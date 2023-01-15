@@ -2,7 +2,9 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
+import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/register_current_address.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
@@ -18,6 +20,7 @@ class RegisterUser extends StatefulWidget {
 
 class _RegisterUserState extends State<RegisterUser> {
   final _formState = GlobalKey<FormState>();
+  final Map<String, String> data = <String, String>{};
 
   @override
   Widget build(BuildContext context) {
@@ -67,26 +70,56 @@ class _RegisterUserState extends State<RegisterUser> {
                         size: avatarCircleRadius * 2),
                   ),
                   const Text(StringValue.addPicture),
-                  const DroprTextField(
+                  DroprTextField(
                     hintText: StringValue.fullName,
+                    onSave: (String value) {
+                      data.addAll({
+                        "name": value,
+                      });
+                    },
                   ),
-                  const DroprTextField(hintText: StringValue.gender),
-                  const DroprTextField(hintText: StringValue.dateOfBirth),
+                  DroprTextField(
+                    hintText: StringValue.gender,
+                    onSave: (String value) {
+                      data.addAll({
+                        "phone_number": value,
+                      });
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.dateOfBirth,
+                    onSave: (String value) {
+                      data.addAll({
+                        "password": value,
+                      });
+                    },
+                  ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: EdgeInsets.all(applyPaddingX(2)),
-                      child: CustomRoundedButton(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            CurrentAddress.routeName,
+                      child: StoreObserver(
+                        builder: (UserStore store, BuildContext context) {
+                          return CustomRoundedButton(
+                            isLoading: store.isLoading,
+                            onTap: () async {
+                              _formState.currentState?.save();
+                              if (_formState.currentState?.validate() ??
+                                  false) {
+                                print("hello user" + data.toString());
+                                await store.sigup(data);
+                                Navigator.pushNamed(
+                                  context,
+                                  CurrentAddress.routeName,
+                                );
+                              }
+                            },
+                            text: StringValue.next,
                           );
                         },
-                        text: StringValue.next,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

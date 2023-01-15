@@ -72,6 +72,12 @@ class StringValue {
   static const String warning3 = "\u2022 Make sure you take clear image\n\n";
   static const String bullet = "\u2022 ";
   static const String okayGotIt = 'OK, GOT IT';
+  static const String verificationDescription =
+      'Enter the four  digit code we sent to you';
+
+  static const String mobileNumber = 'Mobile Number';
+  static const String verification = 'Verification';
+  static const String resend = 'resend';
 
   static const String uploadPhoto = 'Upload photos of your Vehicle';
   static const String camera = 'Camera';
