@@ -130,11 +130,11 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
   String get getImage {
     switch (statePresent) {
       case 0:
-        return ImageValues.walkThroughWelcome;
+        return ImageValues.logo;
       case 1:
-        return ImageValues.walkThroughDelivery;
+        return ImageValues.logo;
       default:
-        return ImageValues.walkThroughSecure;
+        return ImageValues.logo;
     }
   }
 

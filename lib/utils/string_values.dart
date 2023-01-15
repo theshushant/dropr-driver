@@ -72,4 +72,25 @@ class StringValue {
   static const String warning3 = "\u2022 Make sure you take clear image\n\n";
   static const String bullet = "\u2022 ";
   static const String okayGotIt = 'OK, GOT IT';
+
+  static const String uploadPhoto = 'Upload photos of your Vehicle';
+  static const String camera = 'Camera';
+  static const String selectFromGallery = 'Select From Gallery';
+
+  //Bank Information
+  static const String bankInformation = 'Bank Information';
+  static const String bankAccountName = 'Bank account name';
+  static const String bSBNumber = "BSB Number";
+  static const String invoicingGST = 'Invoicing \$ GST';
+  static const String completeDeliveries =
+      'You must have an ABN to complete deliveries with us';
+  static const String ABN = 'Australian Business Number (ABN)';
+  static const String accountNumber = 'Account Number';
+  static const success = 'Success!';
+  static const successLine =
+      'You have successfully submitted your form. Start taking your training & learn more about Dropr.';
+
+  //training
+  static const startYourTraining = 'Start Your Training';
+  static const finishTraining = 'Finish Training';
 }
