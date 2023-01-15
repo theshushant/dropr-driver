@@ -2,6 +2,7 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
+import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
@@ -172,7 +173,7 @@ class _UploadImageState extends State<UploadImage> {
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            UploadImage.routeName,
+                            HomePage.routeName,
                           );
                         },
                       ),

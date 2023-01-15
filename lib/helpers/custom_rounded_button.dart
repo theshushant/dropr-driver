@@ -15,6 +15,7 @@ class CustomRoundedButton extends StatelessWidget {
   final bool isLoading;
   final bool isEnabled;
   final Border? border;
+
   const CustomRoundedButton(
       {Key? key,
       this.child,
@@ -31,7 +32,11 @@ class CustomRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => isEnabled ? onTap!() : null,
+      onTap: () {
+        if (isEnabled && onTap != null) {
+          onTap!();
+        }
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: globalPadding,

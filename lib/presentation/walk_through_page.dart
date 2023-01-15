@@ -4,6 +4,7 @@ import 'package:dropr_driver/helpers/dropr_indicator.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/super_text.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
+import 'package:dropr_driver/presentation/credentials/login_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/register_user.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
@@ -24,6 +25,7 @@ class WalkThroughPage extends StatefulWidget {
 class _WalkThroughPageState extends State<WalkThroughPage> {
   late int statePresent;
   late Timer _timer;
+
   @override
   initState() {
     super.initState();
@@ -99,7 +101,7 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
                           _timer.cancel();
                           Navigator.pushNamed(
                             context,
-                            RegisterUser.routeName,
+                            LoginPage.routeName,
                           );
                         },
                         text: StringValue.login,
@@ -110,6 +112,10 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
                       GestureDetector(
                         onTap: () {
                           _timer.cancel();
+                          Navigator.pushReplacementNamed(
+                            context,
+                            RegisterUser.routeName,
+                          );
                         },
                         child: const HelpText(
                           text: StringValue.signuptext,
