@@ -1,12 +1,13 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
-import 'package:dropr_driver/helpers/dropr_text_field.dart';
-import 'package:dropr_driver/presentation/home.dart';
+import 'package:dropr_driver/presentation/camera_page.dart';
+import 'package:dropr_driver/presentation/register_bank_information.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
@@ -89,49 +90,8 @@ class _UploadImageState extends State<UploadImage> {
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             builder: (context) {
                               return Padding(
-                                padding: EdgeInsets.all(applyPaddingX(2)),
-                                child: Wrap(
-                                  children: [
-                                    Text(StringValue.warning.toUpperCase(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                                color: ColorValues.blackColor,
-                                                fontWeight: FontWeight.w500)),
-                                    const Divider(
-                                      color: ColorValues.blackColor,
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(
-                                                  color: ColorValues.blackColor,
-                                                  fontWeight: FontWeight.w400),
-                                          text: StringValue.warning1,
-                                          children: const [
-                                            TextSpan(
-                                              text: StringValue.warning2,
-                                            ),
-                                            TextSpan(
-                                              text: StringValue.warning3,
-                                            ),
-                                          ]),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(applyPaddingX(1)),
-                                      child: CustomRoundedButton(
-                                        text: StringValue.okayGotIt,
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
+                                  padding: EdgeInsets.all(applyPaddingX(2)),
+                                  child: warningBottomSheet(context, false));
                             },
                           );
                         },
@@ -143,12 +103,14 @@ class _UploadImageState extends State<UploadImage> {
                     child: Container(
                       color: ColorValues.boxSelectionBackground,
                       child: ListTile(
-                          selectedColor: ColorValues.selectionHighlight,
-                          leading: const Icon(Icons.car_crash),
-                          title: Text(
-                            StringValue.registrationImage,
-                            style: Theme.of(context).textTheme.button,
-                          )),
+                        selectedColor: ColorValues.selectionHighlight,
+                        leading: const Icon(Icons.car_crash),
+                        title: Text(
+                          StringValue.registrationImage,
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                        onTap: () {},
+                      ),
                     ),
                   ),
                   Padding(
@@ -173,7 +135,7 @@ class _UploadImageState extends State<UploadImage> {
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            HomePage.routeName,
+                            BankInformation.routeName,
                           );
                         },
                       ),
@@ -187,4 +149,80 @@ class _UploadImageState extends State<UploadImage> {
       ),
     );
   }
+}
+
+Widget warningBottomSheet(BuildContext context, bool warning) {
+  return Wrap(
+    children: warning
+        ? [
+            Text(StringValue.warning.toUpperCase(),
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: ColorValues.blackColor,
+                    fontWeight: FontWeight.w500)),
+            const Divider(
+              color: ColorValues.blackColor,
+            ),
+            RichText(
+              text: TextSpan(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: ColorValues.blackColor,
+                      fontWeight: FontWeight.w400),
+                  text: StringValue.warning1,
+                  children: const [
+                    TextSpan(
+                      text: StringValue.warning2,
+                    ),
+                    TextSpan(
+                      text: StringValue.warning3,
+                    ),
+                  ]),
+            ),
+            Padding(
+              padding: EdgeInsets.all(applyPaddingX(1)),
+              child: CustomRoundedButton(
+                text: StringValue.okayGotIt,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ]
+        : [
+            Text(StringValue.uploadImage.toUpperCase(),
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: ColorValues.blackColor,
+                    fontWeight: FontWeight.w500)),
+            const Divider(
+              color: ColorValues.blackColor,
+            ),
+            Padding(
+              padding: EdgeInsets.all(applyPaddingX(1)),
+              child: CustomRoundedButton(
+                text: StringValue.camera,
+                onTap: () async {
+                  await availableCameras().then((value) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => CameraPage(cameras: value)));
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(applyPaddingX(1)),
+              child: CustomRoundedButton(
+                color: ColorValues.whiteColor,
+                border: Border.all(color: ColorValues.primaryColor),
+                child: Text(StringValue.selectFromGallery,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: ColorValues.primaryColor,
+                        fontWeight: FontWeight.w500)),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
+  );
 }

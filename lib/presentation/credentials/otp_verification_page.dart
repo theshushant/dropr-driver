@@ -1,9 +1,7 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
-import 'package:dropr_driver/helpers/super_text.dart';
 import 'package:dropr_driver/presentation/home.dart';
-import 'package:dropr_driver/presentation/register_user.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
