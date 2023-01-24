@@ -22,4 +22,8 @@ class ColorValues {
   static const Color textFieldFillColor = Color.fromRGBO(242, 242, 247, 1);
   static const Color transparent = Colors.transparent;
   static const Color boxSelectionBackground = Color.fromRGBO(0, 71, 255, 0.1);
+  static const Color deliverPartnerInfoBoxGradient1 =
+      Color.fromRGBO(241, 115, 80, 1);
+  static const Color deliverPartnerInfoBoxGradient2 =
+      Color.fromRGBO(188, 0, 90, 1);
 }

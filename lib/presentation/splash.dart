@@ -51,10 +51,10 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future _navigateToHomePage() async {
-    Navigator.pushReplacementNamed(context, LandingPage.routeName);
+    Navigator.pushReplacementNamed(context, HomePage.routeName);
   }
 
   Future _navigateToWelcomePage() async {
-    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+    Navigator.pushReplacementNamed(context, HomePage.routeName);
   }
 }
