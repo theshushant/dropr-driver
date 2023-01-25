@@ -1,6 +1,10 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/camera_page.dart';
 import 'package:dropr_driver/presentation/register_bank_information.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -19,6 +23,20 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final _formState = GlobalKey<FormState>();
+  Map<String, dynamic> map = {};
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ScreenArguments args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      setState(() {
+        map = args.map ?? <String, dynamic>{};
+      });
+      print("here data is this " + map.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +108,21 @@ class _UploadImageState extends State<UploadImage> {
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             builder: (context) {
                               return Padding(
-                                  padding: EdgeInsets.all(applyPaddingX(2)),
-                                  child: warningBottomSheet(context, false));
+                                padding: EdgeInsets.all(applyPaddingX(2)),
+                                child: warningBottomSheet(
+                                  context,
+                                  false,
+                                  (XFile picture) async {
+                                    String contentType =
+                                        picture.name.split(".").last;
+                                    Map<String, String> data =
+                                        await utilityService.getUrl('jpg');
+                                    await utilityService.uploadFile(
+                                        File(picture.path),
+                                        data["signed_url"]!);
+                                  },
+                                ),
+                              );
                             },
                           );
                         },
@@ -133,9 +164,17 @@ class _UploadImageState extends State<UploadImage> {
                       child: CustomRoundedButton(
                         text: StringValue.next,
                         onTap: () {
+                          map["vehicle_details"]
+                              ["vehicle_plate_images"] = ['xyz'];
+                          map["vehicle_details"]
+                              ["registration_certificate_images"] = ['xyz'];
+                          map["vehicle_details"]
+                              ["driver_license_images"] = ['xyz'];
+                          print("here map is this" + map.toString());
                           Navigator.pushNamed(
                             context,
                             BankInformation.routeName,
+                            arguments: ScreenArguments(map: map),
                           );
                         },
                       ),
@@ -151,7 +190,8 @@ class _UploadImageState extends State<UploadImage> {
   }
 }
 
-Widget warningBottomSheet(BuildContext context, bool warning) {
+Widget warningBottomSheet(
+    BuildContext context, bool warning, Function onSelect) {
   return Wrap(
     children: warning
         ? [
@@ -200,12 +240,15 @@ Widget warningBottomSheet(BuildContext context, bool warning) {
               child: CustomRoundedButton(
                 text: StringValue.camera,
                 onTap: () async {
-                  await availableCameras().then((value) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => CameraPage(cameras: value)));
-                  });
+                  List<CameraDescription> value = await availableCameras();
+                  XFile picture = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CameraPage(cameras: value),
+                    ),
+                  );
+                  onSelect(picture);
+                  Navigator.pop(context);
                 },
               ),
             ),

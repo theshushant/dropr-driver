@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:dropr_driver/models/user.dart';
+import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,7 +9,7 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
-  User? user;
+  Employee? user;
   @observable
   bool isLoading = false;
 
@@ -41,11 +41,10 @@ abstract class _UserStore with Store {
     }
   }
 
-  @action
-  Future<void> sigup(Map<String, String> body) async {
+  Future<void> registerYourself(Map<String, dynamic> body) async {
     try {
       isLoading = true;
-      user = await userService.signup(body);
+      user = await userService.registerYourself(body);
       isLoading = false;
     } catch (e) {
       log('Error in store $e');

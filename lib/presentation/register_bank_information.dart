@@ -2,12 +2,17 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
+import 'package:dropr_driver/models/user.dart';
 import 'package:dropr_driver/presentation/register_vehicle_information.dart';
 import 'package:dropr_driver/presentation/success_page.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class BankInformation extends StatefulWidget {
   const BankInformation({Key? key}) : super(key: key);
@@ -19,6 +24,20 @@ class BankInformation extends StatefulWidget {
 
 class _BankInformationState extends State<BankInformation> {
   final _formState = GlobalKey<FormState>();
+  Map<String, dynamic> map = {};
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ScreenArguments args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      setState(() {
+        map = args.map ?? <String, dynamic>{};
+      });
+      print("here data is this " + map.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +87,52 @@ class _BankInformationState extends State<BankInformation> {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  const DroprTextField(
+                  DroprTextField(
                     hintText: StringValue.bankAccountName,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      if (!map.containsKey("bank_details")) {
+                        map.addAll({"bank_details": <String, dynamic>{}});
+                      }
+                      map["bank_details"]["account_holder_name"] = value;
+                    },
                   ),
-                  const DroprTextField(hintText: StringValue.bSBNumber),
-                  const DroprTextField(hintText: StringValue.accountNumber),
-                  const DroprTextField(
+                  DroprTextField(
+                    hintText: StringValue.bSBNumber,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["bank_details"]["bsb_number"] = value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.accountNumber,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["bank_details"]["account_number"] = value;
+                    },
+                  ),
+                  DroprTextField(
                     hintText: StringValue.ABN,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["bank_details"]["ab_number"] = value;
+                    },
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -83,10 +141,18 @@ class _BankInformationState extends State<BankInformation> {
                       child: CustomRoundedButton(
                         text: StringValue.next,
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            SuccessPage.routeName,
-                          );
+                          _formState.currentState?.save();
+                          if (_formState.currentState?.validate() ?? false) {
+                            UserStore store =
+                                Provider.of<UserStore>(context, listen: false);
+                            store.registerYourself(map);
+                            when((p0) => !store.isLoading, () {
+                              Navigator.pushNamed(
+                                context,
+                                SuccessPage.routeName,
+                              );
+                            });
+                          }
                         },
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/register_current_address.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -20,7 +21,7 @@ class RegisterUser extends StatefulWidget {
 
 class _RegisterUserState extends State<RegisterUser> {
   final _formState = GlobalKey<FormState>();
-  final Map<String, String> data = <String, String>{};
+  final Map<String, dynamic> data = <String, dynamic>{};
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,11 @@ class _RegisterUserState extends State<RegisterUser> {
                   const Text(StringValue.addPicture),
                   DroprTextField(
                     hintText: StringValue.fullName,
+                    onValidate: (String? value){
+                      if(value == null || value.isEmpty){
+                        return StringValue.required;
+                      }
+                    },
                     onSave: (String value) {
                       data.addAll({
                         "name": value,
@@ -80,17 +86,27 @@ class _RegisterUserState extends State<RegisterUser> {
                   ),
                   DroprTextField(
                     hintText: StringValue.gender,
+                    onValidate: (String? value){
+                      if(value == null || value.isEmpty){
+                        return StringValue.required;
+                      }
+                    },
                     onSave: (String value) {
                       data.addAll({
-                        "phone_number": value,
+                        "gender": value,
                       });
                     },
                   ),
                   DroprTextField(
                     hintText: StringValue.dateOfBirth,
+                    onValidate: (String? value){
+                      if(value == null || value.isEmpty){
+                        return StringValue.required;
+                      }
+                    },
                     onSave: (String value) {
                       data.addAll({
-                        "password": value,
+                        "date_of_birth": value,
                       });
                     },
                   ),
@@ -106,11 +122,12 @@ class _RegisterUserState extends State<RegisterUser> {
                               _formState.currentState?.save();
                               if (_formState.currentState?.validate() ??
                                   false) {
-                                print("hello user" + data.toString());
-                                await store.sigup(data);
                                 Navigator.pushNamed(
                                   context,
                                   CurrentAddress.routeName,
+                                  arguments: ScreenArguments(
+                                    map: data,
+                                  ),
                                 );
                               }
                             },

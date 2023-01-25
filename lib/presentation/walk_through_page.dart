@@ -114,7 +114,7 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
                           _timer.cancel();
                           Navigator.pushReplacementNamed(
                             context,
-                            RegisterUser.routeName,
+                            LoginPage.routeName,
                           );
                         },
                         child: const HelpText(

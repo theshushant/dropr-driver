@@ -1,23 +1,32 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/home.dart';
+import 'package:dropr_driver/presentation/register_bank_information.dart';
+import 'package:dropr_driver/presentation/register_contact_information.dart';
+import 'package:dropr_driver/presentation/register_permanent_address.dart';
+import 'package:dropr_driver/presentation/register_user.dart';
+import 'package:dropr_driver/presentation/register_vehicle_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OTPVerificationPage extends StatelessWidget {
   static const String routeName = 'OTPVerificationPage';
   final int otp;
   final String label;
-  final Function? onComplete;
+  final Map<String, dynamic>? map;
 
   const OTPVerificationPage({
     Key? key,
     required this.otp,
     required this.label,
-    this.onComplete,
+    this.map,
   }) : super(key: key);
 
   @override
@@ -94,17 +103,47 @@ class OTPVerificationPage extends StatelessWidget {
           Pinput(
             length: otp.toString().length,
             onCompleted: (String? value) async {
-              if (value != null && onComplete != null) {
-                onComplete!(value, context);
-              }
+              UserStore store = Provider.of<UserStore>(context, listen: false);
               if (value != null) {
-                int sentOtp = int.parse(value);
-                if (sentOtp == otp) {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    HomePage.routeName,
-                  );
-                }
+                Map<String, String> body = {
+                  "otp": value,
+                  "phone_number": map!['phone_number'],
+                };
+                store.loginComplete(body);
+
+                when((p0) => store.user != null, () {
+                  if (store.user?.email == null) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      RegisterUser.routeName,
+                    );
+                  } else if (store.user?.permanentAddress == null) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      PermanentAddress.routeName,
+                    );
+                  } else if (store.user?.emergencyContact == null) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      ContactInformation.routeName,
+                    );
+                  } else if (store.user?.vehicleDetails == null) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      VehicleInformation.routeName,
+                    );
+                  } else if (store.user?.bankDetails == null) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      BankInformation.routeName,
+                    );
+                  } else {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      HomePage.routeName,
+                    );
+                  }
+                });
               }
             },
           ),

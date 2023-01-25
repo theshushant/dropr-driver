@@ -11,7 +11,7 @@ Route getGeneratedRoutes(RouteSettings settings) {
       target = OTPVerificationPage(
         otp: args.otp!,
         label: args.label!,
-         onComplete: args.onComplete,
+        map: args.map!,
       );
       break;
   }

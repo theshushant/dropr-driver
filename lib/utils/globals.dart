@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:dropr_driver/services/preference_service.dart';
 import 'package:dropr_driver/services/user_service.dart';
+import 'package:dropr_driver/services/utility_service.dart';
 import 'package:flutter/material.dart';
 
 final PreferenceService preferenceService = PreferenceService.getInstance();
 final UserService userService = UserService.getInstance();
+final UtilityService utilityService = UtilityService.getInstance();
 
 const double globalPadding = 10;
 const double helperTextSize = 14;

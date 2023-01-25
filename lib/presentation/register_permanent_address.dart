@@ -2,6 +2,7 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/register_contact_information.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -18,6 +19,20 @@ class PermanentAddress extends StatefulWidget {
 
 class _PermanentAddressState extends State<PermanentAddress> {
   final _formState = GlobalKey<FormState>();
+  Map<String, dynamic> map = {};
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ScreenArguments args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      setState(() {
+        map = args.map ?? <String, dynamic>{};
+      });
+      print("here data is this " + map.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +82,79 @@ class _PermanentAddressState extends State<PermanentAddress> {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  const DroprTextField(
+                  DroprTextField(
                     hintText: StringValue.houseFlateNumber,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
                   ),
-                  const DroprTextField(hintText: StringValue.buildingName),
-                  const DroprTextField(hintText: StringValue.streetArea),
-                  const DroprTextField(
+                  DroprTextField(
+                    hintText: StringValue.buildingName,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.streetArea,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  DroprTextField(
                     hintText: StringValue.city,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
                   ),
-                  const DroprTextField(hintText: StringValue.pincode),
-                  const DroprTextField(hintText: StringValue.landmark),
+                  DroprTextField(
+                    hintText: StringValue.pincode,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.landmark,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
                   Row(
                     children: [
-                      Checkbox(value: true, onChanged: (value) {}),
+                      Checkbox(value: true, onChanged: (bool? value) {
+                        if(value??false){
+                          map['permanent_address'] = map['current_address'];
+                        }
+                      }),
                       Text(
                         StringValue.sameascurrentaddress,
                         style: Theme.of(context).textTheme.titleMedium,
@@ -93,10 +168,16 @@ class _PermanentAddressState extends State<PermanentAddress> {
                       child: CustomRoundedButton(
                         text: StringValue.next,
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ContactInformation.routeName,
-                          );
+                          _formState.currentState?.save();
+                          if (_formState.currentState?.validate() ?? false) {
+                            Navigator.pushNamed(
+                              context,
+                              ContactInformation.routeName,
+                              arguments: ScreenArguments(
+                                map: map,
+                              )
+                            );
+                          }
                         },
                       ),
                     ),

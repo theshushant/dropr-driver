@@ -70,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                             arguments: ScreenArguments(
                               otp: otp,
                               label: " StringValue.verification",
+                              map: body,
                             ),
                           );
                         }
