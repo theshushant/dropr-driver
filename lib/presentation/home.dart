@@ -5,6 +5,7 @@ import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = 'HomePage';
@@ -53,68 +54,62 @@ class HomePage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Container(
-                  height: 250,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    // color: ColorValues.whiteColor,
-                    borderRadius: BorderRadius.circular(125),
-                    gradient: const LinearGradient(
-                      // begin: Alignment.topRight,
-                      tileMode: TileMode.mirror,
-                      // end: Alignment.bottomLeft,
-                      colors: [
-                        Color.fromRGBO(140, 140, 140, 0.24),
-                        Color.fromRGBO(250, 250, 254, 1),
-                        Color.fromRGBO(255, 255, 255, 0.5)
-                      ],
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 180,
-                      width: 180,
-                      decoration: BoxDecoration(
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: SfRadialGauge(axes: <RadialAxis>[
+                    RadialAxis(
+                      canScaleToFit: true,
+                      minimum: 0,
+                      maximum: 10,
+                      showLabels: false,
+                      showTicks: false,
+                      startAngle: 145,
+                      endAngle: 145,
+                      axisLineStyle: const AxisLineStyle(
+                        thickness: 1,
                         color: ColorValues.blackShadeColor,
-                        borderRadius: BorderRadius.circular(130),
+                        thicknessUnit: GaugeSizeUnit.factor,
                       ),
-                      padding: EdgeInsets.all(1),
-                      child: Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: ColorValues.blackShadeColor,
-                            borderRadius: BorderRadius.circular(150),
-                            border: Border.all(color: Colors.white, width: 8),
+                      annotations: const <GaugeAnnotation>[
+                        GaugeAnnotation(
+                          positionFactor: 0.5,
+                          angle: 90,
+                          widget: Text(
+                            "\$120\nToday's Earning",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 18),
                           ),
-                          child: Center(
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "\$120",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              Text(
-                                "Today's Earning",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18),
-                              ),
-                            ],
-                          ))),
-                    ),
-                  ),
+                        )
+                      ],
+                      pointers: const <GaugePointer>[
+                        RangePointer(
+                          value: 7,
+                          width: 0.1,
+                          color: Colors.white,
+                          enableAnimation: true,
+                          animationType: AnimationType.slowMiddle,
+                          pointerOffset: 0.1,
+                          cornerStyle: CornerStyle.bothCurve,
+                          sizeUnit: GaugeSizeUnit.factor,
+                        )
+                      ],
+                    )
+                  ]),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(applyPaddingX(1)),
                   child: Text(
-                    "Today's Login Duration 00:00",
+                    "Today's Login Duration 07:00 hr",
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                 ),
@@ -128,7 +123,301 @@ class HomePage extends StatelessWidget {
                 Text(
                   'Deliver More to Earn more',
                   style: Theme.of(context).textTheme.labelLarge,
-                )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Features',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: const [
+                          ColorValues.deliverPartnerInfoBoxGradient1,
+                          ColorValues.deliverPartnerInfoBoxGradient2,
+                        ],
+                      ),
+                      color: ColorValues.blackColor,
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(50),
+                          topLeft: Radius.circular(50))),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              maxRadius: 40,
+                              backgroundImage:
+                                  AssetImage(ImageValues.successImage),
+                            ),
+                            Text(
+                              'Anshit Gera',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            ),
+                            Text(
+                              'Delivery Partner',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            )
+                          ],
+                        ),
+                        VerticalDivider(
+                          color: ColorValues.blackColor,
+                          indent: 20,
+                          endIndent: 20,
+                          thickness: 1,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'ID NO   :905750250',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            ),
+                            Text(
+                              'DOB     :30-07-1990',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            ),
+                            Text(
+                              'Phone  :1201248510',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            ),
+                            Text(
+                              'E-mail  :email@yourdomin.com',
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: ColorValues.whiteColor),
+                            )
+                          ],
+                        )
+                      ]),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: applyPaddingX(4)),
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 30,
+                    mainAxisSpacing: 20,
+                    children: [
+                      GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.all(applyPaddingX(1)),
+                          decoration: BoxDecoration(
+                              color: ColorValues.whiteColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                child: addImageSVG(ImageValues.guideInfo),
+                              ),
+                              Text('\$24',
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge),
+                              Text('Total Earning',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                          color: ColorValues.blackColor,
+                                          fontWeight: FontWeight.w400))
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.all(applyPaddingX(1)),
+                          decoration: BoxDecoration(
+                              color: ColorValues.whiteColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                child: addImageSVG(ImageValues.callCenterIcon),
+                              ),
+                              Text('5',
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge),
+                              Text('Today\'s Order',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                          color: ColorValues.blackColor,
+                                          fontWeight: FontWeight.w400))
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          padding: EdgeInsets.all(applyPaddingX(1)),
+                          decoration: BoxDecoration(
+                              color: ColorValues.whiteColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                child: addImageSVG(ImageValues.jobHistory),
+                              ),
+                              Text('00:00',
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge),
+                              Text('Weekly Login Time',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                          color: ColorValues.blackColor,
+                                          fontWeight: FontWeight.w400))
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                  decoration: BoxDecoration(
+                                      color: ColorValues.whiteColor,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 1),
+                                          blurRadius: 8,
+                                          color: Colors.black12,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  height: 100,
+                                  child: Center(
+                                    child: ListTile(
+                                      leading: Container(
+                                        alignment: Alignment.center,
+                                        width: 60,
+                                        padding:
+                                            EdgeInsets.all(applyPaddingX(0.5)),
+                                        color: ColorValues.blackShadeColor,
+                                        child: Text("30 Sec",
+                                            maxLines: 2,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                    color: ColorValues
+                                                        .whiteColor)),
+                                      ),
+                                      title: Text(
+                                          'You have got an order notification \nSee the order detail by clicking here',
+                                          maxLines: 3,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium),
+                                      trailing:
+                                          Icon(Icons.arrow_forward_ios_rounded),
+                                    ),
+                                  ));
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(applyPaddingX(1)),
+                          decoration: BoxDecoration(
+                              color: ColorValues.whiteColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                child: addImageSVG(ImageValues.guideInfo),
+                              ),
+                              Text('\$12984',
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge),
+                              Text('Weekly Earning',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                          color: ColorValues.blackColor,
+                                          fontWeight: FontWeight.w400))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Image.asset(ImageValues.refer),
+                // addImageSVG(ImageValues.refer)
               ],
             ),
           ),

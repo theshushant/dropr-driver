@@ -17,7 +17,7 @@ class ImageValues {
   static String privacy = 'assets/images/privacy 1.svg';
   static String user = 'assets/images/user.svg';
   static String logout = 'assets/images/logout.svg';
-  static String history = 'assets/images/History.svg';
+  static String refer = 'assets/images/refer.png';
   static String savedLocation = 'assets/images/retirement-home 1.svg';
   static String locationMarker = 'assets/images/locationMarker.svg';
   static String help = 'assets/images/help.svg';
