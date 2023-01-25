@@ -1,7 +1,5 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
-import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/helpers/super_text.dart';
-import 'package:dropr_driver/presentation/register_vehicle_information.dart';
 import 'package:dropr_driver/presentation/training.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';

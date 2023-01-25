@@ -3,32 +3,34 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/presentation/register_vehicle_information.dart';
+import 'package:dropr_driver/presentation/register_user/register_upload_image.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 
-class ContactInformation extends StatefulWidget {
-  const ContactInformation({Key? key}) : super(key: key);
-  static String routeName = 'ContactInformation';
+class VehicleInformation extends StatefulWidget {
+  const VehicleInformation({Key? key}) : super(key: key);
+  static String routeName = 'VehicleInformation';
 
   @override
-  State<ContactInformation> createState() => _ContactInformationState();
+  State<VehicleInformation> createState() => _VehicleInformationState();
 }
 
-class _ContactInformationState extends State<ContactInformation> {
+class _VehicleInformationState extends State<VehicleInformation> {
   final _formState = GlobalKey<FormState>();
-
   Map<String, dynamic> map = {};
-  Map<String, String> map1 = <String,String>{};
+  Map<String, dynamic> map1 = <String,dynamic>{};
 
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final ScreenArguments args =
-          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      ModalRoute
+          .of(context)!
+          .settings
+          .arguments as ScreenArguments;
       setState(() {
         map = args.map ?? <String, dynamic>{};
       });
@@ -54,7 +56,10 @@ class _ContactInformationState extends State<ContactInformation> {
           ),
           title: Text(
             StringValue.registerYourself,
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleLarge,
           ),
           trailing: Container(),
         ),
@@ -68,7 +73,7 @@ class _ContactInformationState extends State<ContactInformation> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GradientProgressBar(
-                      percent: progressIndicatorValue(4),
+                      percent: progressIndicatorValue(5),
                       gradient: const LinearGradient(
                         colors: [
                           ColorValues.progressIndicatorColor1,
@@ -80,52 +85,45 @@ class _ContactInformationState extends State<ContactInformation> {
                   Padding(
                     padding: EdgeInsets.all(applyPaddingX(2)),
                     child: Text(
-                      StringValue.contactInformation,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      StringValue.vehicleInformation,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleLarge,
                     ),
                   ),
                   DroprTextField(
-                    hintText: StringValue.email,
+                    hintText: StringValue.vehicleInformation,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["email"] = value;
+                      map1["vehicle_plate_number"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.emergencyContactPersonName,
+                    hintText: StringValue.registration,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["name"] = value;
+                      map1["registration_certificate_number"] =
+                          value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.emergancyContact,
+                    hintText: StringValue.driverLicense,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["phone_number"] = value;
-                    },
-                  ),
-                  DroprTextField(
-                    hintText: StringValue.relationshipWithEmergancyContact,
-                    onValidate: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return StringValue.required;
-                      }
-                    },
-                    onSave: (String value) {
-                      map1["relationship"] = value;
+                      map1["driver_license_number"] = value;
                     },
                   ),
                   Align(
@@ -138,11 +136,11 @@ class _ContactInformationState extends State<ContactInformation> {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
                             map.addAll({
-                              "emergency_contact":map1
+                              "vehicle_details":map1
                             });
                             Navigator.pushNamed(
                               context,
-                              VehicleInformation.routeName,
+                              UploadImage.routeName,
                               arguments: ScreenArguments(
                                 map: map,
                               ),

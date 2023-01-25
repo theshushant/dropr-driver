@@ -3,26 +3,21 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/models/user.dart';
-import 'package:dropr_driver/presentation/register_vehicle_information.dart';
-import 'package:dropr_driver/presentation/success_page.dart';
-import 'package:dropr_driver/store/user_store.dart';
+import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 
-class BankInformation extends StatefulWidget {
-  const BankInformation({Key? key}) : super(key: key);
-  static String routeName = 'BankInformation';
+class CurrentAddress extends StatefulWidget {
+  const CurrentAddress({Key? key}) : super(key: key);
+  static String routeName = 'CurrentAddress';
 
   @override
-  State<BankInformation> createState() => _BankInformationState();
+  State<CurrentAddress> createState() => _CurrentAddressState();
 }
 
-class _BankInformationState extends State<BankInformation> {
+class _CurrentAddressState extends State<CurrentAddress> {
   final _formState = GlobalKey<FormState>();
   Map<String, dynamic> map = {};
 
@@ -32,9 +27,9 @@ class _BankInformationState extends State<BankInformation> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final ScreenArguments args =
           ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-      setState(() {
-        map = args.map ?? <String, dynamic>{};
-      });
+     setState((){
+       map = args.map ?? <String,dynamic>{};
+     });
       print("here data is this " + map.toString());
     });
   }
@@ -71,7 +66,7 @@ class _BankInformationState extends State<BankInformation> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GradientProgressBar(
-                      percent: progressIndicatorValue(7),
+                      percent: progressIndicatorValue(2),
                       gradient: const LinearGradient(
                         colors: [
                           ColorValues.progressIndicatorColor1,
@@ -83,55 +78,69 @@ class _BankInformationState extends State<BankInformation> {
                   Padding(
                     padding: EdgeInsets.all(applyPaddingX(2)),
                     child: Text(
-                      StringValue.bankInformation,
+                      StringValue.currentAddress,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   DroprTextField(
-                    hintText: StringValue.bankAccountName,
+                    hintText: StringValue.houseFlateNumber,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      if (!map.containsKey("bank_details")) {
-                        map.addAll({"bank_details": <String, dynamic>{}});
-                      }
-                      map["bank_details"]["account_holder_name"] = value;
+                      map["current_address"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.bSBNumber,
+                    hintText: StringValue.buildingName,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["bank_details"]["bsb_number"] = value;
+                      map["current_address"] += value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.accountNumber,
+                    hintText: StringValue.streetArea,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["bank_details"]["account_number"] = value;
+                      map["current_address"] += value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.ABN,
+                    hintText: StringValue.city,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["bank_details"]["ab_number"] = value;
+                      map["current_address"] += value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.pincode,
+                    onValidate: (String? value) {
+                      if (value == null || (value.isEmpty)) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["current_address"] += value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.landmark,
+                    onSave: (String value) {
+                      map["current_address"] += value;
                     },
                   ),
                   Align(
@@ -139,21 +148,19 @@ class _BankInformationState extends State<BankInformation> {
                     child: Padding(
                       padding: EdgeInsets.all(applyPaddingX(2)),
                       child: CustomRoundedButton(
-                        text: StringValue.next,
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            UserStore store =
-                                Provider.of<UserStore>(context, listen: false);
-                            store.registerYourself(map);
-                            when((p0) => !store.isLoading, () {
-                              Navigator.pushNamed(
-                                context,
-                                SuccessPage.routeName,
-                              );
-                            });
+                            print("here current address is this " +
+                                map.toString());
+                            Navigator.pushNamed(
+                                context, PermanentAddress.routeName,
+                                arguments: ScreenArguments(
+                                  map: map,
+                                ));
                           }
                         },
+                        text: StringValue.next,
                       ),
                     ),
                   )

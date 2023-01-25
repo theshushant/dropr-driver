@@ -6,7 +6,7 @@ import 'package:dropr_driver/helpers/super_text.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/credentials/login_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
-import 'package:dropr_driver/presentation/register_user.dart';
+import 'package:dropr_driver/presentation/register_user/register_user.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';

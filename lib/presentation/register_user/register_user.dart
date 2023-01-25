@@ -4,7 +4,7 @@ import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/presentation/register_current_address.dart';
+import 'package:dropr_driver/presentation/register_user/register_current_address.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';

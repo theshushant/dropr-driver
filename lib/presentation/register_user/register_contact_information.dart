@@ -3,23 +3,25 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/presentation/register_permanent_address.dart';
+import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 
-class CurrentAddress extends StatefulWidget {
-  const CurrentAddress({Key? key}) : super(key: key);
-  static String routeName = 'CurrentAddress';
+class ContactInformation extends StatefulWidget {
+  const ContactInformation({Key? key}) : super(key: key);
+  static String routeName = 'ContactInformation';
 
   @override
-  State<CurrentAddress> createState() => _CurrentAddressState();
+  State<ContactInformation> createState() => _ContactInformationState();
 }
 
-class _CurrentAddressState extends State<CurrentAddress> {
+class _ContactInformationState extends State<ContactInformation> {
   final _formState = GlobalKey<FormState>();
+
   Map<String, dynamic> map = {};
+  Map<String, String> map1 = <String,String>{};
 
   @override
   initState() {
@@ -27,9 +29,9 @@ class _CurrentAddressState extends State<CurrentAddress> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final ScreenArguments args =
           ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-     setState((){
-       map = args.map ?? <String,dynamic>{};
-     });
+      setState(() {
+        map = args.map ?? <String, dynamic>{};
+      });
       print("here data is this " + map.toString());
     });
   }
@@ -66,7 +68,7 @@ class _CurrentAddressState extends State<CurrentAddress> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GradientProgressBar(
-                      percent: progressIndicatorValue(2),
+                      percent: progressIndicatorValue(4),
                       gradient: const LinearGradient(
                         colors: [
                           ColorValues.progressIndicatorColor1,
@@ -78,69 +80,52 @@ class _CurrentAddressState extends State<CurrentAddress> {
                   Padding(
                     padding: EdgeInsets.all(applyPaddingX(2)),
                     child: Text(
-                      StringValue.currentAddress,
+                      StringValue.contactInformation,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   DroprTextField(
-                    hintText: StringValue.houseFlateNumber,
+                    hintText: StringValue.email,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["current_address"] = value;
+                      map1["email"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.buildingName,
+                    hintText: StringValue.emergencyContactPersonName,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["current_address"] += value;
+                      map1["name"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.streetArea,
+                    hintText: StringValue.emergancyContact,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["current_address"] += value;
+                      map1["phone_number"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.city,
+                    hintText: StringValue.relationshipWithEmergancyContact,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map["current_address"] += value;
-                    },
-                  ),
-                  DroprTextField(
-                    hintText: StringValue.pincode,
-                    onValidate: (String? value) {
-                      if (value == null || (value.isEmpty)) {
-                        return StringValue.required;
-                      }
-                    },
-                    onSave: (String value) {
-                      map["current_address"] += value;
-                    },
-                  ),
-                  DroprTextField(
-                    hintText: StringValue.landmark,
-                    onSave: (String value) {
-                      map["current_address"] += value;
+                      map1["relationship"] = value;
                     },
                   ),
                   Align(
@@ -148,19 +133,22 @@ class _CurrentAddressState extends State<CurrentAddress> {
                     child: Padding(
                       padding: EdgeInsets.all(applyPaddingX(2)),
                       child: CustomRoundedButton(
+                        text: StringValue.next,
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            print("here current address is this " +
-                                map.toString());
+                            map.addAll({
+                              "emergency_contact":map1
+                            });
                             Navigator.pushNamed(
-                                context, PermanentAddress.routeName,
-                                arguments: ScreenArguments(
-                                  map: map,
-                                ));
+                              context,
+                              VehicleInformation.routeName,
+                              arguments: ScreenArguments(
+                                map: map,
+                              ),
+                            );
                           }
                         },
-                        text: StringValue.next,
                       ),
                     ),
                   )

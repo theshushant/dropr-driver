@@ -3,34 +3,30 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/presentation/register_upload_image.dart';
+import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 
-class VehicleInformation extends StatefulWidget {
-  const VehicleInformation({Key? key}) : super(key: key);
-  static String routeName = 'VehicleInformation';
+class PermanentAddress extends StatefulWidget {
+  const PermanentAddress({Key? key}) : super(key: key);
+  static String routeName = 'PermanentAddress';
 
   @override
-  State<VehicleInformation> createState() => _VehicleInformationState();
+  State<PermanentAddress> createState() => _PermanentAddressState();
 }
 
-class _VehicleInformationState extends State<VehicleInformation> {
+class _PermanentAddressState extends State<PermanentAddress> {
   final _formState = GlobalKey<FormState>();
   Map<String, dynamic> map = {};
-  Map<String, dynamic> map1 = <String,dynamic>{};
 
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final ScreenArguments args =
-      ModalRoute
-          .of(context)!
-          .settings
-          .arguments as ScreenArguments;
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
       setState(() {
         map = args.map ?? <String, dynamic>{};
       });
@@ -56,10 +52,7 @@ class _VehicleInformationState extends State<VehicleInformation> {
           ),
           title: Text(
             StringValue.registerYourself,
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           trailing: Container(),
         ),
@@ -73,7 +66,7 @@ class _VehicleInformationState extends State<VehicleInformation> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GradientProgressBar(
-                      percent: progressIndicatorValue(5),
+                      percent: progressIndicatorValue(3),
                       gradient: const LinearGradient(
                         colors: [
                           ColorValues.progressIndicatorColor1,
@@ -85,46 +78,88 @@ class _VehicleInformationState extends State<VehicleInformation> {
                   Padding(
                     padding: EdgeInsets.all(applyPaddingX(2)),
                     child: Text(
-                      StringValue.vehicleInformation,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleLarge,
+                      StringValue.permanentAddress,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   DroprTextField(
-                    hintText: StringValue.vehicleInformation,
+                    hintText: StringValue.houseFlateNumber,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["vehicle_plate_number"] = value;
+                      map["permanent_address"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.registration,
+                    hintText: StringValue.buildingName,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["registration_certificate_number"] =
-                          value;
+                      map["permanent_address"] = value;
                     },
                   ),
                   DroprTextField(
-                    hintText: StringValue.driverLicense,
+                    hintText: StringValue.streetArea,
                     onValidate: (String? value) {
                       if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
                     onSave: (String value) {
-                      map1["driver_license_number"] = value;
+                      map["permanent_address"] = value;
                     },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.city,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.pincode,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  DroprTextField(
+                    hintText: StringValue.landmark,
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return StringValue.required;
+                      }
+                    },
+                    onSave: (String value) {
+                      map["permanent_address"] = value;
+                    },
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(value: true, onChanged: (bool? value) {
+                        if(value??false){
+                          map['permanent_address'] = map['current_address'];
+                        }
+                      }),
+                      Text(
+                        StringValue.sameascurrentaddress,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      )
+                    ],
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -135,15 +170,12 @@ class _VehicleInformationState extends State<VehicleInformation> {
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            map.addAll({
-                              "vehicle_details":map1
-                            });
                             Navigator.pushNamed(
                               context,
-                              UploadImage.routeName,
+                              ContactInformation.routeName,
                               arguments: ScreenArguments(
                                 map: map,
-                              ),
+                              )
                             );
                           }
                         },

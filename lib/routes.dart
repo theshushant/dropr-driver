@@ -2,6 +2,8 @@ import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/credentials/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 
+import 'presentation/register_user/register_review.dart';
+
 Route getGeneratedRoutes(RouteSettings settings) {
   late final Widget target;
   String? route = settings.name;
@@ -14,6 +16,10 @@ Route getGeneratedRoutes(RouteSettings settings) {
         map: args.map!,
       );
       break;
+    case RegisterReview.routeName:
+      target = RegisterReview(
+        data: args.map!,
+      );
   }
   return MaterialPageRoute(builder: (context) => target);
 }

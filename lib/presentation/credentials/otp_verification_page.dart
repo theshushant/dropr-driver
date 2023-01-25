@@ -3,11 +3,11 @@ import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/home.dart';
-import 'package:dropr_driver/presentation/register_bank_information.dart';
-import 'package:dropr_driver/presentation/register_contact_information.dart';
-import 'package:dropr_driver/presentation/register_permanent_address.dart';
-import 'package:dropr_driver/presentation/register_user.dart';
-import 'package:dropr_driver/presentation/register_vehicle_information.dart';
+import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
+import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
+import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
+import 'package:dropr_driver/presentation/register_user/register_user.dart';
+import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
@@ -112,7 +112,7 @@ class OTPVerificationPage extends StatelessWidget {
                 store.loginComplete(body);
 
                 when((p0) => store.user != null, () {
-                  if (store.user?.dateOfBirth == null) {
+                  if (store.user?.email == null) {
                     Navigator.pushReplacementNamed(
                       context,
                       RegisterUser.routeName,
