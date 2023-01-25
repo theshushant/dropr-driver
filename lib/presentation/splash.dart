@@ -1,7 +1,11 @@
-import 'package:dropr_driver/models/user.dart';
+import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
-import 'package:dropr_driver/presentation/welcome.dart';
+import 'package:dropr_driver/presentation/register_bank_information.dart';
+import 'package:dropr_driver/presentation/register_contact_information.dart';
+import 'package:dropr_driver/presentation/register_permanent_address.dart';
+import 'package:dropr_driver/presentation/register_user.dart';
+import 'package:dropr_driver/presentation/register_vehicle_information.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -44,17 +48,44 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _navigateToScreen() async {
-    User? user = await preferenceService.getAuthUser();
-    Future.delayed(const Duration(milliseconds: 400), () {
-      _navigateToHomePage();
-    });
-  }
-
-  Future _navigateToHomePage() async {
-    Navigator.pushReplacementNamed(context, LandingPage.routeName);
-  }
-
-  Future _navigateToWelcomePage() async {
-    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+    Employee? user = await preferenceService.getAuthUser();
+   if(user!=null){
+     if (user.dateOfBirth == null) {
+       Navigator.pushReplacementNamed(
+         context,
+         RegisterUser.routeName,
+       );
+     } else if (user.permanentAddress == null) {
+       Navigator.pushReplacementNamed(
+         context,
+         PermanentAddress.routeName,
+       );
+     } else if (user.emergencyContact == null) {
+       Navigator.pushReplacementNamed(
+         context,
+         ContactInformation.routeName,
+       );
+     } else if (user.vehicleDetails == null) {
+       Navigator.pushReplacementNamed(
+         context,
+         VehicleInformation.routeName,
+       );
+     } else if (user.bankDetails == null) {
+       Navigator.pushReplacementNamed(
+         context,
+         BankInformation.routeName,
+       );
+     } else {
+       Navigator.pushReplacementNamed(
+         context,
+         HomePage.routeName,
+       );
+     }
+   }else{
+     Navigator.pushReplacementNamed(
+       context,
+       LandingPage.routeName,
+     );
+   }
   }
 }

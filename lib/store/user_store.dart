@@ -33,6 +33,7 @@ abstract class _UserStore with Store {
     try {
       isLoading = true;
       user = await userService.loginComplete(body);
+      preferenceService.setAuthUser(user!);
       isLoading = false;
     } catch (e) {
       log('Error in store $e');

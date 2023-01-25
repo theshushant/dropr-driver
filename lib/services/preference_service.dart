@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,16 +17,16 @@ class PreferenceService {
     return SharedPreferences.getInstance();
   }
 
-  Future<void> setAuthUser(User user) async {
+  Future<void> setAuthUser(Employee user) async {
     (await _getInstance())
         .setString(PreferenceService._user, json.encode(user.toJson()));
   }
 
-  Future<User?> getAuthUser() async {
+  Future<Employee?> getAuthUser() async {
     final String? token =
         (await _getInstance()).getString(PreferenceService._user);
     return token != null && token.isNotEmpty
-        ? User.fromJson(json.decode(token))
+        ? Employee.fromJson(json.decode(token))
         : null;
   }
 
