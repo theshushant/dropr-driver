@@ -70,15 +70,16 @@ class _UploadImageState extends State<UploadImage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GradientProgressBar(
-                      percent: progressIndicatorValue(6),
-                      gradient: const LinearGradient(
-                        colors: [
-                          ColorValues.progressIndicatorColor1,
-                          ColorValues.progressIndicatorColor2,
-                        ],
-                      ),
-                      backgroundColor: ColorValues.whiteColor,
-                      height: progressBarHeight),
+                    percent: progressIndicatorValue(6),
+                    gradient: const LinearGradient(
+                      colors: [
+                        ColorValues.progressIndicatorColor1,
+                        ColorValues.progressIndicatorColor2,
+                      ],
+                    ),
+                    backgroundColor: ColorValues.whiteColor,
+                    height: progressBarHeight,
+                  ),
                   Padding(
                     padding: EdgeInsets.all(applyPaddingX(2)),
                     child: Text(

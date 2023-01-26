@@ -99,4 +99,8 @@ class StringValue {
   //training
   static const startYourTraining = 'Start Your Training';
   static const finishTraining = 'Finish Training';
+  static const review = 'Review';
+  static const basicInformation = 'Basic Information';
+  static const currentInformation = 'Current Information';
+  static const declaration = 'I hereby declare that the information provided is true and correct. I also understand that any willful dishonesty may render for refusal of this application or immediate action against me.';
 }

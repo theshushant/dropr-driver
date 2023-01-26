@@ -49,13 +49,6 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Navigator.pushReplacementNamed(
-        context,
-        LandingPage.routeName,
-      );
-    });
-    return;
     if (user != null) {
       if (user.dateOfBirth == null) {
         Navigator.pushReplacementNamed(

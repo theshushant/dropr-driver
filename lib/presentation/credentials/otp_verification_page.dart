@@ -112,7 +112,7 @@ class OTPVerificationPage extends StatelessWidget {
                 store.loginComplete(body);
 
                 when((p0) => store.user != null, () {
-                  if (store.user?.email == null) {
+                  if (store.user?.dateOfBirth == null) {
                     Navigator.pushReplacementNamed(
                       context,
                       RegisterUser.routeName,
