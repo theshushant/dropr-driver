@@ -2,6 +2,7 @@ import 'package:dropr_driver/presentation/credentials/login_page.dart';
 import 'package:dropr_driver/presentation/credentials/otp_verification_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
+import 'package:dropr_driver/presentation/order/incoming_order.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_current_address.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashPage.routeName: (BuildContext context) => const SplashPage(),
           WelcomePage.routeName: (BuildContext context) => const WelcomePage(),
-          HomePage.routeName: (BuildContext context) => HomePage(),
+          HomePage.routeName: (BuildContext context) => const HomePage(),
           WalkThroughPage.routeName: (BuildContext context) =>
               const WalkThroughPage(),
           LandingPage.routeName: (BuildContext context) => const LandingPage(),
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
           TrainingPage.routeName: (BuildContext context) =>
               const TrainingPage(),
           LoginPage.routeName: (BuildContext context) => LoginPage(),
+          IncomingOrder.routeName: (BuildContext context) => IncomingOrder(),
         },
         onGenerateRoute: getGeneratedRoutes,
       ),

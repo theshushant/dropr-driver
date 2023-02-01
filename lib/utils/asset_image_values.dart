@@ -13,13 +13,13 @@ class ImageValues {
   static String guideInfo = 'assets/images/guideInfo.svg';
   static String announce = 'assets/images/announce.svg';
   static String contact = 'assets/images/contact_us.svg';
-  static String info1 = 'assets/images/info1.svg';
+  static String searchingDuty = 'assets/images/search-location.svg';
   static String privacy = 'assets/images/privacy 1.svg';
   static String user = 'assets/images/user.svg';
   static String logout = 'assets/images/logout.svg';
   static String refer = 'assets/images/refer.png';
-  static String savedLocation = 'assets/images/retirement-home 1.svg';
-  static String locationMarker = 'assets/images/locationMarker.svg';
+  static String bell = 'assets/images/bell.svg';
+  static String dummyMap = 'assets/images/dummy-map.png';
   static String help = 'assets/images/help.svg';
   static String appDrawerAsset = 'assets/images/Frame 14678.svg';
   static String locationHistory = 'assets/images/location.png';

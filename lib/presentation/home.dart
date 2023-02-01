@@ -1,17 +1,24 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
+import 'package:dropr_driver/presentation/order/incoming_order.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String routeName = 'HomePage';
-  HomePage({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  bool _startDuty = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,7 +43,12 @@ class HomePage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         trailing: InkWell(
-          onTap: () => Navigator.pop(context),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              IncomingOrder.routeName,
+            );
+          },
           child: Padding(
             padding: EdgeInsets.all(
               applyPaddingX(1),
@@ -116,8 +128,12 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(applyPaddingX(2)),
                   child: CustomRoundedButton(
-                    text: 'Start Shift',
-                    onTap: () {},
+                    text: _startDuty ? 'End Duty' : 'Start Shift',
+                    onTap: () {
+                      setState(() {
+                        _startDuty = !_startDuty;
+                      });
+                    },
                   ),
                 ),
                 Text(
@@ -360,19 +376,32 @@ class HomePage extends StatelessWidget {
                                         color: ColorValues.blackShadeColor,
                                         child: Text("30 Sec",
                                             maxLines: 2,
+                                            textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleLarge!
                                                 .copyWith(
-                                                    color: ColorValues
-                                                        .whiteColor)),
+                                                  color: ColorValues.whiteColor,
+                                                )),
                                       ),
-                                      title: Text(
-                                          'You have got an order notification \nSee the order detail by clicking here',
-                                          maxLines: 3,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium),
+                                      title: RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 4,
+                                          text: TextSpan(
+                                              text:
+                                                  'You have got an order notification\n',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium,
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      'See the order detail by clicking here',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelMedium,
+                                                ),
+                                              ])),
                                       trailing:
                                           Icon(Icons.arrow_forward_ios_rounded),
                                     ),
