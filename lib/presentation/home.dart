@@ -1,11 +1,14 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
+import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,9 +41,13 @@ class _HomePageState extends State<HomePage> {
               ),
               child: addSVGIcons(ImageValues.menu)),
         ),
-        title: Text(
-          'Hey Anshit',
-          style: Theme.of(context).textTheme.titleLarge,
+        title: StoreObserver(
+          builder: (UserStore store, BuildContext context) {
+            return Text(
+              'Hey ${store.user?.name}',
+              style: Theme.of(context).textTheme.titleLarge,
+            );
+          },
         ),
         trailing: InkWell(
           onTap: () {
@@ -154,89 +161,94 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: const [
-                          ColorValues.deliverPartnerInfoBoxGradient1,
-                          ColorValues.deliverPartnerInfoBoxGradient2,
+                StoreObserver(
+                  builder: (UserStore store, BuildContext context) {
+                    return Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: const [
+                              ColorValues.deliverPartnerInfoBoxGradient1,
+                              ColorValues.deliverPartnerInfoBoxGradient2,
+                            ],
+                          ),
+                          color: ColorValues.blackColor,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(50),
+                              topLeft: Radius.circular(50))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                maxRadius: 40,
+                                backgroundImage:
+                                    AssetImage(ImageValues.successImage),
+                              ),
+                              Text(
+                                store.user?.name ?? "Anshit",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              ),
+                              Text(
+                                store.user?.role ?? 'Delivery Partner',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              )
+                            ],
+                          ),
+                          VerticalDivider(
+                            color: ColorValues.blackColor,
+                            indent: 20,
+                            endIndent: 20,
+                            thickness: 1,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'ID NO   :${store.user?.id}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              ),
+                              Text(
+                                'DOB     :${store.user?.dateOfBirth}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              ),
+                              Text(
+                                'Phone  :${store.user?.phoneNumber}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              ),
+                              Text(
+                                'E-mail  :${store.user?.email}',
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: ColorValues.whiteColor),
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                      color: ColorValues.blackColor,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(50),
-                          topLeft: Radius.circular(50))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              maxRadius: 40,
-                              backgroundImage:
-                                  AssetImage(ImageValues.successImage),
-                            ),
-                            Text(
-                              'Anshit Gera',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            ),
-                            Text(
-                              'Delivery Partner',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            )
-                          ],
-                        ),
-                        VerticalDivider(
-                          color: ColorValues.blackColor,
-                          indent: 20,
-                          endIndent: 20,
-                          thickness: 1,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'ID NO   :905750250',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            ),
-                            Text(
-                              'DOB     :30-07-1990',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            ),
-                            Text(
-                              'Phone  :1201248510',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            ),
-                            Text(
-                              'E-mail  :email@yourdomin.com',
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(color: ColorValues.whiteColor),
-                            )
-                          ],
-                        )
-                      ]),
+                    );
+                  },
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: applyPaddingX(4)),

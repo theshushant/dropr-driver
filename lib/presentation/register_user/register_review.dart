@@ -64,7 +64,9 @@ class RegisterReview extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                SectionRow(),
+                SectionRow(
+                  map: data,
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: 20,

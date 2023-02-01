@@ -22,6 +22,7 @@ class StringValue {
 
   //Login
   static const String login = 'Log In';
+  static const String edit = 'Edit';
   static const String signup = 'Sign Up';
   static const String signuptext = "Don't have an account? Sign Up";
 
