@@ -49,11 +49,13 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
+    print(user);
+
     if (user != null) {
       if (user.dateOfBirth == null) {
         Navigator.pushReplacementNamed(
           context,
-          RegisterUser.routeName,
+          HomePage.routeName,
         );
       } else if (user.permanentAddress == null) {
         Navigator.pushReplacementNamed(
