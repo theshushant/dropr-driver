@@ -28,6 +28,7 @@ class ImageValues {
   static String google = 'assets/images/google.svg';
   static String microsoft = 'assets/images/microsoft.svg';
   static String deliveryVan = 'assets/images/DeliveryVan.png';
+  static String phone = 'assets/images/phone.png';
 }
 
 addImageSVG(String path,

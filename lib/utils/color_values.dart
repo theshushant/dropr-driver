@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorValues {
   static const Color primaryColor = Color.fromRGBO(0, 71, 255, 1);
+  static const Color backgroundColor = Color.fromRGBO(25, 25, 25, 1);
   static const Color transparentColor = Colors.transparent;
   static const Color linkTextColor = Color.fromRGBO(37, 95, 212, 1);
   static const Color linearStartColor = Color.fromRGBO(4, 62, 217, 1);

@@ -1,5 +1,4 @@
 import 'package:dropr_driver/models/employee.dart';
-import 'package:dropr_driver/models/user.dart';
 import 'package:dropr_driver/services/api_service.dart';
 import 'package:dropr_driver/utils/globals.dart';
 

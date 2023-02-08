@@ -1,7 +1,6 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
-import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
@@ -32,32 +31,30 @@ class OTPVerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CustomAppBar(
-                leading: InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                      applyPaddingX(1),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                    ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            CustomAppBar(
+              leading: InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    applyPaddingX(1),
+                  ),
+                  child: const Icon(
+                    Icons.arrow_back,
                   ),
                 ),
-                title: Text(
-                  StringValue.verification,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                trailing: Container(),
               ),
-              _body(context),
-            ],
-          ),
+              title: Text(
+                StringValue.verification,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              trailing: Container(),
+            ),
+            _body(context),
+          ],
         ),
       ),
     );

@@ -6,12 +6,14 @@ class HelpText extends StatelessWidget {
   final String text;
   final Color color;
   final FontWeight? fontWeight;
+  final double? fontSize;
 
   const HelpText({
     Key? key,
     required this.text,
     this.fontWeight,
     this.color = ColorValues.disabledColor,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class HelpText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: helperTextSize,
+        fontSize: fontSize ?? helperTextSize,
         color: color,
         overflow: TextOverflow.ellipsis,
         fontWeight: fontWeight,

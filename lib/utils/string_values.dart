@@ -54,6 +54,10 @@ class StringValue {
   static const String relationshipWithEmergancyContact =
       'Relationship with emergancy contact';
 
+  // Order Screen
+  static const String pickUpLocation = 'Pick-Up Location';
+  static const String dropOffLocation = 'Drop Off Location';
+
   //vehicle Information
   static const String vehicleInformation = 'Vehicle Information';
   static const String vehicleNumber = 'Vehicle Number';
@@ -78,6 +82,7 @@ class StringValue {
 
   static const String mobileNumber = 'Mobile Number';
   static const String verification = 'Verification';
+  static const String order = 'Order';
   static const String resend = 'resend';
 
   static const String uploadPhoto = 'Upload photos of your Vehicle';
@@ -103,5 +108,6 @@ class StringValue {
   static const review = 'Review';
   static const basicInformation = 'Basic Information';
   static const currentInformation = 'Current Information';
-  static const declaration = 'I hereby declare that the information provided is true and correct. I also understand that any willful dishonesty may render for refusal of this application or immediate action against me.';
+  static const declaration =
+      'I hereby declare that the information provided is true and correct. I also understand that any willful dishonesty may render for refusal of this application or immediate action against me.';
 }

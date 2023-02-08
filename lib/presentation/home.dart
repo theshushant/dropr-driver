@@ -2,6 +2,7 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
+import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -125,7 +126,12 @@ class HomePage extends StatelessWidget {
                   padding: EdgeInsets.all(applyPaddingX(2)),
                   child: CustomRoundedButton(
                     text: 'Start Shift',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        OrderScreen.routeName,
+                      );
+                    },
                   ),
                 ),
                 Text(
@@ -174,14 +180,14 @@ class HomePage extends StatelessWidget {
                                     AssetImage(ImageValues.successImage),
                               ),
                               Text(
-                                store.user?.name??"Anshit",
+                                store.user?.name ?? "Anshit",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
                                     .copyWith(color: ColorValues.whiteColor),
                               ),
                               Text(
-                                store.user?.role??'Delivery Partner',
+                                store.user?.role ?? 'Delivery Partner',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!

@@ -1,12 +1,11 @@
 import 'package:dropr_driver/presentation/credentials/login_page.dart';
-import 'package:dropr_driver/presentation/credentials/otp_verification_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
+import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_current_address.dart';
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
-import 'package:dropr_driver/presentation/register_user/register_review.dart';
 import 'package:dropr_driver/presentation/register_user/register_upload_image.dart';
 import 'package:dropr_driver/presentation/register_user/register_user.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
@@ -16,6 +15,7 @@ import 'package:dropr_driver/presentation/training.dart';
 import 'package:dropr_driver/presentation/walk_through_page.dart';
 import 'package:dropr_driver/presentation/welcome.dart';
 import 'package:dropr_driver/routes.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/global_theme.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,9 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<UserStore>.value(
           value: UserStore(),
+        ),
+        Provider<OrderStore>.value(
+          value: OrderStore(),
         ),
       ],
       child: MaterialApp(
@@ -66,6 +69,7 @@ class MyApp extends StatelessWidget {
           TrainingPage.routeName: (BuildContext context) =>
               const TrainingPage(),
           LoginPage.routeName: (BuildContext context) => LoginPage(),
+          OrderScreen.routeName: (BuildContext context) => OrderScreen(),
         },
         onGenerateRoute: getGeneratedRoutes,
       ),
