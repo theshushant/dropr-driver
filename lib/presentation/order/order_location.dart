@@ -1,3 +1,4 @@
+import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/models/order.dart';
@@ -41,6 +42,9 @@ class OrderLocation extends StatelessWidget {
             isTypePickUp
                 ? StringValue.pickUpLocation
                 : StringValue.dropOffLocation,
+            style: TextStyle(
+              fontSize: 18,
+            ),
           ),
           Container(
             padding: EdgeInsets.symmetric(
@@ -66,7 +70,7 @@ class OrderLocation extends StatelessWidget {
                           text: "Perth Institute of CA",
                           color: ColorValues.blackColor,
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                         SizedBox(
                           width: applyPaddingX(0.5),
@@ -81,32 +85,33 @@ class OrderLocation extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: applyPaddingX(1),
+                  height: applyPaddingX(2),
                 ),
-                Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.asset(
-                        ImageValues.phone,
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: applyPaddingX(1),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HelpText(
-                            text: "Amit Trevedi",
-                            color: ColorValues.blackColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                          SizedBox(
-                            width: applyPaddingX(0.5),
-                          ),
-                          Row(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      ImageValues.phone,
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: applyPaddingX(1),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HelpText(
+                          text: "Amit Trevedi",
+                          color: ColorValues.blackColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                        SizedBox(
+                          width: applyPaddingX(0.5),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               HelpText(
@@ -119,25 +124,50 @@ class OrderLocation extends StatelessWidget {
                                 isButtonType: true,
                                 trailingWidget: Icon(
                                   Icons.arrow_forward,
-                                  size: 16,
+                                  size: 14,
                                   color: ColorValues.whiteColor,
                                 ),
                               ),
                             ],
                           ),
-                          // Align(
-                          //   alignment: Alignment.center,
-                          //   child: Text("Csmcks"),
-                          // ),
-                          Divider(),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        // Align(
+                        //   alignment: Alignment.center,
+                        //   child: Text("Csmcks"),
+                        // ),
+                        Divider(),
+                      ],
+                    ),
+                  ],
                 ),
+                _extraBody,
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+  Widget get _extraBody {
+    return Container(
+      child: Column(
+        children: [
+         Container(
+           padding: EdgeInsets.symmetric(
+             horizontal: applyPaddingX(1),
+             vertical: applyPaddingX(0.5),
+           ),
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(8),
+             color: ColorValues.whiteColor,
+           ),
+           child: Text(
+             "Fragile",
+             style: TextStyle(
+               fontSize: 12
+             ),
+           ),
+         ),
         ],
       ),
     );
