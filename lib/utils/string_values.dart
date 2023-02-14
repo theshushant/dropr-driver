@@ -57,6 +57,9 @@ class StringValue {
   // Order Screen
   static const String pickUpLocation = 'Pick-Up Location';
   static const String dropOffLocation = 'Drop Off Location';
+  static const String order = 'Order';
+  static const String orderId = 'Order ID- 2474816';
+  static const String reachedToLocation = 'Reached To Location';
 
   //vehicle Information
   static const String vehicleInformation = 'Vehicle Information';
@@ -82,7 +85,6 @@ class StringValue {
 
   static const String mobileNumber = 'Mobile Number';
   static const String verification = 'Verification';
-  static const String order = 'Order';
   static const String resend = 'resend';
 
   static const String uploadPhoto = 'Upload photos of your Vehicle';

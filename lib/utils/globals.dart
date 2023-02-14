@@ -10,6 +10,7 @@ final PreferenceService preferenceService = PreferenceService.getInstance();
 final UserService userService = UserService.getInstance();
 final UtilityService utilityService = UtilityService.getInstance();
 final OrderService orderService = OrderService.getInstance();
+const mapsApiKey = 'AIzaSyAklibzD5lgq4YA2l_p6K6jJ8A9MnlIzR0';
 
 const double globalPadding = 10;
 const double helperTextSize = 14;

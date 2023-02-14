@@ -3,6 +3,7 @@ import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/presentation/order/pick_up_order.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_current_address.dart';
@@ -72,6 +73,8 @@ class MyApp extends StatelessWidget {
           LoginPage.routeName: (BuildContext context) => LoginPage(),
           OrderScreen.routeName: (BuildContext context) => OrderScreen(),
           IncomingOrder.routeName: (BuildContext context) => IncomingOrder(),
+          PickUpOrderScreen.routeName: (BuildContext context) =>
+              PickUpOrderScreen(),
         },
         onGenerateRoute: getGeneratedRoutes,
       ),

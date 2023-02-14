@@ -2,6 +2,7 @@ import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/models/order.dart';
+import 'package:dropr_driver/presentation/order/pick_up_order.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -119,13 +120,21 @@ class OrderLocation extends StatelessWidget {
                                 color: ColorValues.blackShadeColor,
                                 fontSize: 12,
                               ),
-                              DroprLink(
-                                text: 'Map',
-                                isButtonType: true,
-                                trailingWidget: Icon(
-                                  Icons.arrow_forward,
-                                  size: 14,
-                                  color: ColorValues.whiteColor,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    PickUpOrderScreen.routeName,
+                                  );
+                                },
+                                child: DroprLink(
+                                  text: 'Map',
+                                  isButtonType: true,
+                                  trailingWidget: Icon(
+                                    Icons.arrow_forward,
+                                    size: 14,
+                                    color: ColorValues.whiteColor,
+                                  ),
                                 ),
                               ),
                             ],
@@ -148,26 +157,25 @@ class OrderLocation extends StatelessWidget {
       ),
     );
   }
+
   Widget get _extraBody {
     return Container(
       child: Column(
         children: [
-         Container(
-           padding: EdgeInsets.symmetric(
-             horizontal: applyPaddingX(1),
-             vertical: applyPaddingX(0.5),
-           ),
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(8),
-             color: ColorValues.whiteColor,
-           ),
-           child: Text(
-             "Fragile",
-             style: TextStyle(
-               fontSize: 12
-             ),
-           ),
-         ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: applyPaddingX(1),
+              vertical: applyPaddingX(0.5),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: ColorValues.whiteColor,
+            ),
+            child: Text(
+              "Fragile",
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
         ],
       ),
     );

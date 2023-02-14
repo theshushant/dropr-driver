@@ -9,7 +9,6 @@ import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatefulWidget {
@@ -385,6 +384,12 @@ class _HomePageState extends State<HomePage> {
                                   height: 100,
                                   child: Center(
                                     child: ListTile(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          IncomingOrder.routeName,
+                                        );
+                                      },
                                       leading: Container(
                                         alignment: Alignment.center,
                                         width: 60,

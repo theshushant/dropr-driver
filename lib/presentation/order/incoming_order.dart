@@ -1,7 +1,7 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/location_item.dart';
 import 'package:dropr_driver/helpers/swipeable_button.dart';
-import 'package:dropr_driver/presentation/home.dart';
+import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -164,7 +164,7 @@ class _IncomingOrderState extends State<IncomingOrder> {
                   onFinish: () async {
                     await Navigator.pushNamed(
                       context,
-                      HomePage.routeName,
+                      OrderScreen.routeName,
                     );
                   },
                 )

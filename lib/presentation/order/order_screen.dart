@@ -67,22 +67,17 @@ class OrderScreen extends StatelessWidget {
 
           if (store.fetchedOrdersOnce && store.orders.isEmpty) {
             return Column(
-              children: [
+              children: const [
                 OrderLocation(),
                 OrderLocation(
                   isTypePickUp: false,
                 ),
               ],
             );
-            return Center(
-              child: HelpText(
-                text: "No Order yet!",
-              ),
-            );
           }
 
           return Column(
-            children: [
+            children: const [
               OrderLocation(),
               OrderLocation(
                 isTypePickUp: false,
