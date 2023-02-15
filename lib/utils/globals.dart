@@ -1,9 +1,16 @@
 import 'dart:io';
 
+import 'package:dropr_driver/services/order_service.dart';
 import 'package:dropr_driver/services/preference_service.dart';
+import 'package:dropr_driver/services/user_service.dart';
+import 'package:dropr_driver/services/utility_service.dart';
 import 'package:flutter/material.dart';
 
 final PreferenceService preferenceService = PreferenceService.getInstance();
+final UserService userService = UserService.getInstance();
+final UtilityService utilityService = UtilityService.getInstance();
+final OrderService orderService = OrderService.getInstance();
+const mapsApiKey = 'AIzaSyAklibzD5lgq4YA2l_p6K6jJ8A9MnlIzR0';
 
 const double globalPadding = 10;
 const double helperTextSize = 14;
@@ -13,6 +20,7 @@ const double headingTextSize = 32;
 const double circularRadius = 15;
 double progressBarHeight = Platform.isAndroid ? 6 : 12;
 const double categoryMaxSize = 56;
+const double avatarCircleRadius = 60;
 
 // const mapsApiKey = 'AIzaSyAklibzD5lgq4YA2l_p6K6jJ8A9MnlIzR0';
 EdgeInsets xPadding(double multiple) {
@@ -24,7 +32,7 @@ double applyPaddingX(double value) {
 }
 
 int progressIndicatorValue(int value) {
-  return (100 * value * (1 / 7)).round();
+  return (100 * value * (1 / 8)).round();
 }
 //
 // List<dynamic> packageCatagory = const [
