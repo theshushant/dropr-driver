@@ -45,7 +45,7 @@ class DroprTextField extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: applyPaddingX(1),
       ),
-      child: !Platform.isIOS
+      child: Platform.isIOS
           ? CupertinoTextField(
               maxLength: maxLength,
               maxLines: maxLines,
