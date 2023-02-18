@@ -114,5 +114,8 @@ class StringValue {
       'I hereby declare that the information provided is true and correct. I also understand that any willful dishonesty may render for refusal of this application or immediate action against me.';
 
   //User Specific
-static const String profile = 'Profile';
+  static const String profile = 'Profile';
+
+  //Payment History
+  static const String paymentHistory = 'Payment History';
 }

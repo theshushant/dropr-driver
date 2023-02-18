@@ -24,6 +24,8 @@ import 'package:dropr_driver/utils/global_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'presentation/payments/payment_history.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -75,6 +77,7 @@ class MyApp extends StatelessWidget {
           OrderScreen.routeName: (BuildContext context) => OrderScreen(),
           IncomingOrder.routeName: (BuildContext context) => IncomingOrder(),
           ProfileScreen.routeName: (BuildContext context) => ProfileScreen(),
+          PaymentHistory.routeName: (BuildContext context) => PaymentHistory(),
           PickUpOrderScreen.routeName: (BuildContext context) =>
               PickUpOrderScreen(),
         },

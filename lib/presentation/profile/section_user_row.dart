@@ -1,5 +1,7 @@
+import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/section_tile.dart';
 import 'package:dropr_driver/models/employee.dart';
+import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +130,6 @@ class SectionUserRow extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               )
             ],
@@ -187,6 +188,25 @@ class SectionUserRow extends StatelessWidget {
   Widget get basicInformationBody {
     return Column(
       children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              maxRadius: 40,
+              backgroundImage: AssetImage(
+                ImageValues.landing,
+              ),
+              backgroundColor: ColorValues.appWhiteColor,
+            ),
+            DroprLink(
+              text: "Change Photo",
+              size: 12,
+              onTap: (){
+
+              },
+            ),
+          ],
+        ),
         SizedBox(
           height: 16,
         ),
@@ -225,7 +245,6 @@ class SectionUserRow extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               )
             ],
@@ -269,7 +288,6 @@ class SectionUserRow extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               )
             ],
@@ -313,7 +331,6 @@ class SectionUserRow extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               )
             ],
