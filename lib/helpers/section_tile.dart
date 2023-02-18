@@ -35,7 +35,7 @@ class _SectionTileState extends State<SectionTile> {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: ColorValues.disabledColor.withOpacity(0.4),
+          color: ColorValues.textFieldFillColor,
           borderRadius: BorderRadius.all(
             Radius.circular(4),
           ),

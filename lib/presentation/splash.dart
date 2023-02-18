@@ -78,10 +78,11 @@ class _SplashPageState extends State<SplashPage> {
           BankInformation.routeName,
         );
       } else {
-        Navigator.pushReplacementNamed(
-          context,
-          HomePage.routeName,
-        );
+        Navigator.pushReplacementNamed(context, LandingPage.routeName);
+        // Navigator.pushReplacementNamed(
+        //   context,
+        //   HomePage.routeName,
+        // );
       }
     } else {
       Navigator.pushReplacementNamed(

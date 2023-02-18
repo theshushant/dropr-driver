@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 onSave: (String value) {
+                  print("here value "+value.toString());
                   body["phone_number"] = value;
                 },
               ),
@@ -63,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () async {
                         _formState.currentState?.save();
                         if (_formState.currentState?.validate() ?? false) {
+                          print("here body is this "+body.toString());
                           int otp = await _store.login(body);
                           Navigator.pushReplacementNamed(
                             context,

@@ -4,6 +4,7 @@ import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
 import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -13,6 +14,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'HomePage';
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   bool _startDuty = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -142,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                       });
                       Navigator.pushNamed(
                         context,
-                        OrderScreen.routeName,
+                        ProfileScreen.routeName,
                       );
                     },
                   ),

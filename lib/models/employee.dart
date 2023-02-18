@@ -1,3 +1,6 @@
+import 'package:dropr_driver/models/bank_details.dart';
+import 'package:dropr_driver/models/emergency_contact.dart';
+import 'package:dropr_driver/models/vehicle_details.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'employee.g.dart';
@@ -18,11 +21,11 @@ class Employee {
   final String? longitude;
   final String? latitude;
   @JsonKey(name: 'vehicle_details')
-  final dynamic vehicleDetails;
+  final VehicleDetail vehicleDetails;
   @JsonKey(name: 'bank_details')
-  final dynamic bankDetails;
+  final BankDetail bankDetails;
   @JsonKey(name: 'emergency_contact')
-  final dynamic emergencyContact;
+  final EmergencyContact emergencyContact;
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @JsonKey(name: 'created_at')
@@ -41,13 +44,13 @@ class Employee {
     required this.createdAt,
     this.longitude,
     this.latitude,
-    this.bankDetails,
+    required this.bankDetails,
     this.dateOfBirth,
-    this.emergencyContact,
+    required this.emergencyContact,
     this.gender,
     this.permanentAddress,
     this.role,
-    this.vehicleDetails,
+    required this.vehicleDetails,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);

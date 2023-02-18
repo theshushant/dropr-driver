@@ -15,13 +15,16 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       createdAt: json['created_at'] as String,
       longitude: json['longitude'] as String?,
       latitude: json['latitude'] as String?,
-      bankDetails: json['bank_details'],
+      bankDetails:
+          BankDetail.fromJson(json['bank_details'] as Map<String, dynamic>),
       dateOfBirth: json['date_of_birth'] as String?,
-      emergencyContact: json['emergency_contact'],
+      emergencyContact: EmergencyContact.fromJson(
+          json['emergency_contact'] as Map<String, dynamic>),
       gender: json['gender'] as String?,
       permanentAddress: json['permanent_address'] as String?,
       role: json['role'] as String?,
-      vehicleDetails: json['vehicle_details'],
+      vehicleDetails: VehicleDetail.fromJson(
+          json['vehicle_details'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{

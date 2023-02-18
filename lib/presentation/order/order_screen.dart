@@ -66,13 +66,15 @@ class OrderScreen extends StatelessWidget {
           }
 
           if (store.fetchedOrdersOnce && store.orders.isEmpty) {
-            return Column(
-              children: const [
-                OrderLocation(),
-                OrderLocation(
-                  isTypePickUp: false,
-                ),
-              ],
+            return SingleChildScrollView(
+              child: Column(
+                children: const [
+                  OrderLocation(),
+                  OrderLocation(
+                    isTypePickUp: false,
+                  ),
+                ],
+              ),
             );
           }
 

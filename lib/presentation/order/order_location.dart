@@ -1,7 +1,12 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
+import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
+import 'package:dropr_driver/helpers/outlined_button.dart';
+import 'package:dropr_driver/helpers/text_area.dart';
 import 'package:dropr_driver/models/order.dart';
+import 'package:dropr_driver/presentation/order/order_sub_details.dart';
+import 'package:dropr_driver/presentation/order/package_type_details.dart';
 import 'package:dropr_driver/presentation/order/pick_up_order.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -9,7 +14,7 @@ import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 
-class OrderLocation extends StatelessWidget {
+class OrderLocation extends StatefulWidget {
   const OrderLocation({
     Key? key,
     this.order,
@@ -19,6 +24,12 @@ class OrderLocation extends StatelessWidget {
   final Order? order;
   final bool isTypePickUp;
 
+  @override
+  State<OrderLocation> createState() => _OrderLocationState();
+}
+
+class _OrderLocationState extends State<OrderLocation> {
+  bool showDetails = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +51,7 @@ class OrderLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            isTypePickUp
+            widget.isTypePickUp
                 ? StringValue.pickUpLocation
                 : StringValue.dropOffLocation,
             style: TextStyle(
@@ -53,6 +64,7 @@ class OrderLocation extends StatelessWidget {
               vertical: applyPaddingX(1),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +161,9 @@ class OrderLocation extends StatelessWidget {
                     ),
                   ],
                 ),
-                _extraBody,
+                showDetails?Container():divider,
+               showDetails? OrderSubDetails():Container(),
+                showDetails?divider:Container(),
               ],
             ),
           )
@@ -157,26 +171,21 @@ class OrderLocation extends StatelessWidget {
       ),
     );
   }
-
-  Widget get _extraBody {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: applyPaddingX(1),
-              vertical: applyPaddingX(0.5),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: ColorValues.whiteColor,
-            ),
-            child: Text(
-              "Fragile",
-              style: TextStyle(fontSize: 12),
-            ),
-          ),
-        ],
+  Widget get divider {
+    return InkWell(
+      onTap: (){
+        setState(() {
+          showDetails = !showDetails;
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width*0.35
+        ),
+        child: Divider(
+          thickness: 4,
+          color: ColorValues.blackColor,
+        ),
       ),
     );
   }
