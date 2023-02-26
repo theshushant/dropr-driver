@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class SwipeableWidget extends StatefulWidget {
@@ -17,7 +19,7 @@ class SwipeableWidget extends StatefulWidget {
 
   final bool isActive;
 
-  SwipeableWidget(
+  const SwipeableWidget(
       {Key? key,
       required this.child,
       required this.height,

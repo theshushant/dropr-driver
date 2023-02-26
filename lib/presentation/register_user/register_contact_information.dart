@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
@@ -21,7 +23,7 @@ class _ContactInformationState extends State<ContactInformation> {
   final _formState = GlobalKey<FormState>();
 
   Map<String, dynamic> map = {};
-  Map<String, String> map1 = <String,String>{};
+  Map<String, String> map1 = <String, String>{};
 
   @override
   initState() {
@@ -32,7 +34,7 @@ class _ContactInformationState extends State<ContactInformation> {
       setState(() {
         map = args.map ?? <String, dynamic>{};
       });
-      print("here data is this " + map.toString());
+      log("here data is this $map");
     });
   }
 
@@ -137,9 +139,7 @@ class _ContactInformationState extends State<ContactInformation> {
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            map.addAll({
-                              "emergency_contact":map1
-                            });
+                            map.addAll({"emergency_contact": map1});
                             Navigator.pushNamed(
                               context,
                               VehicleInformation.routeName,

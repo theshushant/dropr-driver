@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:flutter/material.dart';
 import 'swipeable_widget.dart';
@@ -81,7 +83,6 @@ class _SwipeableButtonViewState extends State<SwipeableButtonView>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     setState(() {
@@ -131,7 +132,6 @@ class _SwipeableButtonViewState extends State<SwipeableButtonView>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.dispose();
     rippleController.dispose();
     scaleController.dispose();
@@ -184,7 +184,7 @@ class _SwipeableButtonViewState extends State<SwipeableButtonView>
                       opacity = value;
                     });
                   },
-                  child: Container(
+                  child: SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2.0),
                       child: Row(
@@ -222,7 +222,7 @@ class _SwipeableButtonViewState extends State<SwipeableButtonView>
                 )
               : AnimatedBuilder(
                   animation: rippleAnimation,
-                  builder: (context, child) => Container(
+                  builder: (context, child) => SizedBox(
                     width: rippleAnimation.value,
                     height: rippleAnimation.value,
                     child: AnimatedBuilder(

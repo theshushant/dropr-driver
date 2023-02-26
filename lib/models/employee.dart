@@ -23,7 +23,7 @@ class Employee {
   @JsonKey(name: 'vehicle_details')
   final VehicleDetail vehicleDetails;
   @JsonKey(name: 'bank_details')
-  final BankDetail bankDetails;
+  final BankDetail? bankDetails;
   @JsonKey(name: 'emergency_contact')
   final EmergencyContact emergencyContact;
   @JsonKey(name: 'updated_at')
@@ -44,7 +44,7 @@ class Employee {
     required this.createdAt,
     this.longitude,
     this.latitude,
-    required this.bankDetails,
+    this.bankDetails,
     this.dateOfBirth,
     required this.emergencyContact,
     this.gender,
@@ -53,7 +53,8 @@ class Employee {
     required this.vehicleDetails,
   });
 
-  factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);
+  factory Employee.fromJson(Map<String, dynamic> json) =>
+      _$EmployeeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart' show rootBundle;
 
 class ImageValues {
   static String logo = 'assets/images/logo.png';
@@ -49,4 +52,14 @@ addSVGIcons(String path, {double? height = 24, double? width = 24}) {
     height: height,
     width: width,
   );
+}
+
+Future<Uint8List> getBytesFromAsset(String? path, int? width) async {
+  ByteData data = await rootBundle.load(path!);
+  ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+      targetWidth: width);
+  ui.FrameInfo fi = await codec.getNextFrame();
+  return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+      .buffer
+      .asUint8List();
 }

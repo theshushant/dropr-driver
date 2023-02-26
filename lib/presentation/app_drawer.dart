@@ -1,3 +1,4 @@
+import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,10 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(
+                context,
+                ProfileScreen.routeName,
+              ),
               selectedColor: ColorValues.selectionHighlight,
               leading: addSVGIcons(ImageValues.user),
               subtitle: Text(

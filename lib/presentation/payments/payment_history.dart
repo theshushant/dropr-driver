@@ -62,7 +62,7 @@ class PaymentHistory extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               HelpText(
                   text: "14/11/2022 - 20/11/2022",
                   color: ColorValues.blackColor),
@@ -77,7 +77,7 @@ class PaymentHistory extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               HelpText(
                 text: "This week Earning",
                 color: ColorValues.blackColor,
