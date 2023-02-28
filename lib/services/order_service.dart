@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'package:dropr_driver/models/commission.dart';
 import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/services/api_service.dart';
-
 
 class OrderService extends APIService {
   OrderService._();
@@ -49,5 +49,19 @@ class OrderService extends APIService {
 
     log('here response is this' + response.toString());
     return false;
+  }
+
+  Future<Map<int,Commission>> getCommissions(
+      {bool order = false, bool employee = false}) async {
+    Map<String, dynamic> response = await get('/commissions',
+        params: {"order": order, "employee": employee});
+    log('here response is this' + response.toString());
+    Map<int, Commission> commissions = <int, Commission>{};
+    response['date'].forEach((element) {
+      Commission commission = Commission.fromJson(element);
+      commissions.addAll({commission.id: commission});
+    });
+
+    return commissions;
   }
 }

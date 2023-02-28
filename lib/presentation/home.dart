@@ -3,6 +3,7 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/presentation/payments/payment_history.dart';
 import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
@@ -144,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                       });
                       Navigator.pushNamed(
                         context,
-                        ProfileScreen.routeName,
+                        PaymentHistory.routeName,
                       );
                     },
                   ),
@@ -172,16 +173,18 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       height: 200,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: const [
-                              ColorValues.deliverPartnerInfoBoxGradient1,
-                              ColorValues.deliverPartnerInfoBoxGradient2,
-                            ],
-                          ),
-                          color: ColorValues.blackColor,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(50),
-                              topLeft: Radius.circular(50))),
+                        gradient: LinearGradient(
+                          colors: const [
+                            ColorValues.deliverPartnerInfoBoxGradient1,
+                            ColorValues.deliverPartnerInfoBoxGradient2,
+                          ],
+                        ),
+                        color: ColorValues.blackColor,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(50),
+                          topLeft: Radius.circular(50),
+                        ),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -199,14 +202,18 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 store.user?.role ?? 'Delivery Partner',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               )
                             ],
                           ),
@@ -225,21 +232,27 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'DOB     :${store.user?.dateOfBirth}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'Phone  :${store.user?.phoneNumber}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'E-mail  :${store.user?.email}',
@@ -247,7 +260,9 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               )
                             ],
                           ),
@@ -285,16 +300,20 @@ class _HomePageState extends State<HomePage> {
                               CircleAvatar(
                                 child: addImageSVG(ImageValues.guideInfo),
                               ),
-                              Text('\$24',
-                                  style:
-                                      Theme.of(context).textTheme.titleLarge),
-                              Text('Total Earning',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              Text(
+                                '\$24',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                'Total Earning',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),

@@ -1,9 +1,7 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/profile/section_user_row.dart';
 import 'package:dropr_driver/store/user_store.dart';
-import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
