@@ -100,6 +100,8 @@ abstract class _OrderStore with Store {
   void reset() {
     _isLoading = true;
     _fetchedOrdersOnce = false;
+    _orders.clear();
+    commissions.clear();
     _isLoading = false;
   }
 }

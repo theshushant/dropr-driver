@@ -1,10 +1,8 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_link.dart';
-import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
+import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/presentation/order/order_location.dart';
 import 'package:dropr_driver/store/order_store.dart';
-import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
@@ -59,7 +57,7 @@ class OrderScreen extends StatelessWidget {
               store.orders.isEmpty) {
             store.fetchOrders();
           }
-          if (store.loadingState && store.orders.isEmpty) {
+          if (store.loadingState) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -77,14 +75,21 @@ class OrderScreen extends StatelessWidget {
               ),
             );
           }
-
+          List<Widget> widgets = [];
+          store.orders.forEach((Order element) {
+            widgets.add(
+              Column(
+                children: const [
+                  OrderLocation(),
+                  OrderLocation(
+                    isTypePickUp: false,
+                  ),
+                ],
+              )
+            );
+          });
           return Column(
-            children: const [
-              OrderLocation(),
-              OrderLocation(
-                isTypePickUp: false,
-              ),
-            ],
+            children: widgets,
           );
         },
       ),

@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          key: _scaffoldKey,
       drawer: AppDrawer(
         context: context,
       ),
@@ -142,10 +143,12 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         _startDuty = !_startDuty;
                       });
-                      Navigator.pushNamed(
-                        context,
-                        PaymentHistory.routeName,
-                      );
+                      _scaffoldKey.currentState?.openDrawer();
+
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   PaymentHistory.routeName,
+                      // );
                     },
                   ),
                 ),

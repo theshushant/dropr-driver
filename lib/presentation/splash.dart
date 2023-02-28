@@ -82,11 +82,10 @@ class _SplashPageState extends State<SplashPage> {
         );
       } else {
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, LandingPage.routeName);
-        // Navigator.pushReplacementNamed(
-        //   context,
-        //   HomePage.routeName,
-        // );
+        Navigator.pushReplacementNamed(
+          context,
+          HomePage.routeName,
+        );
       }
     } else {
       if (!mounted) return;
