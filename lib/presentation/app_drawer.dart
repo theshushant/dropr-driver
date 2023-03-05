@@ -1,3 +1,4 @@
+import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/payments/payment_history.dart';
@@ -21,7 +22,10 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(
+                context,
+                ProfileScreen.routeName,
+              ),
               selectedColor: ColorValues.selectionHighlight,
               leading: addSVGIcons(ImageValues.user),
               subtitle: Text(

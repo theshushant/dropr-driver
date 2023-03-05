@@ -148,7 +148,7 @@ class OTPVerificationPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.1,
           ),
           const DroprLink(
-            text: "StringValue.resend",
+            text: StringValue.resend,
           ),
         ],
       ),

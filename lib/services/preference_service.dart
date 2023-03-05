@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dropr_driver/models/employee.dart';
-import 'package:dropr_driver/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceService {
