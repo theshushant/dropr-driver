@@ -62,5 +62,6 @@ abstract class _UserStore with Store {
 
   Future<void> reset() async {
     await preferenceService.reset();
+    user = null;
   }
 }

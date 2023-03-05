@@ -1,5 +1,8 @@
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
+import 'package:dropr_driver/helpers/store_observer.dart';
+import 'package:dropr_driver/models/commission.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
@@ -38,9 +41,36 @@ class PaymentHistory extends StatelessWidget {
               SizedBox(
                 height: applyPaddingX(2),
               ),
-              body,
-              body,
-              body,
+              StoreObserver(
+                builder: (OrderStore store, BuildContext context) {
+                  if (!store.loadingState && !store.fetchedCommissionOnce) {
+                    store.fetchCommissions();
+                  }
+                  if (store.loadingState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (store.commissions.isEmpty) {
+                    return Container(
+                      alignment: Alignment.center,
+                      child: HelpText(
+                        text: StringValue.noDataAvailable,
+                      ),
+                    );
+                  }
+                  List<Widget> widgets = [];
+                  store.commissions.forEach((int index, Commission element) {
+                    widgets.add(
+                      body(element),
+                    );
+                  });
+                  return Column(
+                    children: widgets,
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -48,7 +78,7 @@ class PaymentHistory extends StatelessWidget {
     );
   }
 
-  Widget get body {
+  Widget body(Commission commission) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: applyPaddingX(1),
@@ -62,12 +92,13 @@ class PaymentHistory extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               HelpText(
-                  text: "14/11/2022 - 20/11/2022",
-                  color: ColorValues.blackColor),
+                text: "${commission.createdAt} - ${commission.settlementDate}",
+                color: ColorValues.blackColor,
+              ),
               HelpText(
-                text: "\$149",
+                text: "\$ ${commission.commission}",
                 color: ColorValues.blackColor,
               ),
             ],

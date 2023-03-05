@@ -4,7 +4,6 @@ import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
-import 'package:dropr_driver/presentation/register_user/register_user.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -49,42 +48,47 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
-    print(user);
 
     if (user != null) {
       if (user.dateOfBirth == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           HomePage.routeName,
         );
       } else if (user.permanentAddress == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           PermanentAddress.routeName,
         );
       } else if (user.emergencyContact == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           ContactInformation.routeName,
         );
       } else if (user.vehicleDetails == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           VehicleInformation.routeName,
         );
       } else if (user.bankDetails == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           BankInformation.routeName,
         );
       } else {
-        // Navigator.pushReplacementNamed(context, LandingPage.routeName);
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           HomePage.routeName,
         );
       }
     } else {
+      if (!mounted) return;
       Navigator.pushReplacementNamed(
         context,
         LandingPage.routeName,

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dropr_driver/models/commission.dart';
 import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:mobx/mobx.dart';
@@ -20,7 +21,13 @@ abstract class _OrderStore with Store {
   Map<int, Order> _orders = <int, Order>{};
 
   @observable
+  Map<int, Commission> commissions = <int, Commission>{};
+
+  @observable
   bool _fetchedOrdersOnce = false;
+
+  @observable
+  bool fetchedCommissionOnce = false;
 
   bool get fetchedOrdersOnce {
     return _fetchedOrdersOnce;
@@ -77,9 +84,24 @@ abstract class _OrderStore with Store {
   }
 
   @action
+  fetchCommissions() async {
+    try{
+      _isLoading = true;
+     commissions = await orderService.getCommissions();
+      fetchedCommissionOnce = true;
+      _isLoading = false;
+    }catch(e){
+      _isLoading = false;
+      rethrow;
+    }
+  }
+
+  @action
   void reset() {
     _isLoading = true;
     _fetchedOrdersOnce = false;
+    _orders.clear();
+    commissions.clear();
     _isLoading = false;
   }
 }
