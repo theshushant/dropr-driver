@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/services/api_service.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -9,32 +11,29 @@ class UserService extends APIService {
   static final UserService _instance = UserService._();
 
   Future<int> login(Map<String, String> body) async {
-    Map<String, dynamic> response = await post(
-      '/auth/initiate-verification/employee',
-      body: body,
-    );
+    log("login function with body:$body");
+    dynamic response = await post('/auth/initiate-verification/employee',
+        body: body, useAuthHeaders: true);
+    log("login response:$response");
     return response["data"]["otp"];
   }
 
   Future<Employee> loginComplete(Map<String, String> body) async {
-    print("here data is this " + body.toString());
-    Map<String, dynamic> response = await post(
-      '/auth/carrier-login',
-      body: body,
-      useAuthHeaders: false
-    );
-    print("here data is this " + response.toString());
+    log("here data is this $body");
+    Map<String, dynamic> response =
+        await post('/auth/carrier-login', body: body, useAuthHeaders: false);
+    log("here data is this $response");
     preferenceService.setAuthToken(response["auth_token"]);
     return Employee.fromJson(response["employee"]);
   }
 
-  Future<Employee> registerYourself(Map<String,dynamic> body) async {
-    print("here data is this " + body.toString());
+  Future<Employee> registerYourself(Map<String, dynamic> body) async {
+    log("here data is this $body");
     Map<String, dynamic> response = await put(
       '/employees/me',
       body: body,
     );
-    print("here data is this " + response["data"].toString());
+    log("here data is this ${response["data"]}");
     return Employee.fromJson(response["data"]);
   }
 }

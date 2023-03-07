@@ -1,3 +1,4 @@
+import 'package:dropr_driver/utils/color_values.dart';
 import 'package:flutter/material.dart';
 
 class DroprTextArea extends StatelessWidget {
@@ -13,12 +14,13 @@ class DroprTextArea extends StatelessWidget {
     return TextField(
       minLines: 3,
       maxLines: 5,
+      controller: TextEditingController(text: helpText),
+      readOnly: true,
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        hintText: helpText,
       ),
     );
   }

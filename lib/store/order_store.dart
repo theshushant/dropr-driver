@@ -44,12 +44,12 @@ abstract class _OrderStore with Store {
       _isLoading = true;
       Map<int, Order> data = await orderService.getAllOrders();
       _orders.addAll(data);
-      log('this is woring' + _orders.length.toString());
+      log('this is woring${_orders.length}');
       _fetchedOrdersOnce = true;
       _isLoading = false;
     } catch (e) {
       _isLoading = false;
-      log('Error in store ' + e.toString());
+      log('Error in store $e');
     }
   }
 
@@ -85,12 +85,12 @@ abstract class _OrderStore with Store {
 
   @action
   fetchCommissions() async {
-    try{
+    try {
       _isLoading = true;
-     commissions = await orderService.getCommissions();
+      commissions = await orderService.getCommissions();
       fetchedCommissionOnce = true;
       _isLoading = false;
-    }catch(e){
+    } catch (e) {
       _isLoading = false;
       rethrow;
     }

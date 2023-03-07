@@ -1,15 +1,18 @@
+import 'dart:async';
+
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
-import 'package:dropr_driver/presentation/payments/payment_history.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:quiver/async.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'HomePage';
@@ -23,19 +26,37 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   bool _startDuty = false;
+  Timer? timer;
+  int _start = 30;
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          key: _scaffoldKey,
+      key: _scaffoldKey,
       drawer: AppDrawer(
         context: context,
       ),
       appBar: CustomAppBar(
         leading: InkWell(
           onTap: () {
-            print('object');
             _scaffoldKey.currentState?.openDrawer();
           },
           child: Padding(
@@ -143,8 +164,69 @@ class _HomePageState extends State<HomePage> {
                       setState(() {
                         _startDuty = !_startDuty;
                       });
-                      _scaffoldKey.currentState?.openDrawer();
-
+                      startTimer();
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                              decoration: BoxDecoration(
+                                  color: ColorValues.whiteColor,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(10)),
+                              height: 100,
+                              child: Center(
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      IncomingOrder.routeName,
+                                    );
+                                  },
+                                  leading: Container(
+                                    alignment: Alignment.center,
+                                    width: 60,
+                                    padding: EdgeInsets.all(applyPaddingX(0.5)),
+                                    color: ColorValues.blackShadeColor,
+                                    child: Text("${_start} Sec",
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(
+                                              color: ColorValues.whiteColor,
+                                            )),
+                                  ),
+                                  title: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 4,
+                                      text: TextSpan(
+                                          text:
+                                              'You have got an order notification\n',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  'See the order detail by clicking here',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium,
+                                            ),
+                                          ])),
+                                  trailing:
+                                      Icon(Icons.arrow_forward_ios_rounded),
+                                ),
+                              ));
+                        },
+                      );
                       // Navigator.pushNamed(
                       //   context,
                       //   PaymentHistory.routeName,
@@ -389,71 +471,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      color: ColorValues.whiteColor,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(0, 1),
-                                          blurRadius: 8,
-                                          color: Colors.black12,
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  height: 100,
-                                  child: Center(
-                                    child: ListTile(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          IncomingOrder.routeName,
-                                        );
-                                      },
-                                      leading: Container(
-                                        alignment: Alignment.center,
-                                        width: 60,
-                                        padding:
-                                            EdgeInsets.all(applyPaddingX(0.5)),
-                                        color: ColorValues.blackShadeColor,
-                                        child: Text("30 Sec",
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .copyWith(
-                                                  color: ColorValues.whiteColor,
-                                                )),
-                                      ),
-                                      title: RichText(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 4,
-                                          text: TextSpan(
-                                              text:
-                                                  'You have got an order notification\n',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium,
-                                              children: [
-                                                TextSpan(
-                                                  text:
-                                                      'See the order detail by clicking here',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .labelMedium,
-                                                ),
-                                              ])),
-                                      trailing:
-                                          Icon(Icons.arrow_forward_ios_rounded),
-                                    ),
-                                  ));
-                            },
-                          );
-                        },
+                        onTap: () {},
                         child: Container(
                           padding: EdgeInsets.all(applyPaddingX(1)),
                           decoration: BoxDecoration(
