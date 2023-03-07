@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:dropr_driver/utils/globals.dart';
 
-String baseUrl = 'http://34.202.109.16:3000';
+String baseUrl = 'https://api.dropr.com.au';
 
 abstract class APIService {
   final Dio _dio = Dio();
@@ -35,15 +35,16 @@ abstract class APIService {
   }) async {
     try {
       await _getHeaders(useAuthHeaders: useAuthHeaders, isUpload: isUpload);
+      log("Headers:${_dio.options.headers}");
       final response = await _dio.post(
         _getUrlWithParams(url, params: params),
         data: isUpload ? body : json.encode(body),
       );
-      // log(response.data);
+      log("post response:$response");
       Map<String, dynamic> result = _getResponse(response);
       return result;
     } catch (e) {
-      log('Error: ' + e.toString());
+      log('Error: $e');
       rethrow;
     }
   }
@@ -99,11 +100,13 @@ abstract class APIService {
   Future<void> _getHeaders(
       {bool useAuthHeaders = true, bool isUpload = false}) async {
     final token = await preferenceService.getAuthToken();
-    log('token:' + token.toString());
+    log('token:$token');
     _dio.options.headers['content-Type'] =
         isUpload ? 'multipart/form-data' : 'application/json';
     if (useAuthHeaders) {
       _dio.options.headers['Authorization'] = 'Bearer $token';
+    } else {
+      _dio.options.headers.remove("Authorization");
     }
   }
 
@@ -116,9 +119,9 @@ abstract class APIService {
         paramsString += '&$key=$value';
       });
 
-      return absUrl + '?' + paramsString.substring(1);
+      return '$absUrl?${paramsString.substring(1)}';
     }
-    print("here url is this "+absUrl);
+    print("here url is this $absUrl");
 
     return absUrl;
   }

@@ -9,6 +9,7 @@ import 'package:dropr_driver/utils/color_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:dropr_driver/helpers/store_observer.dart';
 
 class AppDrawer extends StatelessWidget {
   final BuildContext context;
@@ -27,20 +28,21 @@ class AppDrawer extends StatelessWidget {
                 ProfileScreen.routeName,
               ),
               selectedColor: ColorValues.selectionHighlight,
-              leading: addSVGIcons(ImageValues.user),
-              subtitle: Text(
-                'ID Number : 905750250 ',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displaySmall,
-              ),
-              title: Text(
-                'Anshit',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+              // leading: addSVGIcons(ImageValues.user),
+              subtitle: StoreObserver(
+                  builder: (UserStore store, BuildContext context) {
+                return Text(
+                  'ID Number : 905750250 ',
+                  style: Theme.of(context).textTheme.displaySmall,
+                );
+              }),
+              title: StoreObserver(
+                builder: (UserStore store, BuildContext context) {
+                  return Text(
+                    '${store.user?.name}',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  );
+                },
               ),
               trailing: const Icon(
                 CupertinoIcons.arrowtriangle_right_fill,
@@ -54,10 +56,7 @@ class AppDrawer extends StatelessWidget {
             SwitchListTile(
                 title: Text(
                   'Duty Status',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .displayMedium,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 dense: true,
                 activeColor: Colors.green,
@@ -67,68 +66,56 @@ class AppDrawer extends StatelessWidget {
               color: ColorValues.disabledColor,
             ),
             ListTile(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, OrderScreen.routeName);
               },
               leading: addSVGIcons(ImageValues.jobHistory),
               title: Text(
                 'Job History',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             ListTile(
-              onTap: () => {
-              Navigator.pushNamed(context, PaymentHistory.routeName)
-            },
+              onTap: () =>
+                  {Navigator.pushNamed(context, PaymentHistory.routeName)},
               leading: addSVGIcons(ImageValues.paymentHistory),
               title: Text(
                 'Payment History',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             ListTile(
               leading: addSVGIcons(ImageValues.guideInfo),
               title: Text(
                 'Guide & Instruction',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             ListTile(
               leading: addSVGIcons(ImageValues.announce),
               title: Text(
                 'Refer A Friend & Earn',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
             const Divider(
               color: ColorValues.disabledColor,
             ),
-            ListTile(
-              onTap: () async {
-                Provider.of<OrderStore>(context,listen: false).reset();
-                await Provider.of<UserStore>(context,listen: false).reset();
-                Navigator.popUntil(context, (route) => route.isFirst);
-                Navigator.pushReplacementNamed(context, LandingPage.routeName);
-              },
-              leading: addSVGIcons(ImageValues.logout),
-              title: Text(
-                'SignOut',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .displayMedium,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ListTile(
+                onTap: () async {
+                  Provider.of<OrderStore>(context, listen: false).reset();
+                  await Provider.of<UserStore>(context, listen: false).reset();
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                  Navigator.pushReplacementNamed(
+                      context, LandingPage.routeName);
+                },
+                leading: addSVGIcons(ImageValues.logout),
+                title: Text(
+                  'SignOut',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
               ),
             ),
           ],

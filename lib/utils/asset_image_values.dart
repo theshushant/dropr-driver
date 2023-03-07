@@ -32,6 +32,7 @@ class ImageValues {
   static String microsoft = 'assets/images/microsoft.svg';
   static String deliveryVan = 'assets/images/DeliveryVan.png';
   static String phone = 'assets/images/phone.png';
+  static String okay = 'assets/images/okay.png';
 }
 
 addImageSVG(String path,

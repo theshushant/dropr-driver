@@ -25,6 +25,7 @@ class StringValue {
   static const String edit = 'Edit';
   static const String signup = 'Sign Up';
   static const String signuptext = "Don't have an account? Sign Up";
+  static const String verify = 'Verify';
 
   //Register user
   static const String registerYourself = 'Register Yourself';
@@ -55,6 +56,7 @@ class StringValue {
       'Relationship with emergancy contact';
 
   // Order Screen
+  static const String confirmation = 'Confirmation';
   static const String pickUpLocation = 'Pick-Up Location';
   static const String dropOffLocation = 'Drop Off Location';
   static const String order = 'Order';
@@ -119,5 +121,4 @@ class StringValue {
   //Payment History
   static const String paymentHistory = 'Payment History';
   static const String noDataAvailable = 'No Data Present Yet!';
-
 }

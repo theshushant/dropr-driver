@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                     return StringValue.required;
                   }
                 },
-                onSave: (String value) {
+                onChange: (String value) {
                   body["phone_number"] = value;
                 },
               ),

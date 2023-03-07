@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
+import 'package:dropr_driver/presentation/order/package_details.dart';
 import 'package:dropr_driver/services/location_service.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
@@ -38,6 +39,8 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
       markerIcon = icon;
     });
   }
+
+  bool reached = false;
 
   void getPolyPoints() async {
     log('plotting points on map');
@@ -118,7 +121,6 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
   }
 
   Widget get _body {
-    bool reached = false;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -167,22 +169,84 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
                           topRight: Radius.circular(5),
                         ),
                       ),
-                      child: Column(children: [
-                        Row(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(StringValue.pickUpLocation,
+                            Row(
+                              children: [
+                                Text(StringValue.confirmation,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall!
+                                        .copyWith(
+                                          color: ColorValues.blackColor,
+                                        )),
+                              ],
+                            ),
+                            const Divider(
+                              color: ColorValues.disabledColor,
+                            ),
+                            Text(
+                                "Are you Sure You reached to the location?"
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .displaySmall!
+                                    .bodySmall!
                                     .copyWith(
                                       color: ColorValues.blackColor,
                                     )),
-                          ],
-                        ),
-                        const Divider(
-                          color: ColorValues.disabledColor,
-                        ),
-                      ]))
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: applyPaddingX(2)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomRoundedButton(
+                                    color: ColorValues.secondaryColor,
+                                    isEnabled: true,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: applyPaddingX(4)),
+                                      child: Text(
+                                        'No',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        reached = !reached;
+                                      });
+                                    },
+                                  ),
+                                  CustomRoundedButton(
+                                    color: ColorValues.primaryColor,
+                                    isEnabled: true,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: applyPaddingX(4)),
+                                      child: Text(
+                                        'Yes',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        PackageDetails.routeName,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )
+                          ]))
                   : Container(
                       padding: EdgeInsets.all(applyPaddingX(2)),
                       decoration: const BoxDecoration(

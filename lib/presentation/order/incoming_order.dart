@@ -162,7 +162,7 @@ class _IncomingOrderState extends State<IncomingOrder> {
                     });
                   },
                   onFinish: () async {
-                    await Navigator.pushNamed(
+                    await Navigator.pushReplacementNamed(
                       context,
                       OrderScreen.routeName,
                     );
