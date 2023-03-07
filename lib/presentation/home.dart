@@ -10,9 +10,7 @@ import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:quiver/async.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'HomePage';
