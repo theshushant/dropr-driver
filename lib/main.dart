@@ -1,6 +1,8 @@
 import 'package:dropr_driver/presentation/credentials/login_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
+import 'package:dropr_driver/presentation/order/job_history.dart';
+import 'package:dropr_driver/presentation/order/order_images.dart';
 import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
 import 'package:dropr_driver/presentation/order/package_details.dart';
@@ -76,12 +78,14 @@ class MyApp extends StatelessWidget {
               const TrainingPage(),
           LoginPage.routeName: (BuildContext context) => LoginPage(),
           OrderScreen.routeName: (BuildContext context) => OrderScreen(),
+          JobHistory.routeName: (BuildContext context) => JobHistory(),
           IncomingOrder.routeName: (BuildContext context) => IncomingOrder(),
           ProfileScreen.routeName: (BuildContext context) => ProfileScreen(),
           PaymentHistory.routeName: (BuildContext context) => PaymentHistory(),
           PackageDetails.routeName: (BuildContext context) => PackageDetails(),
           PickUpOrderScreen.routeName: (BuildContext context) =>
               PickUpOrderScreen(),
+          OrderImages.routeName: (BuildContext context) => OrderImages(),
         },
         onGenerateRoute: getGeneratedRoutes,
       ),

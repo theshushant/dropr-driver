@@ -33,6 +33,13 @@ class ImageValues {
   static String deliveryVan = 'assets/images/DeliveryVan.png';
   static String phone = 'assets/images/phone.png';
   static String okay = 'assets/images/okay.png';
+  static String pickupDropoffLocation =
+      'assets/images/pickup-dropoff-location.svg';
+  static String loginDuration = 'assets/images/login-duration.svg';
+  static String todaysOrder = 'assets/images/todays-order.svg';
+  static String totalEarnings = 'assets/images/total-earnings.svg';
+  static String weeklyEarnings = 'assets/images/weekly-earnings.svg';
+  static String editImage = 'edit_image.svg';
 }
 
 addImageSVG(String path,

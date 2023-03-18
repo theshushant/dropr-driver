@@ -6,6 +6,7 @@ import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/outlined_button.dart';
 import 'package:dropr_driver/helpers/text_area.dart';
 import 'package:dropr_driver/presentation/camera_page.dart';
+import 'package:dropr_driver/presentation/order/order_images.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -206,19 +207,10 @@ class _PackageDetailsState extends State<PackageDetails> {
                   padding: EdgeInsets.only(top: applyPaddingX(5)),
                   child: CustomRoundedButton(
                     text: "Confirm Pick Up",
-                    onTap: () async {
-                      List<CameraDescription> value = await availableCameras();
-                      XFile picture = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CameraPage(
-                            cameras: value,
-                            packageDetails: true,
-                          ),
-                        ),
-                      );
-                      print(picture.name);
-                    },
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      OrderImages.routeName,
+                    ),
                   ),
                 )
               ],

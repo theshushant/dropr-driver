@@ -5,10 +5,12 @@ import 'package:dropr_driver/presentation/register_user/register_bank_informatio
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   static const String routeName = 'SplashPage';
@@ -48,6 +50,8 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
+    if (!mounted) return;
+    await Provider.of<UserStore>(context, listen: false).setStoreUser(user!);
 
     if (user != null) {
       if (user.dateOfBirth == null) {

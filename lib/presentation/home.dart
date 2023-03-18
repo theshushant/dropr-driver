@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       pointers: const <GaugePointer>[
                         RangePointer(
-                          value: 7,
+                          value: 6,
                           width: 0.1,
                           color: Colors.white,
                           enableAnimation: true,
@@ -380,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.guideInfo),
+                                child: addImageSVG(ImageValues.totalEarnings),
                               ),
                               Text(
                                 '\$24',
@@ -418,7 +418,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.callCenterIcon),
+                                child: addImageSVG(ImageValues.todaysOrder),
                               ),
                               Text('5',
                                   style:
@@ -452,7 +452,10 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.jobHistory),
+                                backgroundColor: Colors.transparent,
+                                child: addImageSVG(
+                                  ImageValues.loginDuration,
+                                ),
                               ),
                               Text('00:00',
                                   style:
@@ -487,7 +490,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.guideInfo),
+                                child: addImageSVG(ImageValues.weeklyEarnings),
                               ),
                               Text('\$12984',
                                   style:

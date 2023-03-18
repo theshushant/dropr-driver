@@ -24,9 +24,14 @@ class PreferenceService {
   Future<Employee?> getAuthUser() async {
     final String? token =
         (await _getInstance()).getString(PreferenceService._user);
-    return token != null && token.isNotEmpty
-        ? Employee.fromJson(json.decode(token))
-        : null;
+    dynamic user;
+    if (token!.isNotEmpty) {
+      user = Employee.fromJson(json.decode(token));
+    } else {
+      user = null;
+    }
+
+    return user;
   }
 
   Future<void> setAuthToken(String token) async {

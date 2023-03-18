@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dropr_driver/presentation/order/job_history.dart';
 import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/order/order_screen.dart';
@@ -96,11 +97,22 @@ class AppDrawer extends StatelessWidget {
                                   allowHalfRating: true,
                                   itemSize: 17,
                                   itemCount: 5,
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 15,
-                                  ),
+                                  maxRating: 5,
+                                  unratedColor: ColorValues.appWhiteColor,
+                                  itemBuilder: (context, ind) {
+                                    if (ind < 3) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 15,
+                                      );
+                                    } else {
+                                      return Icon(
+                                        Icons.star_border_outlined,
+                                        size: 15,
+                                      );
+                                    }
+                                  },
                                   onRatingUpdate: (rating) {},
                                 ),
                               ],
@@ -137,7 +149,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pushNamed(context, OrderScreen.routeName);
+                    Navigator.pushNamed(context, JobHistory.routeName);
                   },
                   leading: addSVGIcons(ImageValues.jobHistory),
                   title: Text(

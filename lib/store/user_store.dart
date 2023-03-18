@@ -64,4 +64,9 @@ abstract class _UserStore with Store {
     await preferenceService.reset();
     user = null;
   }
+
+  @action
+  Future<void> setStoreUser(Employee employee) async {
+    user = employee;
+  }
 }

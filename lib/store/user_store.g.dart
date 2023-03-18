@@ -64,6 +64,14 @@ mixin _$UserStore on _UserStore, Store {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
+  late final _$setStoreUserAsyncAction =
+      AsyncAction('_UserStore.setStoreUser', context: context);
+
+  @override
+  Future<void> setStoreUser(Employee employee) {
+    return _$setStoreUserAsyncAction.run(() => super.setStoreUser(employee));
+  }
+
   @override
   String toString() {
     return '''

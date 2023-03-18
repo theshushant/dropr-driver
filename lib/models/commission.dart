@@ -9,15 +9,15 @@ class Commission {
   int employeeId;
   @JsonKey(name: 'order_id')
   int orderId;
-  double commission;
+  double? commission;
   @JsonKey(name: 'settlement_status')
-  String settlementStatus;
+  String? settlementStatus;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
   @JsonKey(name: 'settlement_date')
-  String settlementDate;
+  String? settlementDate;
   dynamic meta;
 
   Commission({
@@ -28,7 +28,7 @@ class Commission {
     this.meta,
     required this.orderId,
     required this.settlementDate,
-    required this.settlementStatus,
+    this.settlementStatus,
     this.updatedAt,
   });
 

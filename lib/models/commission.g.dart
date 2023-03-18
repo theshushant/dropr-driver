@@ -8,13 +8,13 @@ part of 'commission.dart';
 
 Commission _$CommissionFromJson(Map<String, dynamic> json) => Commission(
       id: json['id'] as int,
-      commission: (json['commission'] as num).toDouble(),
+      commission: (json['commission'] as num?)?.toDouble(),
       createdAt: json['created_at'] as String?,
       employeeId: json['employee_id'] as int,
       meta: json['meta'],
       orderId: json['order_id'] as int,
-      settlementDate: json['settlement_date'] as String,
-      settlementStatus: json['settlement_status'] as String,
+      settlementDate: json['settlement_date'] as String?,
+      settlementStatus: json['settlement_status'] as String?,
       updatedAt: json['updated_at'] as String?,
     );
 
