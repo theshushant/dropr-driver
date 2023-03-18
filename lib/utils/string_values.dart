@@ -81,7 +81,7 @@ class StringValue {
   static const String bullet = "\u2022 ";
   static const String okayGotIt = 'OK, GOT IT';
   static const String verificationDescription =
-      'Enter the four  digit code we sent to you';
+      'Enter the code we sent to you';
 
   static const String mobileNumber = 'Mobile Number';
   static const String verification = 'Verification';

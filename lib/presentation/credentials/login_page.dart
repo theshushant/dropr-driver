@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                             OTPVerificationPage.routeName,
                             arguments: ScreenArguments(
                               otp: otp,
-                              label: "StringValue.verification",
+                              label: body["phone_number"],
                               map: body,
                             ),
                           );
