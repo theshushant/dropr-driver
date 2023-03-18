@@ -27,10 +27,10 @@ class _CurrentAddressState extends State<CurrentAddress> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final ScreenArguments args =
           ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-     setState((){
-       map = args.map ?? <String,dynamic>{};
-     });
-      print("here data is this " + map.toString());
+      setState(() {
+        map = args.map ?? <String, dynamic>{};
+      });
+      print("here data is this $map");
     });
   }
 

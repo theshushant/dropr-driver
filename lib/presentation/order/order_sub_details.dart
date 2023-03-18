@@ -71,7 +71,7 @@ class OrderSubDetails extends StatelessWidget {
           height: applyPaddingX(1),
         ),
         Wrap(
-          children: [
+          children: const [
             DroprOutlineButton(text: "Fragile"),
             DroprOutlineButton(text: "Leave Unattended"),
           ],

@@ -1,9 +1,5 @@
-import 'dart:io';
-
-import 'package:dropr_driver/helpers/super_text.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -25,6 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       decoration: const BoxDecoration(
         color: ColorValues.whiteColor,
         boxShadow: [

@@ -81,7 +81,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.bankDetails.accountHolderName,
+                      user.bankDetails!.accountHolderName,
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -124,7 +124,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.bankDetails.bsbNumber,
+                      user.bankDetails!.bsbNumber,
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -167,7 +167,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.bankDetails.accountNumber,
+                      user.bankDetails!.accountNumber,
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -201,9 +201,7 @@ class SectionUserRow extends StatelessWidget {
             DroprLink(
               text: "Change Photo",
               size: 12,
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
           ],
         ),

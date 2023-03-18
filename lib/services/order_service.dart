@@ -19,7 +19,7 @@ class OrderService extends APIService {
       Order order = Order.fromJson(element);
       _orders.addAll({order.id: order});
     });
-    log('here response is this get all orders' + _orders.length.toString());
+    log('here response is this get all orders${_orders.length}');
     return _orders;
   }
 
@@ -29,7 +29,7 @@ class OrderService extends APIService {
       useAuthHeaders: true,
     );
 
-    log('here response is this' + response.toString());
+    log('here response is this$response');
   }
 
   Future<Order> addOrder(Map<String, dynamic> body) async {
@@ -38,7 +38,7 @@ class OrderService extends APIService {
       body: body,
     );
 
-    log('here response is this posting ' + response.toString());
+    log('here response is this posting $response');
     return Order.fromJson(response['data']);
   }
 
@@ -47,15 +47,15 @@ class OrderService extends APIService {
       '/orders/$id',
     );
 
-    log('here response is this' + response.toString());
+    log('here response is this$response');
     return false;
   }
 
-  Future<Map<int,Commission>> getCommissions(
+  Future<Map<int, Commission>> getCommissions(
       {bool order = false, bool employee = false}) async {
     Map<String, dynamic> response = await get('/commissions',
         params: {"order": order, "employee": employee});
-    log('here response is this' + response.toString());
+    log('here response is this$response');
     Map<int, Commission> commissions = <int, Commission>{};
     response['date'].forEach((element) {
       Commission commission = Commission.fromJson(element);

@@ -22,7 +22,7 @@ abstract class _UserStore with Store {
 
       return otp;
     } catch (e) {
-      log('Error in store ' + e.toString());
+      log('Error in store $e');
       isLoading = false;
       rethrow;
     }

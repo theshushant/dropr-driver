@@ -15,8 +15,9 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       createdAt: json['created_at'] as String,
       longitude: json['longitude'] as String?,
       latitude: json['latitude'] as String?,
-      bankDetails:
-          BankDetail.fromJson(json['bank_details'] as Map<String, dynamic>),
+      bankDetails: json['bank_details'] == null
+          ? null
+          : BankDetail.fromJson(json['bank_details'] as Map<String, dynamic>),
       dateOfBirth: json['date_of_birth'] as String?,
       emergencyContact: EmergencyContact.fromJson(
           json['emergency_contact'] as Map<String, dynamic>),

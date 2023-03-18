@@ -71,9 +71,6 @@ class PaymentHistory extends StatelessWidget {
                   );
                 },
               ),
-              // body,
-              // body,
-              // body,
             ],
           ),
         ),
@@ -111,7 +108,7 @@ class PaymentHistory extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               HelpText(
                 text: "This week Earning",
                 color: ColorValues.blackColor,
