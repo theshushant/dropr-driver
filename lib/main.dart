@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
           TrainingPage.routeName: (BuildContext context) =>
               const TrainingPage(),
           LoginPage.routeName: (BuildContext context) => LoginPage(),
-          OrderScreen.routeName: (BuildContext context) => OrderScreen(),
           JobHistory.routeName: (BuildContext context) => JobHistory(),
           IncomingOrder.routeName: (BuildContext context) => IncomingOrder(),
           ProfileScreen.routeName: (BuildContext context) => ProfileScreen(),

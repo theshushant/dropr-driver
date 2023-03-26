@@ -1,5 +1,6 @@
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/credentials/otp_verification_page.dart';
+import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'presentation/register_user/register_review.dart';
@@ -14,6 +15,12 @@ Route getGeneratedRoutes(RouteSettings settings) {
         otp: args.otp!,
         label: args.label!,
         map: args.map!,
+      );
+      break;
+
+     case OrderScreen.routeName:
+      target = OrderScreen(
+       id: args.genericId!,
       );
       break;
     case RegisterReview.routeName:

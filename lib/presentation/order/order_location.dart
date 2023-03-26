@@ -1,6 +1,7 @@
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/models/order.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/order/order_sub_details.dart';
 import 'package:dropr_driver/presentation/order/pick_up_order.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
@@ -12,11 +13,11 @@ import 'package:flutter/material.dart';
 class OrderLocation extends StatefulWidget {
   const OrderLocation({
     Key? key,
-    this.order,
+    required this.order,
     this.isTypePickUp = true,
   }) : super(key: key);
 
-  final Order? order;
+  final Order order;
   final bool isTypePickUp;
 
   @override
@@ -75,7 +76,7 @@ class _OrderLocationState extends State<OrderLocation> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HelpText(
-                          text: "Perth Institute of CA",
+                          text: widget.order.pickupAddress.address,
                           color: ColorValues.blackColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
@@ -84,7 +85,7 @@ class _OrderLocationState extends State<OrderLocation> {
                           width: applyPaddingX(0.5),
                         ),
                         HelpText(
-                          text: "51 James St, Perth WA 6000, Australia",
+                          text: widget.order.dropAddress.address,
                           color: ColorValues.blackShadeColor,
                           fontSize: 12,
                         ),
@@ -132,6 +133,9 @@ class _OrderLocationState extends State<OrderLocation> {
                                   Navigator.pushNamed(
                                     context,
                                     PickUpOrderScreen.routeName,
+                                    arguments: ScreenArguments(
+                                      genericId: widget.order.id
+                                    )
                                   );
                                 },
                                 text: 'Map',

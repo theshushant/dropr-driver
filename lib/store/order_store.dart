@@ -38,12 +38,20 @@ abstract class _OrderStore with Store {
     return _orders.values.toList();
   }
 
+  @computed
+  Order? orderById(int id) {
+    if (_orders.containsKey(id)) {
+      return _orders[id];
+    }
+    return null;
+  }
+
   @action
   Future<void> fetchOrders() async {
     try {
       _isLoading = true;
-      Map<int, Order> data = await orderService.getAllOrders();
-      _orders.addAll(data);
+      _orders = await orderService.getAllOrders();
+      // _orders.addAll(data);
       log('this is woring${_orders.length}');
       _fetchedOrdersOnce = true;
       _isLoading = false;

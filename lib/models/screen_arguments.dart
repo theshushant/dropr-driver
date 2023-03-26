@@ -4,6 +4,7 @@ class ScreenArguments {
   final Function? onComplete;
   final String? name;
   final Map<String,dynamic>? map;
+  final int? genericId;
 
   ScreenArguments({
     this.otp,
@@ -11,5 +12,6 @@ class ScreenArguments {
     this.onComplete,
     this.name,
     this.map,
+    this.genericId,
   });
 }
