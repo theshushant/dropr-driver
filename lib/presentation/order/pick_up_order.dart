@@ -4,8 +4,11 @@ import 'dart:developer';
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
+import 'package:dropr_driver/models/order.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/order/package_details.dart';
 import 'package:dropr_driver/services/location_service.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -14,6 +17,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PickUpOrderScreen extends StatefulWidget {
@@ -28,10 +32,10 @@ class PickUpOrderScreen extends StatefulWidget {
 class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   LatLng? sourceLocation;
-  static const LatLng destination =
-      LatLng(28.542469503925872, 77.2288228007458);
+  static LatLng destination = LatLng(28.542469503925872, 77.2288228007458);
   List<LatLng> polylineCoordinates = [];
   Uint8List? markerIcon;
+  Order? order;
 
   getMarker() async {
     dynamic icon = await getBytesFromAsset(ImageValues.deliveryVan, 100);
@@ -63,25 +67,52 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
   @override
   void initState() {
     super.initState();
-    getMarker();
-    determinePosition().then((location) async {
-      setState(() {
-        sourceLocation = LatLng(location.latitude, location.longitude);
-      });
-      getPolyPoints();
-      GoogleMapController googleMapController = await _controller.future;
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            zoom: 13.5,
-            target: LatLng(
-              location.latitude,
-              location.longitude,
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ScreenArguments args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      order = Provider.of<OrderStore>(context, listen: false)
+          .orderById(args.genericId);
+      print(
+          'the order here is ${order?.pickupAddress.longitude} & ${order?.pickupAddress.latitude}');
+      print(
+          'the order here is ${order?.dropAddress.longitude} & ${order?.dropAddress.latitude}');
+      if (order != null) {
+        setState(() {
+          destination = LatLng(
+            double.parse( '0'),
+            double.parse('0'),
+          );
+        });
+      }
+      getMarker();
+      determinePosition().then((location) async {
+        setState(() {
+          sourceLocation = LatLng(location.latitude, location.longitude);
+        });
+        getPolyPoints();
+        print('cscscsc 2');
+        GoogleMapController googleMapController = await _controller.future;
+        print('cscscsc');
+        googleMapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              zoom: 13.5,
+              target: LatLng(
+                location.latitude,
+                location.longitude,
+              ),
             ),
           ),
-        ),
-      );
+        );
+      });
     });
+
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('broke before that');
   }
 
   @override
@@ -143,7 +174,7 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
                   markerId: MarkerId("pickup-source"),
                   position: sourceLocation!,
                   icon: BitmapDescriptor.fromBytes(markerIcon!)),
-              const Marker(
+              Marker(
                 markerId: MarkerId("pickup-destination"),
                 position: destination,
               ),
@@ -240,6 +271,9 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
                                       Navigator.pushNamed(
                                         context,
                                         PackageDetails.routeName,
+                                        arguments: ScreenArguments(
+                                          genericId: order?.id
+                                        )
                                       );
                                     },
                                   ),

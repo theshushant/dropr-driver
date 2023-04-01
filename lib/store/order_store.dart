@@ -39,7 +39,10 @@ abstract class _OrderStore with Store {
   }
 
   @computed
-  Order? orderById(int id) {
+  Order? orderById(int? id) {
+    if(id == null){
+      return null;
+    }
     if (_orders.containsKey(id)) {
       return _orders[id];
     }

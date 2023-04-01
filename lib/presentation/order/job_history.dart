@@ -77,6 +77,17 @@ Widget _tabSection(BuildContext context) {
                         !store.loadingState) {
                       store.fetchOrders();
                     }
+
+                    if (store.loadingState) {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.2),
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+
                     if (store.orders.isEmpty) {
                       return Center(
                         child: Padding(
@@ -114,6 +125,16 @@ Widget _tabSection(BuildContext context) {
                         !store.loadingState) {
                       store.fetchOrders();
                     }
+                    if (store.loadingState) {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.2),
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+
                     if (store.orders.isEmpty) {
                       return Center(
                         child: Padding(

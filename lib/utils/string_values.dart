@@ -60,7 +60,7 @@ class StringValue {
   static const String pickUpLocation = 'Pick-Up Location';
   static const String dropOffLocation = 'Drop Off Location';
   static const String order = 'Order';
-  static const String orderId = 'Order ID- 2474816';
+  static const String orderId = 'Order ID- ';
   static const String reachedToLocation = 'Reached To Location';
 
   //vehicle Information

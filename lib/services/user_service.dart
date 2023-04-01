@@ -13,7 +13,7 @@ class UserService extends APIService {
   Future<int> login(Map<String, String> body) async {
     log("login function with body:$body");
     dynamic response = await post('/auth/initiate-verification/employee',
-        body: body, useAuthHeaders: true);
+        body: body, useAuthHeaders: false);
     log("login response:$response");
     return response["data"]["otp"];
   }

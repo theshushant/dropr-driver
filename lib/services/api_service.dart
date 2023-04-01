@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:dropr_driver/utils/globals.dart';
 
-String baseUrl = 'https://api.dropr.com.au';
+String baseUrl = 'http://34.202.109.16:3000';
 
 abstract class APIService {
   final Dio _dio = Dio();

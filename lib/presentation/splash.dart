@@ -51,9 +51,9 @@ class _SplashPageState extends State<SplashPage> {
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
     if (!mounted) return;
-    await Provider.of<UserStore>(context, listen: false).setStoreUser(user!);
 
     if (user != null) {
+      await Provider.of<UserStore>(context, listen: false).setStoreUser(user);
       if (user.dateOfBirth == null) {
         if (!mounted) return;
         Navigator.pushReplacementNamed(

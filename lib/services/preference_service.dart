@@ -25,8 +25,8 @@ class PreferenceService {
     final String? token =
         (await _getInstance()).getString(PreferenceService._user);
     dynamic user;
-    if (token!.isNotEmpty) {
-      user = Employee.fromJson(json.decode(token));
+    if (token?.isNotEmpty??false) {
+      user = Employee.fromJson(json.decode(token!));
     } else {
       user = null;
     }

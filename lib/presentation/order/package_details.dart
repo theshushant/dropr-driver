@@ -5,13 +5,17 @@ import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/outlined_button.dart';
 import 'package:dropr_driver/helpers/text_area.dart';
+import 'package:dropr_driver/models/order.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/camera_page.dart';
 import 'package:dropr_driver/presentation/order/order_images.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PackageDetails extends StatefulWidget {
   const PackageDetails({Key? key}) : super(key: key);
@@ -22,6 +26,20 @@ class PackageDetails extends StatefulWidget {
 }
 
 class _PackageDetailsState extends State<PackageDetails> {
+  Order? order;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ScreenArguments args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      order = Provider.of<OrderStore>(context, listen: false)
+          .orderById(args.genericId);
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +49,7 @@ class _PackageDetailsState extends State<PackageDetails> {
             Icons.arrow_back_ios_new,
           ),
           title: Text(
-            StringValue.orderId,
+            '${StringValue.orderId}${order?.id ?? ''}',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           trailing: Icon(Icons.headphones),
@@ -73,7 +91,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                       width: 10,
                                     ),
                                     Text(
-                                      "Documents | books",
+                                      order?.category ?? "Documents | books",
                                       style: Theme.of(context)
                                           .textTheme
                                           .displayMedium!
@@ -110,14 +128,16 @@ class _PackageDetailsState extends State<PackageDetails> {
                             fontWeight: FontWeight.w500,
                           )),
                 ),
-                DroprTextArea(helpText: "Get the package from the main door"),
+                DroprTextArea(
+                    helpText: order?.deliveryInstructions ??
+                        "Get the package from the main door"),
                 SizedBox(
                   height: applyPaddingX(1),
                 ),
                 Wrap(
-                  children: const [
+                  children: [
                     DroprOutlineButton(
-                      text: "Fragile",
+                      text: order?.packageType ?? "Fragile",
                     ),
                     DroprOutlineButton(text: "Leave Unattended"),
                   ],
@@ -150,13 +170,13 @@ class _PackageDetailsState extends State<PackageDetails> {
                                   height: applyPaddingX(1),
                                 ),
                                 HelpText(
-                                  text: "Perth Institute of CA".toUpperCase(),
+                                  text: order?.pickupAddress.address ?? '',
                                   color: ColorValues.blackColor,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
                                 HelpText(
-                                  text: "51 James St, Perth WA 6000, Australia",
+                                  text: order?.dropAddress.address ?? '',
                                   color: ColorValues.blackColor,
                                   fontSize: 12,
                                 ),
@@ -181,7 +201,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                   height: applyPaddingX(1),
                                 ),
                                 HelpText(
-                                  text: "Amit Trevedi",
+                                  text: order?.user.name ?? "",
                                   color: ColorValues.blackColor,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
@@ -189,9 +209,9 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     HelpText(
-                                      text: "9718529289",
+                                      text: order?.user.phoneNumber ?? "",
                                       color: ColorValues.linkTextColor,
                                       fontSize: 12,
                                     ),
