@@ -121,7 +121,6 @@ abstract class APIService {
 
       return '$absUrl?${paramsString.substring(1)}';
     }
-    print("here url is this $absUrl");
 
     return absUrl;
   }

@@ -3,7 +3,6 @@ import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/order/job_history.dart';
 import 'package:dropr_driver/presentation/order/order_images.dart';
-import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
 import 'package:dropr_driver/presentation/order/package_details.dart';
 import 'package:dropr_driver/presentation/order/pick_up_order.dart';

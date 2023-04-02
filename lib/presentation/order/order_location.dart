@@ -4,7 +4,6 @@ import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/order/order_sub_details.dart';
 import 'package:dropr_driver/presentation/order/package_details.dart';
-import 'package:dropr_driver/presentation/order/pick_up_order.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -119,7 +118,7 @@ class _OrderLocationState extends State<OrderLocation> {
                         SizedBox(
                           width: applyPaddingX(0.5),
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.75,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,13 +138,13 @@ class _OrderLocationState extends State<OrderLocation> {
                                     )
                                   );
                                   return;
-                                  Navigator.pushNamed(
-                                    context,
-                                    PickUpOrderScreen.routeName,
-                                    arguments: ScreenArguments(
-                                      genericId: widget.order.id
-                                    )
-                                  );
+                                  // Navigator.pushNamed(
+                                  //   context,
+                                  //   PickUpOrderScreen.routeName,
+                                  //   arguments: ScreenArguments(
+                                  //     genericId: widget.order.id
+                                  //   )
+                                  // );
                                 },
                                 text: 'Map',
                                 isButtonType: true,

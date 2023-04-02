@@ -10,6 +10,7 @@ import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({Key? key}) : super(key: key);
@@ -73,8 +74,8 @@ class _RegisterUserState extends State<RegisterUser> {
                   const Text(StringValue.addPicture),
                   DroprTextField(
                     hintText: StringValue.fullName,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
@@ -86,8 +87,8 @@ class _RegisterUserState extends State<RegisterUser> {
                   ),
                   DroprTextField(
                     hintText: StringValue.gender,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
@@ -99,8 +100,8 @@ class _RegisterUserState extends State<RegisterUser> {
                   ),
                   DroprTextField(
                     hintText: StringValue.dateOfBirth,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
@@ -122,13 +123,16 @@ class _RegisterUserState extends State<RegisterUser> {
                               _formState.currentState?.save();
                               if (_formState.currentState?.validate() ??
                                   false) {
-                                Navigator.pushNamed(
-                                  context,
-                                  CurrentAddress.routeName,
-                                  arguments: ScreenArguments(
-                                    map: data,
-                                  ),
-                                );
+                                store.registerYourself(data);
+                                when((p0) => !store.isLoading, () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    CurrentAddress.routeName,
+                                    arguments: ScreenArguments(
+                                      map: data,
+                                    ),
+                                  );
+                                });
                               }
                             },
                             text: StringValue.next,

@@ -1,15 +1,11 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
-import 'package:dropr_driver/presentation/camera_page.dart';
 import 'package:dropr_driver/presentation/home.dart';
-import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 
 class TrainingPage extends StatefulWidget {
   const TrainingPage({Key? key}) : super(key: key);
@@ -20,7 +16,7 @@ class TrainingPage extends StatefulWidget {
 }
 
 class _TrainingPageState extends State<TrainingPage> {
-  final _formState = GlobalKey<FormState>();
+//  final _formState = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

@@ -19,10 +19,8 @@ class UserService extends APIService {
   }
 
   Future<Employee> loginComplete(Map<String, String> body) async {
-    log("here data is this $body");
     Map<String, dynamic> response =
         await post('/auth/carrier-login', body: body, useAuthHeaders: false);
-    log("here data is this $response");
     preferenceService.setAuthToken(response["auth_token"]);
     return Employee.fromJson(response["employee"]);
   }

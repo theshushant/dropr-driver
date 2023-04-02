@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:mobx/mobx.dart';
@@ -48,8 +49,8 @@ abstract class _UserStore with Store {
       user = await userService.registerYourself(body);
       preferenceService.setAuthUser(user!);
       isLoading = false;
-    } catch (e) {
-      log('Error in store $e');
+    } on DioError catch (e) {
+      log('Error in store ${e.response}');
       isLoading = false;
       rethrow;
     }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
@@ -7,11 +6,14 @@ import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/camera_page.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
@@ -29,12 +31,11 @@ class _UploadImageState extends State<UploadImage> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final ScreenArguments args =
-          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      final ScreenArguments? args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments?;
       setState(() {
-        map = args.map ?? <String, dynamic>{};
+        map = args?.map ?? <String, dynamic>{};
       });
-      print("here data is this " + map.toString());
     });
   }
 
@@ -114,8 +115,8 @@ class _UploadImageState extends State<UploadImage> {
                                   context,
                                   false,
                                   (XFile picture) async {
-                                    String contentType =
-                                        picture.name.split(".").last;
+                                    // String contentType =
+                                    //     picture.name.split(".").last;
                                     Map<String, String> data =
                                         await utilityService.getUrl('jpg');
                                     await utilityService.uploadFile(
@@ -171,12 +172,16 @@ class _UploadImageState extends State<UploadImage> {
                               ["registration_certificate_images"] = ['xyz'];
                           map["vehicle_details"]
                               ["driver_license_images"] = ['xyz'];
-                          print("here map is this" + map.toString());
-                          Navigator.pushNamed(
-                            context,
-                            BankInformation.routeName,
-                            arguments: ScreenArguments(map: map),
-                          );
+                          UserStore store =
+                              Provider.of<UserStore>(context, listen: false);
+                          store.registerYourself(map);
+                          when((p0) => !store.isLoading, () {
+                            Navigator.pushNamed(
+                              context,
+                              BankInformation.routeName,
+                              arguments: ScreenArguments(map: map),
+                            );
+                          });
                         },
                       ),
                     ),

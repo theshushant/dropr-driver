@@ -21,16 +21,17 @@ class Employee {
   final String? longitude;
   final String? latitude;
   @JsonKey(name: 'vehicle_details')
-  final VehicleDetail vehicleDetails;
+  final VehicleDetail? vehicleDetails;
   @JsonKey(name: 'bank_details')
   final BankDetail? bankDetails;
   @JsonKey(name: 'emergency_contact')
-  final EmergencyContact emergencyContact;
+  final EmergencyContact? emergencyContact;
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @JsonKey(name: 'created_at')
   final String createdAt;
-
+  @JsonKey(name: 'average_rating')
+  final dynamic averageRating;
   // String get fullName {
   //   return firstName + ' ' + lastName;
   // }
@@ -46,11 +47,12 @@ class Employee {
     this.latitude,
     this.bankDetails,
     this.dateOfBirth,
-    required this.emergencyContact,
+     this.emergencyContact,
     this.gender,
     this.permanentAddress,
     this.role,
-    required this.vehicleDetails,
+     this.vehicleDetails,
+    this.averageRating,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) =>

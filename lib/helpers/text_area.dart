@@ -1,4 +1,3 @@
-import 'package:dropr_driver/utils/color_values.dart';
 import 'package:flutter/material.dart';
 
 class DroprTextArea extends StatelessWidget {

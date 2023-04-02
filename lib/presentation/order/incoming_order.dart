@@ -148,11 +148,9 @@ class _IncomingOrderState extends State<IncomingOrder> {
                       fontWeight: FontWeight.w400,
                       fontSize: 20),
                   buttonColor: ColorValues.progressIndicatorColor1,
-                  buttonWidget: Container(
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: ColorValues.appWhiteColor,
-                    ),
+                  buttonWidget: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: ColorValues.appWhiteColor,
                   ),
                   activeColor: ColorValues.appWhiteColor,
                   isFinished: isFinished,

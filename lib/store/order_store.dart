@@ -38,7 +38,6 @@ abstract class _OrderStore with Store {
     return _orders.values.toList();
   }
 
-  @computed
   Order? orderById(int? id) {
     if(id == null){
       return null;
@@ -54,8 +53,6 @@ abstract class _OrderStore with Store {
     try {
       _isLoading = true;
       _orders = await orderService.getAllOrders();
-      // _orders.addAll(data);
-      log('this is woring${_orders.length}');
       _fetchedOrdersOnce = true;
       _isLoading = false;
     } catch (e) {
@@ -68,9 +65,9 @@ abstract class _OrderStore with Store {
   Future<void> addOrder(Map<String, dynamic> body) async {
     try {
       _isLoading = true;
-      Order _order = await orderService.addOrder(body);
+      Order order = await orderService.addOrder(body);
       _orders.addAll({
-        _order.id: _order,
+        order.id: order,
       });
       _isLoading = false;
     } catch (e) {

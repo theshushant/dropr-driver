@@ -100,7 +100,7 @@ class StringValue {
   static const String invoicingGST = 'Invoicing \$ GST';
   static const String completeDeliveries =
       'You must have an ABN to complete deliveries with us';
-  static const String ABN = 'Australian Business Number (ABN)';
+  static const String abn = 'Australian Business Number (ABN)';
   static const String accountNumber = 'Account Number';
   static const success = 'Success!';
   static const successLine =

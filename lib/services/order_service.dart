@@ -14,13 +14,13 @@ class OrderService extends APIService {
       '/orders',
       useAuthHeaders: true,
     );
-    Map<int, Order> _orders = <int, Order>{};
+    Map<int, Order> orders = <int, Order>{};
     response['data'].forEach((element) {
       Order order = Order.fromJson(element);
-      _orders.addAll({order.id: order});
+      orders.addAll({order.id: order});
     });
-    log('here response is this get all orders${_orders.length}');
-    return _orders;
+    log('here response is this get all orders${orders.length}');
+    return orders;
   }
 
   Future<void> getOrderById(int id) async {

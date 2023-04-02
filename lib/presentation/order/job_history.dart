@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 class JobHistory extends StatefulWidget {
   static const String routeName = 'JobHistory';
 
-  JobHistory({Key? key}) : super(key: key);
+  const JobHistory({Key? key}) : super(key: key);
 
   @override
   State<JobHistory> createState() => _JobHistoryState();
@@ -185,7 +185,7 @@ Widget orderBox(BuildContext context, Order order) {
           ),
         );
       },
-      child: Container(
+      child: SizedBox(
         height: 150,
         child: Column(
           children: [

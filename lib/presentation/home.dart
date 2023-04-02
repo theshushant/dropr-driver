@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                                     width: 60,
                                     padding: EdgeInsets.all(applyPaddingX(0.5)),
                                     color: ColorValues.blackShadeColor,
-                                    child: Text("${_start} Sec",
+                                    child: Text("$_start Sec",
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context)

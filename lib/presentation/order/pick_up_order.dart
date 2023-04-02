@@ -72,10 +72,6 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
           ModalRoute.of(context)!.settings.arguments as ScreenArguments;
       order = Provider.of<OrderStore>(context, listen: false)
           .orderById(args.genericId);
-      print(
-          'the order here is ${order?.pickupAddress.longitude} & ${order?.pickupAddress.latitude}');
-      print(
-          'the order here is ${order?.dropAddress.longitude} & ${order?.dropAddress.latitude}');
       if (order != null) {
         setState(() {
           destination = LatLng(
@@ -90,9 +86,7 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
           sourceLocation = LatLng(location.latitude, location.longitude);
         });
         getPolyPoints();
-        print('cscscsc 2');
         GoogleMapController googleMapController = await _controller.future;
-        print('cscscsc');
         googleMapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -106,13 +100,6 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
         );
       });
     });
-
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print('broke before that');
   }
 
   @override
@@ -392,7 +379,7 @@ class _PickUpOrderScreenState extends State<PickUpOrderScreen> {
                                             SizedBox(
                                               width: applyPaddingX(0.5),
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *

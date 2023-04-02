@@ -1,16 +1,12 @@
-import 'package:camera/camera.dart';
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/outlined_button.dart';
 import 'package:dropr_driver/helpers/text_area.dart';
 import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
-import 'package:dropr_driver/presentation/camera_page.dart';
 import 'package:dropr_driver/presentation/order/order_images.dart';
 import 'package:dropr_driver/store/order_store.dart';
-import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';

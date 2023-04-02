@@ -26,15 +26,14 @@ class _VehicleInformationState extends State<VehicleInformation> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final ScreenArguments args =
+      final ScreenArguments? args =
       ModalRoute
           .of(context)!
           .settings
-          .arguments as ScreenArguments;
+          .arguments as ScreenArguments?;
       setState(() {
-        map = args.map ?? <String, dynamic>{};
+        map = args?.map ?? <String, dynamic>{};
       });
-      print("here data is this " + map.toString());
     });
   }
 

@@ -1,6 +1,5 @@
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';

@@ -375,7 +375,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.emergencyContact.email,
+                      user.emergencyContact?.email??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -417,7 +417,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.emergencyContact.name,
+                      user.emergencyContact?.name??"",
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -459,7 +459,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.emergencyContact.phoneNumber,
+                      user.emergencyContact?.phoneNumber??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -502,7 +502,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.emergencyContact.relationship,
+                      user.emergencyContact?.relationship??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -639,7 +639,7 @@ class SectionUserRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user.vehicleDetails.driverLicenseNumber,
+                user.vehicleDetails?.driverLicenseNumber??'',
                 style: TextStyle(
                   fontSize: 14,
                   color: ColorValues.linkTextColor,
@@ -655,7 +655,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.driverLicenseImages.first,
+                      user.vehicleDetails?.driverLicenseImages.first??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -697,7 +697,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.vehiclePlateImages.first,
+                      user.vehicleDetails?.vehiclePlateImages.first??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -739,7 +739,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.registrationCertificateNumber,
+                      user.vehicleDetails?.registrationCertificateNumber??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -781,7 +781,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.registrationCertificateImages.first,
+                      user.vehicleDetails?.registrationCertificateImages.first??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -823,7 +823,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.driverLicenseNumber,
+                      user.vehicleDetails?.driverLicenseNumber??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -865,7 +865,7 @@ class SectionUserRow extends StatelessWidget {
                       left: 8,
                     ),
                     child: Text(
-                      user.vehicleDetails.driverLicenseImages.first,
+                      user.vehicleDetails?.driverLicenseImages.first??'',
                       style: TextStyle(
                         fontSize: 16,
                       ),

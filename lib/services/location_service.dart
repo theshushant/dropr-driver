@@ -35,9 +35,9 @@ Future<List<dynamic>?> getAutocompleteAddressGmaps({
   String? params,
 }) async {
   log(params!);
-  final Dio _dio = Dio();
+  final Dio dio = Dio();
   try {
-    var data = await _dio.get(
+    var data = await dio.get(
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=$mapsApiKey&input=$params');
     log(data.toString());
     if (data.statusCode == 200) {
