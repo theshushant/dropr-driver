@@ -4,6 +4,7 @@ import 'package:dropr_driver/presentation/landing_page.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
+import 'package:dropr_driver/presentation/register_user/register_user.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
@@ -53,12 +54,12 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
 
     if (user != null) {
-      await Provider.of<UserStore>(context, listen: false).setStoreUser(user);
+      await Provider.of<UserStore>(context, listen: false).getMe();
       if (user.dateOfBirth == null) {
         if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
-          HomePage.routeName,
+          RegisterUser.routeName,
         );
       } else if (user.permanentAddress == null) {
         if (!mounted) return;

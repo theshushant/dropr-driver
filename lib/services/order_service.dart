@@ -57,10 +57,14 @@ class OrderService extends APIService {
         params: {"order": order, "employee": employee});
     log('here response is this$response');
     Map<int, Commission> commissions = <int, Commission>{};
-    response['date'].forEach((element) {
-      Commission commission = Commission.fromJson(element);
-      commissions.addAll({commission.id: commission});
-    });
+   try{
+     response['data'].forEach((element) {
+       Commission commission = Commission.fromJson(element);
+       commissions.addAll({commission.id: commission});
+     });
+   }catch(e){
+     return {};
+   }
 
     return commissions;
   }

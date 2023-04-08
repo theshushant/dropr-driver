@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:dropr_driver/presentation/order/job_history.dart';
+import 'package:dropr_driver/presentation/payments/payment_history_total_earning.dart';
 import 'package:dropr_driver/presentation/profile/profile_screen.dart';
 import 'package:dropr_driver/presentation/landing_page.dart';
-import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/payments/payment_history.dart';
 import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/store/user_store.dart';
@@ -89,31 +87,36 @@ class AppDrawer extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                 ),
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  ignoreGestures: true,
-                                  allowHalfRating: true,
-                                  itemSize: 17,
-                                  itemCount: 5,
-                                  maxRating: 5,
-                                  unratedColor: ColorValues.appWhiteColor,
-                                  itemBuilder: (context, ind) {
-                                    if (ind < 3) {
-                                      return Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 15,
-                                      );
-                                    } else {
-                                      return Icon(
-                                        Icons.star_border_outlined,
-                                        size: 15,
-                                      );
-                                    }
+                                StoreObserver(
+                                  builder:
+                                      (UserStore store, BuildContext context) {
+                                    return RatingBar.builder(
+                                      initialRating: store.user?.averageRating??5,
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      ignoreGestures: true,
+                                      allowHalfRating: true,
+                                      itemSize: 17,
+                                      itemCount: 5,
+                                      maxRating: 5,
+                                      unratedColor: ColorValues.appWhiteColor,
+                                      itemBuilder: (context, ind) {
+                                        if (ind < (store.user?.averageRating??1)) {
+                                          return Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                            size: 15,
+                                          );
+                                        } else {
+                                          return Icon(
+                                            Icons.star_border_outlined,
+                                            size: 15,
+                                          );
+                                        }
+                                      },
+                                      onRatingUpdate: (rating) {},
+                                    );
                                   },
-                                  onRatingUpdate: (rating) {},
                                 ),
                               ],
                             );
@@ -159,7 +162,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () =>
-                      {Navigator.pushNamed(context, PaymentHistory.routeName)},
+                      {Navigator.pushNamed(context, PaymentHistoryTotalEarning.routeName)},
                   leading: addSVGIcons(ImageValues.paymentHistory),
                   title: Text(
                     'Payment History',

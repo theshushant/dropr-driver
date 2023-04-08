@@ -22,6 +22,7 @@ class UserService extends APIService {
     Map<String, dynamic> response =
         await post('/auth/carrier-login', body: body, useAuthHeaders: false);
     preferenceService.setAuthToken(response["auth_token"]);
+    log('here user is ${response['employee']}');
     return Employee.fromJson(response["employee"]);
   }
 
@@ -33,5 +34,23 @@ class UserService extends APIService {
     );
     log("here data is this ${response["data"]}");
     return Employee.fromJson(response["data"]);
+  }
+
+  Future<Employee> showMe() async {
+    Map<String, dynamic> response = await get('/employees/me');
+    log("here data is this ${response["data"]}");
+    return Employee.fromJson(response['data']);
+  }
+
+  Future<void> startSession() async {
+    Map<String, dynamic> response =
+        await post('/employees/me/start-session', body: {});
+    log("here data is this ${response["data"]}");
+  }
+
+  Future<void> endSession() async {
+    Map<String, dynamic> response =
+        await post('/employees/me/end-session', body: {});
+    log("here data is this ${response["data"]}");
   }
 }

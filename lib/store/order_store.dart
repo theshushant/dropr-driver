@@ -34,12 +34,31 @@ abstract class _OrderStore with Store {
   }
 
   @computed
+  double get getAllCommissions {
+    double doubleValue = 0;
+    commissions.forEach((key, value) {
+      doubleValue += value.commission ?? 0;
+    });
+    return doubleValue;
+  }
+
+  @computed
+  int get todayOrders {
+    DateTime dateTime = DateTime.now();
+
+    return orders.where((element) {
+      DateTime date = DateTime.parse(element.createdAt);
+      return date.day == dateTime.day && date.year == dateTime.year && date.month == dateTime.month;
+    }).length??0;
+  }
+
+  @computed
   List<Order> get orders {
     return _orders.values.toList();
   }
 
   Order? orderById(int? id) {
-    if(id == null){
+    if (id == null) {
       return null;
     }
     if (_orders.containsKey(id)) {

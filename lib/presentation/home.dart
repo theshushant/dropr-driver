@@ -5,11 +5,13 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   bool _startDuty = false;
   Timer? timer;
   int _start = 30;
+
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(
@@ -159,6 +162,11 @@ class _HomePageState extends State<HomePage> {
                   child: CustomRoundedButton(
                     text: _startDuty ? 'End Duty' : 'Start Shift',
                     onTap: () {
+                      if (!_startDuty) {
+                        userService.startSession();
+                      } else {
+                        userService.endSession();
+                      }
                       setState(() {
                         _startDuty = !_startDuty;
                       });
@@ -382,10 +390,15 @@ class _HomePageState extends State<HomePage> {
                               CircleAvatar(
                                 child: addImageSVG(ImageValues.totalEarnings),
                               ),
-                              Text(
-                                '\$24',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
+                              StoreObserver(builder: (OrderStore store,BuildContext context){
+                                if(!store.fetchedCommissionOnce && !store.loadingState && store.commissions.isEmpty){
+                                  store.fetchCommissions();
+                                }
+                                return Text(
+                                  '\$ ${store.getAllCommissions}',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                );
+                              }),
                               Text(
                                 'Total Earning',
                                 style: Theme.of(context)
@@ -420,9 +433,15 @@ class _HomePageState extends State<HomePage> {
                               CircleAvatar(
                                 child: addImageSVG(ImageValues.todaysOrder),
                               ),
-                              Text('5',
-                                  style:
-                                      Theme.of(context).textTheme.titleLarge),
+                              StoreObserver(builder:
+                                  (OrderStore store, BuildContext context) {
+                                if(!store.fetchedOrdersOnce && !store.loadingState && store.orders.isEmpty){
+                                  store.fetchOrders();
+                                }
+                                return Text(store.todayOrders.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge);
+                              }),
                               Text('Today\'s Order',
                                   style: Theme.of(context)
                                       .textTheme
@@ -460,13 +479,16 @@ class _HomePageState extends State<HomePage> {
                               Text('00:00',
                                   style:
                                       Theme.of(context).textTheme.titleLarge),
-                              Text('Weekly Login Time',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              Text(
+                                'Weekly Login Time',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),
@@ -495,13 +517,16 @@ class _HomePageState extends State<HomePage> {
                               Text('\$12984',
                                   style:
                                       Theme.of(context).textTheme.titleLarge),
-                              Text('Weekly Earning',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              Text(
+                                'Weekly Earning',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),

@@ -2,6 +2,7 @@ import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/models/commission.dart';
+import 'package:dropr_driver/presentation/payments/payment_history_total_earning.dart';
 import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
@@ -63,7 +64,7 @@ class PaymentHistory extends StatelessWidget {
                   List<Widget> widgets = [];
                   store.commissions.forEach((int index, Commission element) {
                     widgets.add(
-                      body(element),
+                      body(element,context),
                     );
                   });
                   return Column(
@@ -78,49 +79,54 @@ class PaymentHistory extends StatelessWidget {
     );
   }
 
-  Widget body(Commission commission) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: applyPaddingX(1),
-        vertical: applyPaddingX(1),
-      ),
-      margin: EdgeInsets.symmetric(
-        vertical: applyPaddingX(1),
-      ),
-      color: ColorValues.textFieldFillColor,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              HelpText(
-                text: "${commission.createdAt} - ${commission.settlementDate}",
-                color: ColorValues.blackColor,
-              ),
-              HelpText(
-                text: "\$ ${commission.commission}",
-                color: ColorValues.blackColor,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: applyPaddingX(2),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              HelpText(
-                text: "This week Earning",
-                color: ColorValues.blackColor,
-                fontSize: 12,
-              ),
-              Icon(
-                Icons.arrow_forward_outlined,
-                size: 18,
-              ),
-            ],
-          ),
-        ],
+  Widget body(Commission commission,BuildContext context) {
+    return InkWell(
+      onTap: (){
+        Navigator.pushNamed(context, PaymentHistoryTotalEarning.routeName);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: applyPaddingX(1),
+          vertical: applyPaddingX(1),
+        ),
+        margin: EdgeInsets.symmetric(
+          vertical: applyPaddingX(1),
+        ),
+        color: ColorValues.textFieldFillColor,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                HelpText(
+                  text: "${commission.createdAt} - ${commission.settlementDate}",
+                  color: ColorValues.blackColor,
+                ),
+                HelpText(
+                  text: "\$ ${commission.commission}",
+                  color: ColorValues.blackColor,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: applyPaddingX(2),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                HelpText(
+                  text: "This week Earning",
+                  color: ColorValues.blackColor,
+                  fontSize: 12,
+                ),
+                Icon(
+                  Icons.arrow_forward_outlined,
+                  size: 18,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

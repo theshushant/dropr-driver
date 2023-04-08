@@ -120,5 +120,6 @@ class StringValue {
 
   //Payment History
   static const String paymentHistory = 'Payment History';
+  static const String totalEarning = 'Total Earning';
   static const String noDataAvailable = 'No Data Present Yet!';
 }

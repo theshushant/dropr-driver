@@ -30,6 +30,18 @@ abstract class _UserStore with Store {
   }
 
   @action
+  Future<void> getMe() async {
+    try {
+      isLoading = true;
+      user = await userService.showMe();
+      isLoading = false;
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+  @action
   Future<void> loginComplete(Map<String, String> body) async {
     try {
       isLoading = true;

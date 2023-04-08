@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/payments/payment_history.dart';
+import 'presentation/payments/payment_history_total_earning.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
           PickUpOrderScreen.routeName: (BuildContext context) =>
               PickUpOrderScreen(),
           OrderImages.routeName: (BuildContext context) => OrderImages(),
+          PaymentHistoryTotalEarning.routeName: (BuildContext context) => PaymentHistoryTotalEarning(),
         },
         onGenerateRoute: getGeneratedRoutes,
       ),
