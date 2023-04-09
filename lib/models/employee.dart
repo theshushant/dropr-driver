@@ -1,3 +1,6 @@
+import 'package:dropr_driver/models/bank_details.dart';
+import 'package:dropr_driver/models/emergency_contact.dart';
+import 'package:dropr_driver/models/vehicle_details.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'employee.g.dart';
@@ -18,16 +21,17 @@ class Employee {
   final String? longitude;
   final String? latitude;
   @JsonKey(name: 'vehicle_details')
-  final dynamic vehicleDetails;
+  final VehicleDetail? vehicleDetails;
   @JsonKey(name: 'bank_details')
-  final dynamic bankDetails;
+  final BankDetail? bankDetails;
   @JsonKey(name: 'emergency_contact')
-  final dynamic emergencyContact;
+  final EmergencyContact? emergencyContact;
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @JsonKey(name: 'created_at')
   final String createdAt;
-
+  @JsonKey(name: 'average_rating')
+  final dynamic averageRating;
   // String get fullName {
   //   return firstName + ' ' + lastName;
   // }
@@ -43,14 +47,16 @@ class Employee {
     this.latitude,
     this.bankDetails,
     this.dateOfBirth,
-    this.emergencyContact,
+     this.emergencyContact,
     this.gender,
     this.permanentAddress,
     this.role,
-    this.vehicleDetails,
+     this.vehicleDetails,
+    this.averageRating,
   });
 
-  factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);
+  factory Employee.fromJson(Map<String, dynamic> json) =>
+      _$EmployeeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }

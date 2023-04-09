@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class ContactInformation extends StatefulWidget {
   const ContactInformation({Key? key}) : super(key: key);
@@ -21,18 +26,18 @@ class _ContactInformationState extends State<ContactInformation> {
   final _formState = GlobalKey<FormState>();
 
   Map<String, dynamic> map = {};
-  Map<String, String> map1 = <String,String>{};
+  Map<String, String> map1 = <String, String>{};
 
   @override
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final ScreenArguments args =
-          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      final ScreenArguments? args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments?;
       setState(() {
-        map = args.map ?? <String, dynamic>{};
+        map = args?.map ?? <String, dynamic>{};
       });
-      print("here data is this " + map.toString());
+      log("here data is this $map");
     });
   }
 
@@ -137,16 +142,19 @@ class _ContactInformationState extends State<ContactInformation> {
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            map.addAll({
-                              "emergency_contact":map1
+                            map.addAll({"emergency_contact": map1});
+                            UserStore store =
+                                Provider.of<UserStore>(context, listen: false);
+                            store.registerYourself(map);
+                            when((p0) => !store.isLoading, () {
+                              Navigator.pushNamed(
+                                context,
+                                VehicleInformation.routeName,
+                                arguments: ScreenArguments(
+                                  map: map,
+                                ),
+                              );
                             });
-                            Navigator.pushNamed(
-                              context,
-                              VehicleInformation.routeName,
-                              arguments: ScreenArguments(
-                                map: map,
-                              ),
-                            );
                           }
                         },
                       ),

@@ -48,6 +48,22 @@ mixin _$OrderStore on _OrderStore, Store {
     });
   }
 
+  late final _$commissionsAtom =
+      Atom(name: '_OrderStore.commissions', context: context);
+
+  @override
+  Map<int, Commission> get commissions {
+    _$commissionsAtom.reportRead();
+    return super.commissions;
+  }
+
+  @override
+  set commissions(Map<int, Commission> value) {
+    _$commissionsAtom.reportWrite(value, super.commissions, () {
+      super.commissions = value;
+    });
+  }
+
   late final _$_fetchedOrdersOnceAtom =
       Atom(name: '_OrderStore._fetchedOrdersOnce', context: context);
 
@@ -61,6 +77,23 @@ mixin _$OrderStore on _OrderStore, Store {
   set _fetchedOrdersOnce(bool value) {
     _$_fetchedOrdersOnceAtom.reportWrite(value, super._fetchedOrdersOnce, () {
       super._fetchedOrdersOnce = value;
+    });
+  }
+
+  late final _$fetchedCommissionOnceAtom =
+      Atom(name: '_OrderStore.fetchedCommissionOnce', context: context);
+
+  @override
+  bool get fetchedCommissionOnce {
+    _$fetchedCommissionOnceAtom.reportRead();
+    return super.fetchedCommissionOnce;
+  }
+
+  @override
+  set fetchedCommissionOnce(bool value) {
+    _$fetchedCommissionOnceAtom.reportWrite(value, super.fetchedCommissionOnce,
+        () {
+      super.fetchedCommissionOnce = value;
     });
   }
 
@@ -88,6 +121,14 @@ mixin _$OrderStore on _OrderStore, Store {
     return _$deleteOrderAsyncAction.run(() => super.deleteOrder(id));
   }
 
+  late final _$fetchCommissionsAsyncAction =
+      AsyncAction('_OrderStore.fetchCommissions', context: context);
+
+  @override
+  Future fetchCommissions() {
+    return _$fetchCommissionsAsyncAction.run(() => super.fetchCommissions());
+  }
+
   late final _$_OrderStoreActionController =
       ActionController(name: '_OrderStore', context: context);
 
@@ -105,6 +146,8 @@ mixin _$OrderStore on _OrderStore, Store {
   @override
   String toString() {
     return '''
+commissions: ${commissions},
+fetchedCommissionOnce: ${fetchedCommissionOnce},
 orders: ${orders}
     ''';
   }

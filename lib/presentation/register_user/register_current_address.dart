@@ -4,10 +4,13 @@ import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class CurrentAddress extends StatefulWidget {
   const CurrentAddress({Key? key}) : super(key: key);
@@ -25,12 +28,11 @@ class _CurrentAddressState extends State<CurrentAddress> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final ScreenArguments args =
-          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
-     setState((){
-       map = args.map ?? <String,dynamic>{};
-     });
-      print("here data is this " + map.toString());
+      final ScreenArguments? args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments?;
+      setState(() {
+        map = args?.map ?? <String, dynamic>{};
+      });
     });
   }
 
@@ -151,13 +153,21 @@ class _CurrentAddressState extends State<CurrentAddress> {
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            print("here current address is this " +
-                                map.toString());
-                            Navigator.pushNamed(
-                                context, PermanentAddress.routeName,
-                                arguments: ScreenArguments(
-                                  map: map,
-                                ));
+                            UserStore store =
+                                Provider.of<UserStore>(context, listen: false);
+                            store.registerYourself(map);
+                            when(
+                              (p0) => !store.isLoading,
+                              () {
+                                Navigator.pushNamed(
+                                  context,
+                                  PermanentAddress.routeName,
+                                  arguments: ScreenArguments(
+                                    map: map,
+                                  ),
+                                );
+                              },
+                            );
                           }
                         },
                         text: StringValue.next,

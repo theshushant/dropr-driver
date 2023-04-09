@@ -8,6 +8,29 @@ part 'order.g.dart';
 class Order {
   int id;
   User user;
+  String category;
+  @JsonKey(name: 'updated_at')
+  final String updatedAt;
+  @JsonKey(name: 'created_at')
+  final String createdAt;
+  @JsonKey(name: 'user_id')
+  int userId;
+  @JsonKey(name: 'package_type')
+  String packageType;
+  @JsonKey(name: 'delivery_instructions')
+  String? deliveryInstructions;
+  double distance;
+  @JsonKey(name: 'drop_address_id')
+  int dropAddressId;
+  @JsonKey(name: 'order_status')
+  String orderStatus;
+  @JsonKey(name: 'payment_status')
+  String paymentStatus;
+  @JsonKey(name: 'scheduled_delivery_date')
+  String scheduledDeliveryDate;
+  @JsonKey(name: 'time_slot')
+  String timeSlot;
+
   DroprAddress pickupAddress;
   DroprAddress dropAddress;
 
@@ -16,6 +39,18 @@ class Order {
     required this.user,
     required this.dropAddress,
     required this.pickupAddress,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.category,
+    required this.deliveryInstructions,
+    required this.distance,
+    required this.dropAddressId,
+    required this.orderStatus,
+    required this.packageType,
+    required this.paymentStatus,
+    required this.scheduledDeliveryDate,
+    required this.timeSlot,
+    required this.userId,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);

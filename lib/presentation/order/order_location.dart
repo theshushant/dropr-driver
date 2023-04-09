@@ -1,24 +1,31 @@
-import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/models/order.dart';
-import 'package:dropr_driver/presentation/order/pick_up_order.dart';
+import 'package:dropr_driver/models/screen_arguments.dart';
+import 'package:dropr_driver/presentation/order/order_sub_details.dart';
+import 'package:dropr_driver/presentation/order/package_details.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
 
-class OrderLocation extends StatelessWidget {
+class OrderLocation extends StatefulWidget {
   const OrderLocation({
     Key? key,
-    this.order,
+    required this.order,
     this.isTypePickUp = true,
   }) : super(key: key);
 
-  final Order? order;
+  final Order order;
   final bool isTypePickUp;
 
+  @override
+  State<OrderLocation> createState() => _OrderLocationState();
+}
+
+class _OrderLocationState extends State<OrderLocation> {
+  bool showDetails = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +47,7 @@ class OrderLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            isTypePickUp
+            widget.isTypePickUp
                 ? StringValue.pickUpLocation
                 : StringValue.dropOffLocation,
             style: TextStyle(
@@ -53,6 +60,7 @@ class OrderLocation extends StatelessWidget {
               vertical: applyPaddingX(1),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +76,7 @@ class OrderLocation extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HelpText(
-                          text: "Perth Institute of CA",
+                          text: widget.order.pickupAddress.address,
                           color: ColorValues.blackColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
@@ -77,7 +85,7 @@ class OrderLocation extends StatelessWidget {
                           width: applyPaddingX(0.5),
                         ),
                         HelpText(
-                          text: "51 James St, Perth WA 6000, Australia",
+                          text: widget.order.dropAddress.address,
                           color: ColorValues.blackShadeColor,
                           fontSize: 12,
                         ),
@@ -102,7 +110,7 @@ class OrderLocation extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HelpText(
-                          text: "Amit Trevedi",
+                          text: widget.order.user.name??" ",
                           color: ColorValues.blackColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
@@ -110,31 +118,40 @@ class OrderLocation extends StatelessWidget {
                         SizedBox(
                           width: applyPaddingX(0.5),
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.75,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               HelpText(
-                                text: "58899999",
+                                text: widget.order.user.phoneNumber??"58899999",
                                 color: ColorValues.blackShadeColor,
                                 fontSize: 12,
                               ),
-                              GestureDetector(
+                              DroprLink(
                                 onTap: () {
                                   Navigator.pushNamed(
                                     context,
-                                    PickUpOrderScreen.routeName,
+                                    PackageDetails.routeName,
+                                    arguments: ScreenArguments(
+                                      genericId: widget.order.id
+                                    )
                                   );
+                                  return;
+                                  // Navigator.pushNamed(
+                                  //   context,
+                                  //   PickUpOrderScreen.routeName,
+                                  //   arguments: ScreenArguments(
+                                  //     genericId: widget.order.id
+                                  //   )
+                                  // );
                                 },
-                                child: DroprLink(
-                                  text: 'Map',
-                                  isButtonType: true,
-                                  trailingWidget: Icon(
-                                    Icons.arrow_forward,
-                                    size: 14,
-                                    color: ColorValues.whiteColor,
-                                  ),
+                                text: 'Map',
+                                isButtonType: true,
+                                trailingWidget: Icon(
+                                  Icons.arrow_forward,
+                                  size: 14,
+                                  color: ColorValues.whiteColor,
                                 ),
                               ),
                             ],
@@ -149,7 +166,9 @@ class OrderLocation extends StatelessWidget {
                     ),
                   ],
                 ),
-                _extraBody,
+                showDetails ? Container() : divider,
+                showDetails ? OrderSubDetails() : Container(),
+                showDetails ? divider : Container(),
               ],
             ),
           )
@@ -158,25 +177,19 @@ class OrderLocation extends StatelessWidget {
     );
   }
 
-  Widget get _extraBody {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: applyPaddingX(1),
-              vertical: applyPaddingX(0.5),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: ColorValues.whiteColor,
-            ),
-            child: Text(
-              "Fragile",
-              style: TextStyle(fontSize: 12),
-            ),
-          ),
-        ],
+  Widget get divider {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          showDetails = !showDetails;
+        });
+      },
+      child: Divider(
+        height: 5,
+        endIndent: MediaQuery.of(context).size.width * 0.35,
+        indent: MediaQuery.of(context).size.width * 0.35,
+        thickness: 5,
+        color: ColorValues.blackColor,
       ),
     );
   }

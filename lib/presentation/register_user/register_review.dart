@@ -19,6 +19,7 @@ class RegisterReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('here data is this '+data.toString());
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(

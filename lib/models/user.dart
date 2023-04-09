@@ -24,9 +24,6 @@ class User {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
 
-  // String get fullName {
-  //   return firstName + ' ' + lastName;
-  // }
 
   User({
     this.phoneNumber,

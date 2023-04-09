@@ -19,80 +19,88 @@ class DroprTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool showBorder;
   final Color? prefixIconColor;
-  const DroprTextField(
-      {Key? key,
-      this.prefixIcon,
-      this.keyboardType,
-      this.suffixIcon,
-      required this.hintText,
-      this.onSave,
-      this.value,
-      this.onValidate,
-      this.maxLength,
-      this.controller,
-      this.showBorder = false,
-      this.maxLines,
-      this.onChange,
-      this.prefixIconColor})
-      : super(key: key);
+  final bool isEnabled;
+  final VoidCallback? onClick;
+
+  const DroprTextField({
+    Key? key,
+    this.prefixIcon,
+    this.keyboardType,
+    this.suffixIcon,
+    required this.hintText,
+    this.onSave,
+    this.value,
+    this.onValidate,
+    this.maxLength,
+    this.controller,
+    this.showBorder = false,
+    this.maxLines,
+    this.onChange,
+    this.prefixIconColor,
+    this.isEnabled = true,
+    this.onClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: applyPaddingX(1),
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: applyPaddingX(1),
-      ),
-      child: Platform.isIOS
-          ? CupertinoTextField(
-              maxLength: maxLength,
-              maxLines: maxLines,
-              prefix: Padding(
-                padding: xPadding(1),
-                child: prefixIcon,
-              ),
-              suffix: suffixIcon,
-              placeholder: hintText,
-              decoration:
-                  const BoxDecoration(color: ColorValues.textFieldFillColor),
-              onChanged: (String? value) {
-                if (onChange != null) {
-                  onChange!(value);
-                }
-              },
-              onSubmitted: (String? value) {
-                if (value != null && onSave != null) {
-                  onSave!(value);
-                }
-              },
-              keyboardType: keyboardType,
-              controller: controller,
-            )
-          : TextFormField(
-              maxLength: maxLength,
-              maxLines: maxLines,
-              initialValue: value,
-              validator: (String? value) {
-                if (onValidate != null) {
-                  return onValidate!(value);
-                }
-                return null;
-              },
-              onSaved: (String? value) {
-                if (value != null && onSave != null) {
-                  onSave!(value);
-                }
-              },
-              onChanged: (String? value) {
-                if (onChange != null) {
-                  onChange!(value);
-                }
-              },
-              keyboardType: keyboardType,
-              controller: controller,
-              decoration: InputDecoration(
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          vertical: applyPaddingX(1),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: applyPaddingX(1),
+        ),
+        child: !Platform.isIOS
+            ? CupertinoTextField(
+                maxLength: maxLength,
+                maxLines: maxLines,
+                prefix: Padding(
+                  padding: xPadding(1),
+                  child: prefixIcon,
+                ),
+                suffix: suffixIcon,
+                placeholder: hintText,
+                decoration:
+                    const BoxDecoration(color: ColorValues.textFieldFillColor),
+                onChanged: (String? value) {
+                  if (onChange != null) {
+                    onChange!(value);
+                  }
+                },
+                onSubmitted: (String? value) {
+                  if (value != null && onSave != null) {
+                    onSave!(value);
+                  }
+                },
+                keyboardType: keyboardType,
+                controller: controller,
+              )
+            : TextFormField(
+                enabled: isEnabled,
+                maxLength: maxLength,
+                maxLines: maxLines,
+                initialValue: value,
+                validator: (String? value) {
+                  if (onValidate != null) {
+                    return onValidate!(value);
+                  }
+                  return null;
+                },
+                onSaved: (String? value) {
+                  if (value != null && onSave != null) {
+                    onSave!(value);
+                  }
+                },
+                onChanged: (String? value) {
+                  if (onChange != null) {
+                    onChange!(value);
+                  }
+                },
+                keyboardType: keyboardType,
+                controller: controller,
+                decoration: InputDecoration(
                   border: showBorder ? const OutlineInputBorder() : null,
                   prefixIcon: prefixIcon,
                   suffixIcon: suffixIcon,
@@ -100,8 +108,13 @@ class DroprTextField extends StatelessWidget {
                   fillColor: ColorValues.disabledColor,
                   prefixIconColor: prefixIconColor,
                   counterText: '',
-                  hintStyle: Theme.of(context).textTheme.labelSmall),
-            ),
+                  hintStyle: Theme.of(context).textTheme.labelSmall,
+                  errorStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+              ),
+      ),
     );
   }
 }

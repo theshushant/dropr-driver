@@ -18,6 +18,7 @@ class ColorValues {
   static const Color blackColor = Color.fromRGBO(26, 26, 26, 1);
   static const Color blackShadeColor = Color.fromRGBO(0, 29, 102, 1);
   static const Color headingColor = Color.fromRGBO(0, 29, 102, 1);
+  static const Color boxColor = Color.fromRGBO(250, 250, 254, 1);
   static const Color progressIndicatorColor1 = Color.fromRGBO(41, 184, 102, 1);
   static const Color progressIndicatorColor2 = Color.fromRGBO(32, 142, 79, 1);
   static const Color textFieldFillColor = Color.fromRGBO(242, 242, 247, 1);

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dropr_driver/models/employee.dart';
-import 'package:dropr_driver/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceService {
@@ -25,9 +24,14 @@ class PreferenceService {
   Future<Employee?> getAuthUser() async {
     final String? token =
         (await _getInstance()).getString(PreferenceService._user);
-    return token != null && token.isNotEmpty
-        ? Employee.fromJson(json.decode(token))
-        : null;
+    dynamic user;
+    if (token?.isNotEmpty??false) {
+      user = Employee.fromJson(json.decode(token!));
+    } else {
+      user = null;
+    }
+
+    return user;
   }
 
   Future<void> setAuthToken(String token) async {

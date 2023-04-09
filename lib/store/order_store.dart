@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dropr_driver/models/commission.dart';
 import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:mobx/mobx.dart';
@@ -20,10 +21,35 @@ abstract class _OrderStore with Store {
   Map<int, Order> _orders = <int, Order>{};
 
   @observable
+  Map<int, Commission> commissions = <int, Commission>{};
+
+  @observable
   bool _fetchedOrdersOnce = false;
+
+  @observable
+  bool fetchedCommissionOnce = false;
 
   bool get fetchedOrdersOnce {
     return _fetchedOrdersOnce;
+  }
+
+  @computed
+  double get getAllCommissions {
+    double doubleValue = 0;
+    commissions.forEach((key, value) {
+      doubleValue += value.commission ?? 0;
+    });
+    return doubleValue;
+  }
+
+  @computed
+  int get todayOrders {
+    DateTime dateTime = DateTime.now();
+
+    return orders.where((element) {
+      DateTime date = DateTime.parse(element.createdAt);
+      return date.day == dateTime.day && date.year == dateTime.year && date.month == dateTime.month;
+    }).length??0;
   }
 
   @computed
@@ -31,18 +57,26 @@ abstract class _OrderStore with Store {
     return _orders.values.toList();
   }
 
+  Order? orderById(int? id) {
+    if (id == null) {
+      return null;
+    }
+    if (_orders.containsKey(id)) {
+      return _orders[id];
+    }
+    return null;
+  }
+
   @action
   Future<void> fetchOrders() async {
     try {
       _isLoading = true;
-      Map<int, Order> data = await orderService.getAllOrders();
-      _orders.addAll(data);
-      log('this is woring' + _orders.length.toString());
+      _orders = await orderService.getAllOrders();
       _fetchedOrdersOnce = true;
       _isLoading = false;
     } catch (e) {
       _isLoading = false;
-      log('Error in store ' + e.toString());
+      log('Error in store $e');
     }
   }
 
@@ -50,9 +84,9 @@ abstract class _OrderStore with Store {
   Future<void> addOrder(Map<String, dynamic> body) async {
     try {
       _isLoading = true;
-      Order _order = await orderService.addOrder(body);
+      Order order = await orderService.addOrder(body);
       _orders.addAll({
-        _order.id: _order,
+        order.id: order,
       });
       _isLoading = false;
     } catch (e) {
@@ -77,9 +111,24 @@ abstract class _OrderStore with Store {
   }
 
   @action
+  fetchCommissions() async {
+    try {
+      _isLoading = true;
+      commissions = await orderService.getCommissions();
+      fetchedCommissionOnce = true;
+      _isLoading = false;
+    } catch (e) {
+      _isLoading = false;
+      rethrow;
+    }
+  }
+
+  @action
   void reset() {
     _isLoading = true;
     _fetchedOrdersOnce = false;
+    _orders.clear();
+    commissions.clear();
     _isLoading = false;
   }
 }

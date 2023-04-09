@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dropr_driver/services/api_service.dart';
 import 'package:dropr_driver/utils/globals.dart';
-import 'package:http_parser/http_parser.dart';
 
 class UtilityService extends APIService {
   UtilityService._();
@@ -21,7 +20,7 @@ class UtilityService extends APIService {
       },
       useAuthHeaders: true,
     );
-    log("here url" + response.toString());
+    log("here url$response");
     return {
       "file_url": response["file_url"],
       "signed_url": response["signed_url"]
@@ -30,17 +29,17 @@ class UtilityService extends APIService {
 
   Future<void> uploadFile(File file, String url) async {
     String fileName = file.path.split('/').last;
-    print("fileName"+fileName);
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(
-        file.path,
-        filename: fileName,
-        contentType: new MediaType("image", "jpg")
-      ),
-    });
-    print("here url is this" + url);
+    log("fileName$fileName");
+    // FormData formData = FormData.fromMap({
+    //   "file": await MultipartFile.fromFile(
+    //     file.path,
+    //     filename: fileName,
+    //     contentType: new MediaType("image", "jpg")
+    //   ),
+    // });
+    log("here url is this$url");
     Dio dio = Dio();
-    var len = await file.length();
+  //  var len = await file.length();
     final token = await preferenceService.getAuthToken();
      // dio.options.headers['content-Type'] = 'multipart/form-data';
     dio.options.headers['Authorization'] = 'Bearer $token';

@@ -1,5 +1,5 @@
+import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
-import 'package:dropr_driver/helpers/dropr_link.dart';
 import 'package:dropr_driver/helpers/helper_text.dart';
 import 'package:dropr_driver/presentation/home.dart';
 import 'package:dropr_driver/presentation/register_user/register_bank_information.dart';
@@ -78,7 +78,7 @@ class OTPVerificationPage extends StatelessWidget {
                   height: globalPadding,
                 ),
                 HelpText(
-                  text: label,
+                  text: "+91 ${map!['phone_number']}",
                 ),
               ],
             ),
@@ -147,8 +147,11 @@ class OTPVerificationPage extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,
           ),
-          const DroprLink(
-            text: "StringValue.resend",
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomRoundedButton(
+              text: StringValue.verify,
+            ),
           ),
         ],
       ),

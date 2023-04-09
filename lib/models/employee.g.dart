@@ -15,13 +15,22 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       createdAt: json['created_at'] as String,
       longitude: json['longitude'] as String?,
       latitude: json['latitude'] as String?,
-      bankDetails: json['bank_details'],
+      bankDetails: json['bank_details'] == null
+          ? null
+          : BankDetail.fromJson(json['bank_details'] as Map<String, dynamic>),
       dateOfBirth: json['date_of_birth'] as String?,
-      emergencyContact: json['emergency_contact'],
+      emergencyContact: json['emergency_contact'] == null
+          ? null
+          : EmergencyContact.fromJson(
+              json['emergency_contact'] as Map<String, dynamic>),
       gender: json['gender'] as String?,
       permanentAddress: json['permanent_address'] as String?,
       role: json['role'] as String?,
-      vehicleDetails: json['vehicle_details'],
+      vehicleDetails: json['vehicle_details'] == null
+          ? null
+          : VehicleDetail.fromJson(
+              json['vehicle_details'] as Map<String, dynamic>),
+      averageRating: json['average_rating'],
     );
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
@@ -40,4 +49,5 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'emergency_contact': instance.emergencyContact,
       'updated_at': instance.updatedAt,
       'created_at': instance.createdAt,
+      'average_rating': instance.averageRating,
     };

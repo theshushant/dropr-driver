@@ -1,7 +1,7 @@
 import 'dart:developer';
+import 'package:dropr_driver/models/commission.dart';
 import 'package:dropr_driver/models/order.dart';
 import 'package:dropr_driver/services/api_service.dart';
-
 
 class OrderService extends APIService {
   OrderService._();
@@ -14,13 +14,13 @@ class OrderService extends APIService {
       '/orders',
       useAuthHeaders: true,
     );
-    Map<int, Order> _orders = <int, Order>{};
+    Map<int, Order> orders = <int, Order>{};
     response['data'].forEach((element) {
       Order order = Order.fromJson(element);
-      _orders.addAll({order.id: order});
+      orders.addAll({order.id: order});
     });
-    log('here response is this get all orders' + _orders.length.toString());
-    return _orders;
+    log('here response is this get all orders${orders.length}');
+    return orders;
   }
 
   Future<void> getOrderById(int id) async {
@@ -29,7 +29,7 @@ class OrderService extends APIService {
       useAuthHeaders: true,
     );
 
-    log('here response is this' + response.toString());
+    log('here response is this$response');
   }
 
   Future<Order> addOrder(Map<String, dynamic> body) async {
@@ -38,7 +38,7 @@ class OrderService extends APIService {
       body: body,
     );
 
-    log('here response is this posting ' + response.toString());
+    log('here response is this posting $response');
     return Order.fromJson(response['data']);
   }
 
@@ -47,7 +47,25 @@ class OrderService extends APIService {
       '/orders/$id',
     );
 
-    log('here response is this' + response.toString());
+    log('here response is this$response');
     return false;
+  }
+
+  Future<Map<int, Commission>> getCommissions(
+      {bool order = false, bool employee = false}) async {
+    Map<String, dynamic> response = await get('/commissions',
+        params: {"order": order, "employee": employee});
+    log('here response is this$response');
+    Map<int, Commission> commissions = <int, Commission>{};
+   try{
+     response['data'].forEach((element) {
+       Commission commission = Commission.fromJson(element);
+       commissions.addAll({commission.id: commission});
+     });
+   }catch(e){
+     return {};
+   }
+
+    return commissions;
   }
 }

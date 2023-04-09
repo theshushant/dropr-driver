@@ -72,7 +72,7 @@ class SectionRow extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 8,
@@ -127,7 +127,7 @@ class SectionRow extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 8,
@@ -182,7 +182,7 @@ class SectionRow extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 8,
@@ -649,7 +649,7 @@ class SectionRow extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 8,
@@ -714,7 +714,7 @@ class SectionRow extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 8,

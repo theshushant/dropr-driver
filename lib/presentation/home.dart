@@ -1,18 +1,22 @@
+import 'dart:async';
+
 import 'package:dropr_driver/helpers/custom_rounded_button.dart';
 import 'package:dropr_driver/helpers/dropr_app_bar.dart';
 import 'package:dropr_driver/helpers/store_observer.dart';
 import 'package:dropr_driver/presentation/app_drawer.dart';
-import 'package:dropr_driver/presentation/order/order_screen.dart';
 import 'package:dropr_driver/presentation/order/incoming_order.dart';
+import 'package:dropr_driver/store/order_store.dart';
 import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'HomePage';
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -22,17 +26,38 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   bool _startDuty = false;
+  Timer? timer;
+  int _start = 30;
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      key: _scaffoldKey,
       drawer: AppDrawer(
         context: context,
       ),
       appBar: CustomAppBar(
         leading: InkWell(
           onTap: () {
-            print('object');
             _scaffoldKey.currentState?.openDrawer();
           },
           child: Padding(
@@ -109,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       pointers: const <GaugePointer>[
                         RangePointer(
-                          value: 7,
+                          value: 6,
                           width: 0.1,
                           color: Colors.white,
                           enableAnimation: true,
@@ -137,13 +162,81 @@ class _HomePageState extends State<HomePage> {
                   child: CustomRoundedButton(
                     text: _startDuty ? 'End Duty' : 'Start Shift',
                     onTap: () {
+                      if (!_startDuty) {
+                        userService.startSession();
+                      } else {
+                        userService.endSession();
+                      }
                       setState(() {
                         _startDuty = !_startDuty;
                       });
-                      Navigator.pushNamed(
-                        context,
-                        OrderScreen.routeName,
+                      startTimer();
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                              decoration: BoxDecoration(
+                                  color: ColorValues.whiteColor,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(10)),
+                              height: 100,
+                              child: Center(
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      IncomingOrder.routeName,
+                                    );
+                                  },
+                                  leading: Container(
+                                    alignment: Alignment.center,
+                                    width: 60,
+                                    padding: EdgeInsets.all(applyPaddingX(0.5)),
+                                    color: ColorValues.blackShadeColor,
+                                    child: Text("$_start Sec",
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(
+                                              color: ColorValues.whiteColor,
+                                            )),
+                                  ),
+                                  title: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 4,
+                                      text: TextSpan(
+                                          text:
+                                              'You have got an order notification\n',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  'See the order detail by clicking here',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium,
+                                            ),
+                                          ])),
+                                  trailing:
+                                      Icon(Icons.arrow_forward_ios_rounded),
+                                ),
+                              ));
+                        },
                       );
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   PaymentHistory.routeName,
+                      // );
                     },
                   ),
                 ),
@@ -170,16 +263,18 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       height: 200,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: const [
-                              ColorValues.deliverPartnerInfoBoxGradient1,
-                              ColorValues.deliverPartnerInfoBoxGradient2,
-                            ],
-                          ),
-                          color: ColorValues.blackColor,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(50),
-                              topLeft: Radius.circular(50))),
+                        gradient: LinearGradient(
+                          colors: const [
+                            ColorValues.deliverPartnerInfoBoxGradient1,
+                            ColorValues.deliverPartnerInfoBoxGradient2,
+                          ],
+                        ),
+                        color: ColorValues.blackColor,
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(50),
+                          topLeft: Radius.circular(50),
+                        ),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -197,14 +292,18 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 store.user?.role ?? 'Delivery Partner',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               )
                             ],
                           ),
@@ -223,21 +322,27 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'DOB     :${store.user?.dateOfBirth}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'Phone  :${store.user?.phoneNumber}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               ),
                               Text(
                                 'E-mail  :${store.user?.email}',
@@ -245,7 +350,9 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
-                                    .copyWith(color: ColorValues.whiteColor),
+                                    .copyWith(
+                                      color: ColorValues.whiteColor,
+                                    ),
                               )
                             ],
                           ),
@@ -281,18 +388,27 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.guideInfo),
+                                child: addImageSVG(ImageValues.totalEarnings),
                               ),
-                              Text('\$24',
-                                  style:
-                                      Theme.of(context).textTheme.titleLarge),
-                              Text('Total Earning',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              StoreObserver(builder: (OrderStore store,BuildContext context){
+                                if(!store.fetchedCommissionOnce && !store.loadingState && store.commissions.isEmpty){
+                                  store.fetchCommissions();
+                                }
+                                return Text(
+                                  '\$ ${store.getAllCommissions}',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                );
+                              }),
+                              Text(
+                                'Total Earning',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),
@@ -315,11 +431,17 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.callCenterIcon),
+                                child: addImageSVG(ImageValues.todaysOrder),
                               ),
-                              Text('5',
-                                  style:
-                                      Theme.of(context).textTheme.titleLarge),
+                              StoreObserver(builder:
+                                  (OrderStore store, BuildContext context) {
+                                if(!store.fetchedOrdersOnce && !store.loadingState && store.orders.isEmpty){
+                                  store.fetchOrders();
+                                }
+                                return Text(store.todayOrders.toString(),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge);
+                              }),
                               Text('Today\'s Order',
                                   style: Theme.of(context)
                                       .textTheme
@@ -349,88 +471,30 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.jobHistory),
+                                backgroundColor: Colors.transparent,
+                                child: addImageSVG(
+                                  ImageValues.loginDuration,
+                                ),
                               ),
                               Text('00:00',
                                   style:
                                       Theme.of(context).textTheme.titleLarge),
-                              Text('Weekly Login Time',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              Text(
+                                'Weekly Login Time',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      color: ColorValues.whiteColor,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(0, 1),
-                                          blurRadius: 8,
-                                          color: Colors.black12,
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  height: 100,
-                                  child: Center(
-                                    child: ListTile(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          IncomingOrder.routeName,
-                                        );
-                                      },
-                                      leading: Container(
-                                        alignment: Alignment.center,
-                                        width: 60,
-                                        padding:
-                                            EdgeInsets.all(applyPaddingX(0.5)),
-                                        color: ColorValues.blackShadeColor,
-                                        child: Text("30 Sec",
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .copyWith(
-                                                  color: ColorValues.whiteColor,
-                                                )),
-                                      ),
-                                      title: RichText(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 4,
-                                          text: TextSpan(
-                                              text:
-                                                  'You have got an order notification\n',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium,
-                                              children: [
-                                                TextSpan(
-                                                  text:
-                                                      'See the order detail by clicking here',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .labelMedium,
-                                                ),
-                                              ])),
-                                      trailing:
-                                          Icon(Icons.arrow_forward_ios_rounded),
-                                    ),
-                                  ));
-                            },
-                          );
-                        },
+                        onTap: () {},
                         child: Container(
                           padding: EdgeInsets.all(applyPaddingX(1)),
                           decoration: BoxDecoration(
@@ -448,18 +512,21 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircleAvatar(
-                                child: addImageSVG(ImageValues.guideInfo),
+                                child: addImageSVG(ImageValues.weeklyEarnings),
                               ),
                               Text('\$12984',
                                   style:
                                       Theme.of(context).textTheme.titleLarge),
-                              Text('Weekly Earning',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          color: ColorValues.blackColor,
-                                          fontWeight: FontWeight.w400))
+                              Text(
+                                'Weekly Earning',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      color: ColorValues.blackColor,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              )
                             ],
                           ),
                         ),

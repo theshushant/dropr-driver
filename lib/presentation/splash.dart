@@ -6,10 +6,12 @@ import 'package:dropr_driver/presentation/register_user/register_contact_informa
 import 'package:dropr_driver/presentation/register_user/register_permanent_address.dart';
 import 'package:dropr_driver/presentation/register_user/register_user.dart';
 import 'package:dropr_driver/presentation/register_user/register_vehicle_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/asset_image_values.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   static const String routeName = 'SplashPage';
@@ -49,41 +51,49 @@ class _SplashPageState extends State<SplashPage> {
 
   void _navigateToScreen() async {
     Employee? user = await preferenceService.getAuthUser();
-    print(user);
+    if (!mounted) return;
 
     if (user != null) {
+      await Provider.of<UserStore>(context, listen: false).getMe();
       if (user.dateOfBirth == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
-          HomePage.routeName,
+          RegisterUser.routeName,
         );
       } else if (user.permanentAddress == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           PermanentAddress.routeName,
         );
       } else if (user.emergencyContact == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           ContactInformation.routeName,
         );
       } else if (user.vehicleDetails == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           VehicleInformation.routeName,
         );
       } else if (user.bankDetails == null) {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           BankInformation.routeName,
         );
       } else {
+        if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
           HomePage.routeName,
         );
       }
     } else {
+      if (!mounted) return;
       Navigator.pushReplacementNamed(
         context,
         LandingPage.routeName,

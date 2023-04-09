@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:dropr_driver/models/employee.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:mobx/mobx.dart';
@@ -22,7 +23,19 @@ abstract class _UserStore with Store {
 
       return otp;
     } catch (e) {
-      log('Error in store ' + e.toString());
+      log('Error in store $e');
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+  @action
+  Future<void> getMe() async {
+    try {
+      isLoading = true;
+      user = await userService.showMe();
+      isLoading = false;
+    } catch (e) {
       isLoading = false;
       rethrow;
     }
@@ -48,8 +61,8 @@ abstract class _UserStore with Store {
       user = await userService.registerYourself(body);
       preferenceService.setAuthUser(user!);
       isLoading = false;
-    } catch (e) {
-      log('Error in store $e');
+    } on DioError catch (e) {
+      log('Error in store ${e.response}');
       isLoading = false;
       rethrow;
     }
@@ -62,5 +75,11 @@ abstract class _UserStore with Store {
 
   Future<void> reset() async {
     await preferenceService.reset();
+    user = null;
+  }
+
+  @action
+  Future<void> setStoreUser(Employee employee) async {
+    user = employee;
   }
 }

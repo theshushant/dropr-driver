@@ -34,6 +34,15 @@ double applyPaddingX(double value) {
 int progressIndicatorValue(int value) {
   return (100 * value * (1 / 8)).round();
 }
+List<dynamic> packageCatagory = const [
+  {'title': 'Clothes | Accessories ', 'icon': Icon(Icons.checkroom)},
+  {'title': 'Documents | Books ', 'icon': Icon(Icons.library_books)},
+  {'title': 'Electronic Items ', 'icon': Icon(Icons.power)},
+  {'title': 'Food | Flowers', 'icon': Icon(Icons.fastfood)},
+  {'title': 'Sports Equipment', 'icon': Icon(Icons.sports_soccer)},
+  {'title': 'Alchol | Tabacco', 'icon': Icon(Icons.sports_bar)},
+  {'title': 'Other', 'icon': Icon(Icons.inventory)},
+];
 //
 // List<dynamic> packageCatagory = const [
 //   {'title': 'Clothes | Accessories ', 'icon': Icon(Icons.checkroom)},

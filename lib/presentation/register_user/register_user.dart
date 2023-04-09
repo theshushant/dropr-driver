@@ -10,6 +10,7 @@ import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class RegisterUser extends StatefulWidget {
 class _RegisterUserState extends State<RegisterUser> {
   final _formState = GlobalKey<FormState>();
   final Map<String, dynamic> data = <String, dynamic>{};
-
+  String? dateOfBirth;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,8 +74,8 @@ class _RegisterUserState extends State<RegisterUser> {
                   const Text(StringValue.addPicture),
                   DroprTextField(
                     hintText: StringValue.fullName,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
+                    onValidate: (String? value) {
+                      if (value == null || value.isEmpty) {
                         return StringValue.required;
                       }
                     },
@@ -84,30 +85,65 @@ class _RegisterUserState extends State<RegisterUser> {
                       });
                     },
                   ),
-                  DroprTextField(
-                    hintText: StringValue.gender,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
-                        return StringValue.required;
-                      }
-                    },
-                    onSave: (String value) {
-                      data.addAll({
-                        "gender": value,
-                      });
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: applyPaddingX(1),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: applyPaddingX(1),
+                    ),
+                    child: DropdownButtonFormField(
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return StringValue.required;
+                        }
+                      },
+                      hint: Text(
+                        StringValue.gender,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      items: const <DropdownMenuItem<String>>[
+                        DropdownMenuItem<String>(
+                          value: 'MALE',
+                          child: Text('Male'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'FEMALE',
+                          child: Text('Female'),
+                        ),
+                      ],
+                      onChanged: (String? s) {
+                        data.addAll({
+                          "gender": s,
+                        });
+                      },
+                    ),
                   ),
                   DroprTextField(
+                    controller: TextEditingController(text:dateOfBirth),
+                    isEnabled: false,
+                    onClick: () async {
+                      DateTime? dateTime = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime(2016),
+                        firstDate: DateTime(1950),
+                        lastDate: DateTime.now(),
+                      );
+                      setState(() {
+                        dateOfBirth = dateTime.toString().split(' ').first.replaceAll('-', '/');
+                        data.addAll({
+                          "date_of_birth": dateTime.toString(),
+                        });
+                      });
+                    },
                     hintText: StringValue.dateOfBirth,
-                    onValidate: (String? value){
-                      if(value == null || value.isEmpty){
+                    // value: data.containsKey('date_of_birth')
+                    //     ? data['date_of_birth']
+                    //     : null,
+                    onValidate: (String? value) {
+                      if (value == null || value.trim().isEmpty) {
                         return StringValue.required;
                       }
-                    },
-                    onSave: (String value) {
-                      data.addAll({
-                        "date_of_birth": value,
-                      });
                     },
                   ),
                   Align(
@@ -122,13 +158,16 @@ class _RegisterUserState extends State<RegisterUser> {
                               _formState.currentState?.save();
                               if (_formState.currentState?.validate() ??
                                   false) {
-                                Navigator.pushNamed(
-                                  context,
-                                  CurrentAddress.routeName,
-                                  arguments: ScreenArguments(
-                                    map: data,
-                                  ),
-                                );
+                                store.registerYourself(data);
+                                when((p0) => !store.isLoading, () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    CurrentAddress.routeName,
+                                    arguments: ScreenArguments(
+                                      map: data,
+                                    ),
+                                  );
+                                });
                               }
                             },
                             text: StringValue.next,

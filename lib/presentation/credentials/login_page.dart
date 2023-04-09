@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class LoginPage extends StatefulWidget {
   static const String routeName = 'LoginPage';
 
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -32,12 +32,9 @@ class _LoginPageState extends State<LoginPage> {
           ),
           child: Column(
             children: [
-              Container(
-                child: Image.asset(
-                  'assets/images/LoginImage.png',
-                  fit: BoxFit.contain,
-                ),
-                height: MediaQuery.of(context).size.height * 0.5,
+              Image.asset(
+                'assets/images/LoginImage.png',
+                fit: BoxFit.contain,
               ),
               DroprTextField(
                 keyboardType: TextInputType.number,
@@ -48,12 +45,12 @@ class _LoginPageState extends State<LoginPage> {
                     return StringValue.required;
                   }
                 },
-                onSave: (String value) {
+                onChange: (String value) {
                   body["phone_number"] = value;
                 },
               ),
               StoreObserver(
-                builder: (UserStore _store, BuildContext context) {
+                builder: (UserStore store, BuildContext context) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 15,
@@ -63,13 +60,14 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () async {
                         _formState.currentState?.save();
                         if (_formState.currentState?.validate() ?? false) {
-                          int otp = await _store.login(body);
+                          int otp = await store.login(body);
+                          if (!mounted) return;
                           Navigator.pushReplacementNamed(
                             context,
                             OTPVerificationPage.routeName,
                             arguments: ScreenArguments(
                               otp: otp,
-                              label: " StringValue.verification",
+                              label: "StringValue.verification",
                               map: body,
                             ),
                           );

@@ -4,10 +4,13 @@ import 'package:dropr_driver/helpers/dropr_gradient_progress_bar.dart';
 import 'package:dropr_driver/helpers/dropr_text_field.dart';
 import 'package:dropr_driver/models/screen_arguments.dart';
 import 'package:dropr_driver/presentation/register_user/register_contact_information.dart';
+import 'package:dropr_driver/store/user_store.dart';
 import 'package:dropr_driver/utils/color_values.dart';
 import 'package:dropr_driver/utils/globals.dart';
 import 'package:dropr_driver/utils/string_values.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class PermanentAddress extends StatefulWidget {
   const PermanentAddress({Key? key}) : super(key: key);
@@ -25,12 +28,11 @@ class _PermanentAddressState extends State<PermanentAddress> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final ScreenArguments args =
-          ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+      final ScreenArguments? args =
+          ModalRoute.of(context)!.settings.arguments as ScreenArguments?;
       setState(() {
-        map = args.map ?? <String, dynamic>{};
+        map = args?.map ?? <String, dynamic>{};
       });
-      print("here data is this " + map.toString());
     });
   }
 
@@ -150,11 +152,13 @@ class _PermanentAddressState extends State<PermanentAddress> {
                   ),
                   Row(
                     children: [
-                      Checkbox(value: true, onChanged: (bool? value) {
-                        if(value??false){
-                          map['permanent_address'] = map['current_address'];
-                        }
-                      }),
+                      Checkbox(
+                          value: true,
+                          onChanged: (bool? value) {
+                            if (value ?? false) {
+                              map['permanent_address'] = map['current_address'];
+                            }
+                          }),
                       Text(
                         StringValue.sameascurrentaddress,
                         style: Theme.of(context).textTheme.titleMedium,
@@ -170,13 +174,16 @@ class _PermanentAddressState extends State<PermanentAddress> {
                         onTap: () {
                           _formState.currentState?.save();
                           if (_formState.currentState?.validate() ?? false) {
-                            Navigator.pushNamed(
-                              context,
-                              ContactInformation.routeName,
-                              arguments: ScreenArguments(
-                                map: map,
-                              )
-                            );
+                            UserStore store =
+                                Provider.of<UserStore>(context, listen: false);
+                            store.registerYourself(map);
+                            when((p0) => !store.isLoading, () {
+                              Navigator.pushNamed(
+                                  context, ContactInformation.routeName,
+                                  arguments: ScreenArguments(
+                                    map: map,
+                                  ));
+                            });
                           }
                         },
                       ),

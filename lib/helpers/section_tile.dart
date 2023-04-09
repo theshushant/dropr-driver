@@ -7,9 +7,11 @@ class SectionTile extends StatefulWidget {
     Key? key,
     required this.title,
     required this.body,
+    this.trailingWidget,
   }) : super(key: key);
   final String title;
   final Widget body;
+  final Widget? trailingWidget;
 
   @override
   State<SectionTile> createState() => _SectionTileState();
@@ -35,7 +37,7 @@ class _SectionTileState extends State<SectionTile> {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: ColorValues.disabledColor.withOpacity(0.4),
+          color: ColorValues.textFieldFillColor,
           borderRadius: BorderRadius.all(
             Radius.circular(4),
           ),
@@ -51,9 +53,16 @@ class _SectionTileState extends State<SectionTile> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: customTextSize),
                 ),
-                Icon(
-                  isOpen ? Icons.keyboard_arrow_down : Icons.arrow_forward_ios,
-                  size: isOpen ? 28 : 18,
+                Row(
+                  children: [
+                    widget.trailingWidget ?? SizedBox(),
+                    Icon(
+                      isOpen
+                          ? Icons.keyboard_arrow_down
+                          : Icons.arrow_forward_ios,
+                      size: isOpen ? 28 : 18,
+                    )
+                  ],
                 ),
               ],
             ),

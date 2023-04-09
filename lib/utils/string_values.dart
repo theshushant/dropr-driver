@@ -25,6 +25,7 @@ class StringValue {
   static const String edit = 'Edit';
   static const String signup = 'Sign Up';
   static const String signuptext = "Don't have an account? Sign Up";
+  static const String verify = 'Verify';
 
   //Register user
   static const String registerYourself = 'Register Yourself';
@@ -55,10 +56,11 @@ class StringValue {
       'Relationship with emergancy contact';
 
   // Order Screen
+  static const String confirmation = 'Confirmation';
   static const String pickUpLocation = 'Pick-Up Location';
   static const String dropOffLocation = 'Drop Off Location';
   static const String order = 'Order';
-  static const String orderId = 'Order ID- 2474816';
+  static const String orderId = 'Order ID- ';
   static const String reachedToLocation = 'Reached To Location';
 
   //vehicle Information
@@ -98,7 +100,7 @@ class StringValue {
   static const String invoicingGST = 'Invoicing \$ GST';
   static const String completeDeliveries =
       'You must have an ABN to complete deliveries with us';
-  static const String ABN = 'Australian Business Number (ABN)';
+  static const String abn = 'Australian Business Number (ABN)';
   static const String accountNumber = 'Account Number';
   static const success = 'Success!';
   static const successLine =
@@ -112,4 +114,12 @@ class StringValue {
   static const currentInformation = 'Current Information';
   static const declaration =
       'I hereby declare that the information provided is true and correct. I also understand that any willful dishonesty may render for refusal of this application or immediate action against me.';
+
+  //User Specific
+  static const String profile = 'Profile';
+
+  //Payment History
+  static const String paymentHistory = 'Payment History';
+  static const String totalEarning = 'Total Earning';
+  static const String noDataAvailable = 'No Data Present Yet!';
 }
