@@ -89,6 +89,11 @@ class _SplashPageState extends State<SplashPage> {
         if (!mounted) return;
         Navigator.pushReplacementNamed(
           context,
+          LandingPage.routeName,
+        );
+        return;
+        Navigator.pushReplacementNamed(
+          context,
           HomePage.routeName,
         );
       }
