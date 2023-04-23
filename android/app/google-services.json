@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "158177151507",
+    "project_id": "dropr-8344e",
+    "storage_bucket": "dropr-8344e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158177151507:android:1f141518f1fc2b35cc0de6",
+        "android_client_info": {
+          "package_name": "com.example.dropr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158177151507-16i7n42tqtqnl7s0h9mqmjgd0ilasfcd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dropr",
+            "certificate_hash": "c0b24cb1f80631fc43923f2b75a6a3fd9cc8611a"
+          }
+        },
+        {
+          "client_id": "158177151507-4vl3120k9ajn0vu4a2r4i7run2fnprga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC-4unx1PYEbT9dCxPz34njOY-oIUBgoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158177151507-4vl3120k9ajn0vu4a2r4i7run2fnprga.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "158177151507-oe19vpev0aevv84imkktuqd69i9mouu9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dropr"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158177151507:android:696bd3582b1c3786cc0de6",
+        "android_client_info": {
+          "package_name": "com.example.dropr_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158177151507-4vl3120k9ajn0vu4a2r4i7run2fnprga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC-4unx1PYEbT9dCxPz34njOY-oIUBgoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158177151507-4vl3120k9ajn0vu4a2r4i7run2fnprga.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "158177151507-oe19vpev0aevv84imkktuqd69i9mouu9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dropr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>158177151507-mbcvdb7ih1dr4jivb6l59ssn8j928vb1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.158177151507-mbcvdb7ih1dr4jivb6l59ssn8j928vb1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>158177151507-16i7n42tqtqnl7s0h9mqmjgd0ilasfcd.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnmyLYFKotzDk8v7IJNFQ50DGONhpCO1k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>158177151507</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.droprDriver</string>
+	<key>PROJECT_ID</key>
+	<string>dropr-8344e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dropr-8344e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:158177151507:ios:36b267c4279707f7cc0de6</string>
+</dict>
+</plist>
